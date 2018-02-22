@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<root>
+	<user id="1">
+		<username>frank</username>
+		<password>12345</password>
+		<firtName>JunHui</firtName>
+		<lastName>Li</lastName>
+		<fullName>JunHui Li</fullName>
+		<department>Computer Science</department>
+		<loginStatus>false</loginStatus>
+	</user>
+	
+	<user id="2">
+		<username>Tom</username>
+		<password>12345</password>
+		<firtName>Tom</firtName>
+		<lastName>Gadsby</lastName>
+		<fullName>Tom Gadsby</fullName>
+		<department>Computer Science</department>
+		<loginStatus>false</loginStatus>
+	</user>
+	
+</root>
