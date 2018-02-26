@@ -43,7 +43,7 @@ import javax.swing.SwingUtilities;
  * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
  * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
  */
-public class GUI extends javax.swing.JFrame implements ActionListener {
+public class HomePage extends javax.swing.JFrame implements ActionListener {
 
     {
         //Set Look & Feel
@@ -72,7 +72,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                GUI inst = new GUI();
+                HomePage inst = new HomePage();
                 inst.setLayout(null);
                 inst.setLocationRelativeTo(null);
                 inst.setVisible(true);
@@ -80,7 +80,7 @@ public class GUI extends javax.swing.JFrame implements ActionListener {
         });
     }
 
-    public GUI() {
+    public HomePage() {
         super();
         initGUI();
     }
@@ -260,7 +260,7 @@ class introductionPanel extends JPanel{
         String title = "Title";
         String content = "asdffffffffffffff" ;
         JTextArea introduction = new JTextArea(title + "\n" +content,25,60);
-        introduction.setLineWrap(true);// 婵�娲昏嚜鍔ㄦ崲琛屽姛鑳�?
+        introduction.setLineWrap(true);// 婵�娲昏嚜鍔ㄦ崲琛屽姛鑳�?
         introduction.setWrapStyleWord(true);
         introduction.setBounds(7, 7, 748, 443);
         JScrollPane sp = new JScrollPane(introduction);
@@ -292,7 +292,7 @@ class turnPanel extends JPanel{
 
     public void addTurn(String title, String content) {
         JTextArea turn = new JTextArea("team" + title + "\n" +content,25,60);
-        turn.setLineWrap(true);// 婵�娲昏嚜鍔ㄦ崲琛屽姛鑳�?
+        turn.setLineWrap(true);// 婵�娲昏嚜鍔ㄦ崲琛屽姛鑳�?
         turn.setWrapStyleWord(true);
         sp.add(turn);
     }
@@ -317,7 +317,7 @@ class movePanel extends JPanel{
 
     public void addmove(String title, String content) {
         JTextArea turn = new JTextArea(title + "\n" +content,25,60);
-        turn.setLineWrap(true);// 婵�娲昏嚜鍔ㄦ崲琛屽姛鑳�?
+        turn.setLineWrap(true);
         turn.setWrapStyleWord(true);
         sp.add(turn);
     }

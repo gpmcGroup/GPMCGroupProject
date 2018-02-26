@@ -65,11 +65,11 @@ public class LoginPage {
 			OkHttpClient client = new OkHttpClient();
 			RequestBody requestBoday = new FormBody.Builder().add("username",username).add("password", password).build();
 			
-			Request request = new Request.Builder().post(requestBoday).url("http://localhost:8080/GPMCGroupWork1/loginService").build();
+			Request request = new Request.Builder().post(requestBoday).url("http://localhost:8080/GPMCGroupProject/loginService").build();
 			
 			try {
 				Response response = client.newCall(request).execute();
-				if(!response.isSuccessful()) {
+				if(!response.isSuccessful()) {	
 					JOptionPane.showMessageDialog(panel, "Can't request server, please check server status");
 				}else {
 					String txt = response.body().string();

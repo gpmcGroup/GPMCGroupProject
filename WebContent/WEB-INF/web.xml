@@ -15,6 +15,6 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>loginService</servlet-name>
-    <url-pattern>/GPMCGroupWork1/loginService</url-pattern>
+    <url-pattern>/GPMCGroupProject/loginService</url-pattern>
   </servlet-mapping>
 </web-app>
