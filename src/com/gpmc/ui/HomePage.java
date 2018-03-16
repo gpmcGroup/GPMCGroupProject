@@ -176,26 +176,34 @@ public class HomePage extends javax.swing.JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==jBIntroduction) {
             jPBasic.removeAll();
-
             jPBasic.add(new introductionPanel());
+            jPBasic.updateUI();
+            jPBasic.repaint();
 
         }
         if(e.getSource()==jBMove) {
-            jPBasic.removeAll();
+            this.jPBasic.removeAll();
+            jPBasic.updateUI();
             jPBasic.repaint();
+
             //jPBasic.add(new movePanel()); //movelist
         }
         if(e.getSource()==jBTurn) {
             jPBasic.removeAll();
+            jPBasic.updateUI();
             jPBasic.repaint();
             //this.jPBasic.add(new turnPanel());
         }
         if(e.getSource()==jBChat) {
             jPBasic.removeAll();
+            jPBasic.updateUI();
+            jPBasic.repaint();
             //chat
         }
         if(e.getSource()==jBStatisc) {
             jPBasic.removeAll();
+            jPBasic.updateUI();
+            jPBasic.repaint();
             //report
         }
     }
@@ -260,7 +268,7 @@ class introductionPanel extends JPanel{
         String title = "Title";
         String content = "asdffffffffffffff" ;
         JTextArea introduction = new JTextArea(title + "\n" +content,25,60);
-        introduction.setLineWrap(true);// 婵�娲昏嚜鍔ㄦ崲琛屽姛鑳�?
+        introduction.setLineWrap(true);
         introduction.setWrapStyleWord(true);
         introduction.setBounds(7, 7, 748, 443);
         JScrollPane sp = new JScrollPane(introduction);
@@ -269,57 +277,27 @@ class introductionPanel extends JPanel{
         sp.setVerticalScrollBarPolicy( 	JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         this.add(sp);
         this.setBounds(0, 23, 800, 400);
+        this.setVisible(true);
 
     }
 
 }
 
 class turnPanel extends JPanel{
-    JScrollPane sp = new JScrollPane();
-
-    public turnPanel(List ori_turn[]) {
-        sp.setHorizontalScrollBarPolicy( JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        sp.setVerticalScrollBarPolicy( 	JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        this.setBounds(0,23,800,400);
-        this.setLayout(new GridLayout(0,1,10,10));
-        JButton JBCreate = new JButton("Create");
-        JButton JBRemove = new JButton("Remove");
-        for(int i=0; i <= ori_turn.length;i++) {
-            //addTurn(ori_turn[i].title, ori_turn[i].content);
-        }
-        this.add(sp);
-    }
-
-    public void addTurn(String title, String content) {
-        JTextArea turn = new JTextArea("team" + title + "\n" +content,25,60);
-        turn.setLineWrap(true);// 婵�娲昏嚜鍔ㄦ崲琛屽姛鑳�?
-        turn.setWrapStyleWord(true);
-        sp.add(turn);
+     public turnPanel(List ori_turn[]) {
+    	 //add content showing in the turn panel
     }
 
 }
 
 class movePanel extends JPanel{
-    JScrollPane sp = new JScrollPane();
-
     public movePanel(List ori_move[]) {
-        sp.setHorizontalScrollBarPolicy( JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        sp.setVerticalScrollBarPolicy( 	JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        this.setBounds(0,23,800,400);
-        this.setLayout(new GridLayout(0,1,10,10));
-        JButton JBCreate = new JButton("Create");
-        JButton JBRemove = new JButton("Remove");
-        for(int i=0; i <= ori_move.length;i++) {
-            //addmove(ori_move[i].title, ori_move[i].content);
-        }
-        this.add(sp);
+    	//add content showing in the move panel
     }
+     
 
     public void addmove(String title, String content) {
-        JTextArea turn = new JTextArea(title + "\n" +content,25,60);
-        turn.setLineWrap(true);
-        turn.setWrapStyleWord(true);
-        sp.add(turn);
+    	//add move if you need this method
     }
 }
 
