@@ -20,4 +20,25 @@
 		<loginStatus>false</loginStatus>
 	</user>
 	
+	<user id="3">
+		<username>Ryan</username>
+		<password>12345</password>
+		<firtName>Ryan</firtName>
+		<lastName>Chen</lastName>
+		<fullName>Ryan Chen</fullName>
+		<department>Computer Science</department>
+		<loginStatus>false</loginStatus>
+	</user>
+	
+	<user id="4">
+		<username>Andy</username>
+		<password>12345</password>
+		<firtName>Andy</firtName>
+		<lastName>Chen</lastName>
+		<fullName>Andy Chen</fullName>
+		<department>Computer Science</department>
+		<loginStatus>false</loginStatus>
+	</user>
+	
+	
 </root>
