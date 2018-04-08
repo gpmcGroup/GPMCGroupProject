@@ -1,6 +1,8 @@
 package com.gpmc.servletAPI;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,14 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.dom4j.DocumentException;
-
+import org.dom4j.Element;
 
 import com.gpmc.modelClass.Student;
 import com.gpmc.modelClass.User;
+import com.gpmc.util.xmlUtil;
 
 /**
  * Servlet implementation class loginService
  */
+
 @WebServlet("/loginService")
 public class loginService extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -40,13 +44,13 @@ public class loginService extends HttpServlet {
 		String username = (String) request.getParameter("username");
 		String password = (String) request.getParameter("password");
 		
-		System.out.println(username + " " + password );
 		User user = new Student();
 		try {
 			if(user.login(username, password)) {
-				response.getWriter().write("login successful!"); 
+				String reponseText = xmlUtil.getUserDetail(username).asXML();
+				response.getWriter().write(reponseText);  //send user detail to front-end 
 			}else {
-				response.getWriter().write("username or password wrong!");
+				response.getWriter().write("false");
 			}
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
@@ -58,6 +62,7 @@ public class loginService extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);

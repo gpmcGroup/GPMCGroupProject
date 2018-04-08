@@ -16,18 +16,24 @@ public class ChatServer extends Thread{
 	//every team has a teamMessageList, a new login will create a new teamMessageList
 	
 	//in real situation, every team could have a serverPort
-	private int port = 9999;  
+	private int port;  
 //	private int[] clientListeningPort = {8001,8002};// one team, one server port, in following version to solve that.
 	
 	private ServerSocket server;
 	
+	
+	
 	//thread list
 	private List<ClientThread> ClientThreadList;   //this thread is used to provide service to every user
+	
+	public ChatServer(int port) {
+		this.port = port;
+	}
+	
 	public static void main(String[] args) {
-		ChatServer server = new ChatServer();
+		ChatServer server = new ChatServer(9999);
 		server.initialServer();
 		server.start();
-		System.out.println("Server Open!");
 	}
 	
 	public void initialServer() {
@@ -36,6 +42,7 @@ public class ChatServer extends Thread{
 		try {
 			ClientThreadList = new ArrayList<ClientThread>();
 			server = new ServerSocket(port);
+			System.out.println(port + ": Server Open");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -87,10 +94,9 @@ public class ChatServer extends Thread{
 					message = reader.readLine(); //receive message from client;
 					if(message == null) {
 						socket.close();
-						System.out.println(ClientName + "is offline");
 						break;
 					}
-					System.out.println(ClientName + " says : " + message);
+					
 					broadCastMessage(message);  //broadCastMessage to every Client
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -98,7 +104,6 @@ public class ChatServer extends Thread{
 				}
 			}
 		}
-		
 		//this method is used to broadCast new messages to every client
 		public void broadCastMessage(String message) {
 			for(int i = 0 ; i < ClientThreadList.size() ; i++) {

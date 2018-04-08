@@ -5,12 +5,17 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
+
 import javax.swing.BoxLayout;
 
 import javax.swing.DefaultComboBoxModel;
@@ -28,6 +33,23 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.ListModel;
 import javax.swing.WindowConstants;
+
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
+
+import com.gpmc.ChatTest.ChatClient;
+import com.gpmc.modelClass.User;
+import com.gpmc.util.xmlUtil;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 import javax.swing.SwingUtilities;
 
 
@@ -65,33 +87,91 @@ public class HomePage extends javax.swing.JFrame implements ActionListener {
     private JButton jBStatisc;
     private JButton jBChat;
     private JButton jBLogout;
-
+    
+    private User loginUser;
+    
+    private String initialData;
+    private Document doc;
+    private Vector<String> topicList;
     /**
      * Auto-generated main method to display this JFrame
      */
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                HomePage inst = new HomePage();
-                inst.setLayout(null);
-                inst.setLocationRelativeTo(null);
-                inst.setVisible(true);
-            }
-        });
-    }
 
-    public HomePage() {
+    
+    
+    class listPanel extends JPanel implements ActionListener{
+
+        private JButton jBPlus;
+        private JButton jBReudce;
+        private JList jLTopic;
+
+        public listPanel() {                                     				//add user a
+            this.setBounds(24, 81, 290, 518);
+            this.setLayout(null);
+
+            	
+            JScrollPane jScrollPane = new JScrollPane();
+            jScrollPane.setBounds(12,12,266,444);
+            jLTopic = new JList();
+            jLTopic.setListData(topicList);
+            jScrollPane.setViewportView(jLTopic);
+            	
+            jBReudce = new JButton();
+            jBReudce.setText("-");
+            jBReudce.setBounds(145, 462, 79, 39);
+
+            jBPlus = new JButton();
+            jBPlus.setText("+");
+            jBPlus.setBounds(44, 462, 79, 39);
+
+            this.add(jBPlus);
+            this.add(jBReudce);
+
+            this.add(jScrollPane);
+            
+            this.setVisible(true);
+        }
+
+    	@Override
+    	public void actionPerformed(ActionEvent e) {
+    		
+    		//newTopic nt = new newTopic();
+    	}
+    }
+    
+    
+    public HomePage(String initialData) {
+    		
         super();
+        this.initialData = initialData;
+        topicList = new Vector<String>();
         initGUI();
     }
 
+
     private void initGUI() {
+    	
+    	try {
+			doc = DocumentHelper.parseText(initialData);
+			
+			name = doc.valueOf("//user/username");
+			//topic list data 
+			Element eleTopic = (Element) doc.selectSingleNode("//user/topicList");
+			for(Iterator<Element> it = eleTopic.elementIterator("topic");it.hasNext();) {
+				Element ele = it.next();
+				topicList.add(ele.elementText("topicName"));
+			}
+			
+		} catch (DocumentException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    	
         try {
             {
                 this.setTitle("system");
                 this.setSize(688, 456);
                 this.setResizable(false);
-
             }
 
             this.jPBasic = new JPBasic();
@@ -100,11 +180,11 @@ public class HomePage extends javax.swing.JFrame implements ActionListener {
             getContentPane().add(new listPanel());
             getContentPane().add(jPBasic);
 
-
-
             jPBasic.add(new introductionPanel());
-
+            
+            
             {
+            	
                 jLaWelcome = new JLabel();
                 getContentPane().add(jLaWelcome);
                 jLaWelcome.setText("welcome, " + name);
@@ -123,7 +203,7 @@ public class HomePage extends javax.swing.JFrame implements ActionListener {
                 getContentPane().add(jBChat);
                 jBChat.setText("Chat");
                 jBChat.setBounds(927, 76, 108, 35);
-                jBChat.addActionListener(this);
+                jBChat.addActionListener(new jBChatActionListener());
             }
             {
                 jBStatisc = new JButton();
@@ -172,6 +252,37 @@ public class HomePage extends javax.swing.JFrame implements ActionListener {
         }
     }
 
+    
+    private class jBChatActionListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			//Handler information
+			Document doc = DocumentHelper.parseText(initialData);
+			String teamName = doc.valueOf("//user/teamList/team/teamName");
+			System.out.println(teamName);
+			
+			//request chat port from server
+			OkHttpClient client = new OkHttpClient();
+			
+			RequestBody requestBody = new FormBody.Builder().add("teamName",teamName).build();
+			
+			Request request = new Request.Builder().post(requestBody).url("http://localhost:8080/GPMCGroupProject/charPortQuery").build();
+			
+			Response reponse = client.newCall(request).execute();
+			
+			ChatClient inst = new ChatClient(name,);
+    			inst.setLocationRelativeTo(null);
+			inst.setVisible(true);
+			inst.setResizable(false);
+			
+			//handler information
+			
+		}
+    		
+    }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==jBIntroduction) {
@@ -210,58 +321,7 @@ public class HomePage extends javax.swing.JFrame implements ActionListener {
 
 }
 
-class listPanel extends JPanel implements ActionListener{
 
-    private JButton jBPlus;
-    private JButton jBReudce;
-    private JList jLTopic;
-
-    public listPanel() {                                     				//add user a
-        this.setBounds(24, 81, 290, 518);
-        this.setLayout(null);
-
-        ListModel jLTopicModel =
-                new DefaultComboBoxModel(
-                        new String[] {"item one", "intem two"});  			//a.getTopicList()
-        jLTopic = new JList();
-        jLTopic.setModel(jLTopicModel);
-        jLTopic.setBounds(12, 12, 266, 444);
-
-        jBReudce = new JButton();
-        jBReudce.setText("-");
-        jBReudce.setBounds(145, 462, 79, 39);
-
-        jBPlus = new JButton();
-        jBPlus.setText("+");
-        jBPlus.setBounds(44, 462, 79, 39);
-
-        this.add(jBPlus);
-        this.add(jBReudce);
-
-//		if(a.getType()= "tutor") {
-//
-//			jBReudce = new JButton();
-//			jBReudce.setText("-");
-//			jBReudce.setBounds(75, 249, 54, 36);
-//
-//			jBPlus = new JButton();
-//			jBPlus.setText("+");
-//			jBPlus.addActionListener(this);
-//			jBPlus.setBounds(16, 249, 54, 36);
-//
-//			this.add(jBPlus);
-//			this.add(jBReudce);
-//		}
-        this.add(jLTopic);
-        this.setVisible(true);
-    }
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-		//newTopic nt = new newTopic();
-	}
-}
 
 class introductionPanel extends JPanel{
     public introductionPanel() {

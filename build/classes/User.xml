@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>  
+<?xml version="1.0" encoding="UTF-8" ?>  
 <root>
 	<user id="1">
 		<username>frank</username>
@@ -8,6 +8,19 @@
 		<fullName>JunHui Li</fullName>
 		<department>Computer Science</department>
 		<loginStatus>false</loginStatus>
+		<topicList>
+			<topic id = "1">
+				<topicName>Is Abortion is wrong?</topicName>
+			</topic>
+			<topic id = "2">
+				<topicName>Are you ok?</topicName>
+			</topic>
+		</topicList>
+		<teamList>
+			<team id = "1">
+				<teamName>teamA</teamName>
+			</team>
+		</teamList>
 	</user>
 	
 	<user id="2">
@@ -18,6 +31,16 @@
 		<fullName>Tom Gadsby</fullName>
 		<department>Computer Science</department>
 		<loginStatus>false</loginStatus>
+		<topicList>
+			<topic id = "1">
+				<topicName>Is Abortion is wrong?</topicName>
+			</topic>
+		</topicList>
+		<teamList>
+			<team id = "1">
+				<teamName>teamA</teamName>
+			</team>
+		</teamList>
 	</user>
 	
 	<user id="3">

@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -16,22 +17,24 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
-public class LoginPage {
+public class LoginPage extends JFrame{
 
 	public static void main(String[] args) {
-		JFrame frame = new JFrame("Login");
-		frame.setSize(350, 177);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		LoginPage page = new LoginPage();
+		
+		page.setName("Login");
+		page.setSize(350, 177);
+		page.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JPanel panel = new JPanel();
-		frame.add(panel);
-		placeComponents(panel);
+		page.add(panel);
+		page.placeComponents(panel);
 
-		frame.setVisible(true);
-		frame.setPreferredSize(new java.awt.Dimension(350, 177));
+		page.setVisible(true);
+		page.setPreferredSize(new java.awt.Dimension(350, 177));
 	}
 
-	private static void placeComponents(JPanel panel) {
+	private void placeComponents(JPanel panel) {
 
 		panel.setLayout(null);
 
@@ -73,8 +76,20 @@ public class LoginPage {
 					JOptionPane.showMessageDialog(panel, "Can't request server, please check server status");
 				}else {
 					String txt = response.body().string();
-					JOptionPane.showMessageDialog(panel, txt);
-					System.out.println(txt);
+					if(txt.equals("false")) {
+						JOptionPane.showMessageDialog(panel, "username or password is wrong!");
+					}else {
+						this.dispose();
+						SwingUtilities.invokeLater(new Runnable() {
+				            public void run() {
+				                HomePage inst = new HomePage(txt);
+				                inst.setLayout(null);
+				                inst.setLocationRelativeTo(null);
+				                inst.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				                inst.setVisible(true);
+				            }
+				        });
+					}
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

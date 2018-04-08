@@ -39,20 +39,29 @@ public class ChatClient extends javax.swing.JFrame {
 	private PrintWriter pw;
 	private BufferedReader reader;
 	private ClientMessageThread clientThread;
+	
+	
+	private String ServerIP;
+	private String ServerPort;
+	private String name;
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
 	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				ChatClient inst = new ChatClient();
-				inst.setLocationRelativeTo(null);
-				inst.setVisible(true);
-			}
-		});
+//		SwingUtilities.invokeLater(new Runnable() {
+//			public void run() {
+//				ChatClient inst = new ChatClient();
+//				inst.setLocationRelativeTo(null);
+//				inst.setVisible(true);
+//				inst.setResizable(false);
+//			}
+//		});
 	}
-	public ChatClient() {
+	public ChatClient(String name, String ip,String port) {
 		super();
+		this.name = name;
+		this.ServerIP = ip;
+		this.ServerPort = port;
 		initGUI();
 	}
 	
@@ -81,7 +90,6 @@ public class ChatClient extends javax.swing.JFrame {
 		
 	}
 	public void sendMessage(String message) {
-		System.out.println("reveive a new message");
 		pw.println(message);
 		pw.flush();
 		jTextFieldMessage.setText("");
@@ -103,7 +111,6 @@ public class ChatClient extends javax.swing.JFrame {
 				String message;
 				try {
 					message = reader.readLine();
-					System.out.println("received a message from server" + message);
 					jTextArea1.append(message + "\r\n");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

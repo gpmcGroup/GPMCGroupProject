@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<root>
+	<team id = "1" name="teamA">
+		<user id = "1">
+			<username>frank</username>
+		</user>
+		<user id = "2">
+			<username>Tom</username>
+		</user>
+		<chatPort>9998</chatPort>
+	</team>
+	
+	<team id = "2" name="teamB">
+		<user id = "1">
+			<username>Ryan</username>
+		</user>
+		
+		<user id = "2">
+			<username>Andy</username>
+		</user>
+		<chatPort>9999</chatPort>
+	</team>
+
+</root>

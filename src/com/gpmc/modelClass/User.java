@@ -1,6 +1,11 @@
 package com.gpmc.modelClass;
 
+import java.io.File;
+
+import org.dom4j.Document;
 import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 
 import com.gpmc.util.xmlUtil;
 
@@ -22,10 +27,14 @@ public abstract class User {
 	 * true logout successful, false logout failed. 
 	 */
 	
-	public boolean logout() {
+	public boolean logout() throws DocumentException {
 		//your code;
-		if(this.loginStatus == true)
+		if(this.loginStatus == true) {
 			this.loginStatus = false;
+			Document doc = new SAXReader().read(new File(xmlUtil.class.getClassLoader().getResource("User.xml").getPath()));
+			Element ele = (Element)doc.selectSingleNode("//user[username='" + username + "']/loginStatus");
+			ele.setText("false");
+		}
 		return true;
 	}
 	
@@ -35,11 +44,12 @@ public abstract class User {
 	public boolean login(String username, String password) throws DocumentException {
 		
 		String pass = xmlUtil.Userlogin(username);
-		System.out.println(pass);
+		System.out.println(username);
 		if(pass == null)
 			return false;
 		else if(pass.equals(password)) {
 			this.loginStatus = true;
+			xmlUtil.modifyUserValue(username, "loginStatus", "true");
 			return true;
 		}else return false;
 	}
