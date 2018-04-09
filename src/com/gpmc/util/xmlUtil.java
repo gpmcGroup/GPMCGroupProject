@@ -14,7 +14,7 @@ import org.dom4j.io.XMLWriter;
 public class xmlUtil {
 	
 	public static String Userpath = xmlUtil.class.getClassLoader().getResource("User.xml").getPath();
-	
+	public static String TeamPath = xmlUtil.class.getClassLoader().getResource("Team.xml").getPath();
 	//input username, return password
 	public static String Userlogin(String username) throws DocumentException {
 //		String path = xmlUtil.class.getClassLoader().getResource("User.xml").getPath();
@@ -51,6 +51,11 @@ public class xmlUtil {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+	}
+	
+	public static String queryTeamChatPort(String teamName) throws DocumentException {
+		Document doc = new SAXReader().read(new File(TeamPath));
+//		Element ele = 
+		return doc.valueOf("//team[@name='" + teamName + "']/chatPort");
 	}
 }

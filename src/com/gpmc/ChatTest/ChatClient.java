@@ -158,11 +158,13 @@ public class ChatClient extends javax.swing.JFrame {
 				getContentPane().add(jLabel1ServerIP);
 				jLabel1ServerIP.setBounds(7, 12, 92, 15);
 				jLabel1ServerIP.setName("jLabel1ServerIP");
+				
 			}
 			{
 				jTextFieldServerIP = new JTextField();
 				getContentPane().add(jTextFieldServerIP);
 				jTextFieldServerIP.setBounds(111, 9, 74, 22);
+				jTextFieldServerIP.setText(ServerIP);
 			}
 			{
 				jLabelServerPort = new JLabel();
@@ -174,6 +176,7 @@ public class ChatClient extends javax.swing.JFrame {
 				jTextFieldServerPort = new JTextField();
 				getContentPane().add(jTextFieldServerPort);
 				jTextFieldServerPort.setBounds(240, 9, 73, 22);
+				jTextFieldServerPort.setText(ServerPort);
 			}
 			{
 				jLabelName = new JLabel();
@@ -185,6 +188,7 @@ public class ChatClient extends javax.swing.JFrame {
 				jTextFieldName = new JTextField();
 				getContentPane().add(jTextFieldName);
 				jTextFieldName.setBounds(64, 44, 62, 22);
+				jTextFieldName.setText(name);
 			}
 			{
 				jButtonConnect = new JButton();
@@ -222,7 +226,7 @@ public class ChatClient extends javax.swing.JFrame {
 			pack();
 			setSize(400, 300);
 			Application.getInstance().getContext().getResourceMap(getClass()).injectComponents(getContentPane());
-			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -17,4 +17,13 @@
     <servlet-name>loginService</servlet-name>
     <url-pattern>/GPMCGroupProject/loginService</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>chatPortQuery</servlet-name>
+  	<servlet-class>com.gpmc.servletAPI</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>chatPortQuery</servlet-name>
+  	<url-pattern>/GPMCGroupProject/chatPortQuery</url-pattern>
+  </servlet-mapping>
 </web-app>

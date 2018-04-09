@@ -21,6 +21,19 @@
 		<startTime>2018-06-07 24:00:00</startTime>
 		<maxTurn>4</maxTurn>
 		<turnCycleFrequency>200000</turnCycleFrequency>
+		<presentTurnOwner>York Bird</presentTurnOwner>
+		<changeTurnTimeLeft>200000</changeTurnTimeLeft>
+		<status>pending</status>
+		<winner>null</winner>
+	</topic>
+	
+	<topic id = "3">
+		<title>test1</title>
+		<teamA>York 3</teamA>
+		<teamB>York 4</teamB>
+		<startTime>2018-06-07 24:00:00</startTime>
+		<maxTurn>4</maxTurn>
+		<turnCycleFrequency>200000</turnCycleFrequency>
 		<presentTurnOwner>York Duck</presentTurnOwner>
 		<changeTurnTimeLeft>200000</changeTurnTimeLeft>
 		<status>pending</status>

@@ -157,10 +157,13 @@ public class HomePage extends javax.swing.JFrame implements ActionListener {
 			name = doc.valueOf("//user/username");
 			//topic list data 
 			Element eleTopic = (Element) doc.selectSingleNode("//user/topicList");
-			for(Iterator<Element> it = eleTopic.elementIterator("topic");it.hasNext();) {
-				Element ele = it.next();
-				topicList.add(ele.elementText("topicName"));
+			if(eleTopic!=null) {
+				for(Iterator<Element> it = eleTopic.elementIterator("topic");it.hasNext();) {
+					Element ele = it.next();
+					topicList.add(ele.elementText("topicName"));
+				}
 			}
+			
 			
 		} catch (DocumentException e1) {
 			// TODO Auto-generated catch block
@@ -203,7 +206,49 @@ public class HomePage extends javax.swing.JFrame implements ActionListener {
                 getContentPane().add(jBChat);
                 jBChat.setText("Chat");
                 jBChat.setBounds(927, 76, 108, 35);
-                jBChat.addActionListener(new jBChatActionListener());
+                jBChat.addActionListener(l->{
+	                	//Handler information
+	        			Document doc;
+						try {
+							doc = DocumentHelper.parseText(initialData);
+							String teamName = doc.valueOf("//user/teamList/team/teamName");
+							
+			        			if(!teamName.equals("")) {
+			        				//request chat port from server
+				        			OkHttpClient client = new OkHttpClient();
+				        			RequestBody requestBoday = new FormBody.Builder().add("teamName",teamName).build();
+				        			Request request = new Request.Builder().post(requestBoday).url("http://localhost:8080/GPMCGroupProject/chatPortQuery").build();
+				        			
+				        			Response response = client.newCall(request).execute();
+				        			if(!response.isSuccessful()) {
+				        				JOptionPane.showMessageDialog(null, "Can't request server, please check server status");
+				        			}else {
+				        				String txt = response.body().string();
+				        				if(txt.equals("null")) {
+				        					JOptionPane.showMessageDialog(null, "team Not port");
+				        				}else {
+				        					ChatClient inst = new ChatClient(name,"127.0.0.1",txt);
+					            			inst.setLocationRelativeTo(null);
+					            			inst.setVisible(true);
+					            			inst.setResizable(false);
+				        				}
+				        			}
+			        			}else {
+			        				JOptionPane.showMessageDialog(null, "You should have a team first");
+			        			}
+			        			
+						} catch (DocumentException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+	        			
+	        			
+	        			
+	        			
+                });
             }
             {
                 jBStatisc = new JButton();
@@ -252,36 +297,6 @@ public class HomePage extends javax.swing.JFrame implements ActionListener {
         }
     }
 
-    
-    private class jBChatActionListener implements ActionListener{
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			
-			//Handler information
-			Document doc = DocumentHelper.parseText(initialData);
-			String teamName = doc.valueOf("//user/teamList/team/teamName");
-			System.out.println(teamName);
-			
-			//request chat port from server
-			OkHttpClient client = new OkHttpClient();
-			
-			RequestBody requestBody = new FormBody.Builder().add("teamName",teamName).build();
-			
-			Request request = new Request.Builder().post(requestBody).url("http://localhost:8080/GPMCGroupProject/charPortQuery").build();
-			
-			Response reponse = client.newCall(request).execute();
-			
-			ChatClient inst = new ChatClient(name,);
-    			inst.setLocationRelativeTo(null);
-			inst.setVisible(true);
-			inst.setResizable(false);
-			
-			//handler information
-			
-		}
-    		
-    }
     
     @Override
     public void actionPerformed(ActionEvent e) {

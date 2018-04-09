@@ -18,7 +18,7 @@
 		</topicList>
 		<teamList>
 			<team id = "1">
-				<teamName>teamA</teamName>
+				<teamName>York Duck</teamName>
 			</team>
 		</teamList>
 	</user>
@@ -38,7 +38,7 @@
 		</topicList>
 		<teamList>
 			<team id = "1">
-				<teamName>teamA</teamName>
+				<teamName>York Duck</teamName>
 			</team>
 		</teamList>
 	</user>
@@ -51,6 +51,11 @@
 		<fullName>Ryan Chen</fullName>
 		<department>Computer Science</department>
 		<loginStatus>false</loginStatus>
+		<teamList>
+			<team id = "1">
+				<teamName>York Bird</teamName>
+			</team>
+		</teamList>
 	</user>
 	
 	<user id="4">
@@ -61,6 +66,11 @@
 		<fullName>Andy Chen</fullName>
 		<department>Computer Science</department>
 		<loginStatus>false</loginStatus>
+		
+		<teamList>
+			
+		
+		</teamList>
 	</user>
 	
 	

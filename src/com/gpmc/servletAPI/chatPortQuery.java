@@ -7,6 +7,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.dom4j.DocumentException;
+
+import com.gpmc.util.xmlUtil;
+
 /**
  * Servlet implementation class chatPortQuery
  */
@@ -27,6 +31,17 @@ public class chatPortQuery extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		
+		String teamName = request.getParameter("teamName");
+		
+		try {
+			String port = xmlUtil.queryTeamChatPort(teamName);
+			System.out.println("teamport :" + port);
+			response.getWriter().write(xmlUtil.queryTeamChatPort(teamName));
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 
