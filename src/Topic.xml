@@ -13,6 +13,7 @@
 		<changeTurnTimeLeft>100000</changeTurnTimeLeft>
 		<status>progressing</status>
 		<winner>null</winner>
+		<creator>Tommy</creator>
 	</topic>
 	<topic id = "2">
 		<title>Are you ok?</title>

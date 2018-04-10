@@ -15,11 +15,15 @@
 		<user id = "1">
 			<username>Ryan</username>
 		</user>
-		
-		<user id = "2">
+		<chatPort>9999</chatPort>
+	</team>
+	
+	
+	<team id = "3" name="CS Duck">
+	
+		<user id = "1">
 			<username>Andy</username>
 		</user>
-		<chatPort>9999</chatPort>
 	</team>
 
 </root>

@@ -244,10 +244,6 @@ public class HomePage extends javax.swing.JFrame implements ActionListener {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-	        			
-	        			
-	        			
-	        			
                 });
             }
             {
