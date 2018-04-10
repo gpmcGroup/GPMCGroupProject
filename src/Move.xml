@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<move id="1">
+		<type>Claim</type>
+		<createUserID>Tom</createUserID>
+		<createdAt>22/02/2018</createdAt>
+		<turnID>1</turnID>
+		<linkedDCFile>none</linkedDCFile>
+		<status>true</status>
+		<textBody>A basic argument</textBody>
+	</move>
+	
+	<move id="2">
+		<type>Evidence</type>
+		<createUserID>Frank</createUserID>
+		<createdAt>22/02/2018</createdAt>
+		<turnID>2</turnID>
+		<linkedDCFile>none</linkedDCFile>
+		<status>true</status>
+		<textBody>Some evidence to support the argument</textBody>
+	</move>
+
+</root>
