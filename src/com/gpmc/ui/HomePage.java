@@ -3,6 +3,7 @@ import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Vector;
@@ -30,6 +31,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 
 import com.gpmc.ChatTest.ChatClient;
 import com.gpmc.modelClass.User;
@@ -353,23 +355,47 @@ public class HomePage extends javax.swing.JFrame implements ActionListener {
     	private JTextArea moveDetails;
     	private JScrollPane moveScroll;
     	private JTable turnTable;
+      	private JScrollPane turnScroll;
     	private GroupLayout turnPanelLayout;
+    	private DefaultTableModel t;
     	
-    	public turnPanel() {
+    	public turnPanel(){
     		super();
+    		try {
     		initGUI();
     		setupEventHandlers();
     		displayData();
+    	
+    		} catch(DocumentException d) {
+    			d.printStackTrace();
+    		}
     		this.setVisible(true);
     	}
     	
-    	private void setupEventHandlers() {
-    		//bla bla 
-    	}
+    
     	
-    	private void displayData() {
-    		//bla bla
-    	}
+      	public void displayData() throws DocumentException{
+      		OkHttpClient client = new OkHttpClient();
+    		RequestBody req = new FormBody.Builder().build();
+    		Request getreq = new Request.Builder().post(req).url("http://localhost:8080/GPMCGroupProject/MoveData").build();
+      		
+    		try {
+    			Response response = client.newCall(getreq).execute();
+    			
+    			if(!response.isSuccessful()) {
+    				JOptionPane.showMessageDialog(moveTable, "Problems accessing server");
+    		} else {
+    			t = new DefaultTableModel();
+    			t = xmlUtil.fillTurnData();
+    			turnTable.setModel(t);
+    			
+    		}
+    		} catch (IOException e) {
+    			e.printStackTrace();
+    		}
+      	}
+   
+    		
     	
     	private void initGUI() {
 
@@ -377,24 +403,24 @@ public class HomePage extends javax.swing.JFrame implements ActionListener {
     				this.setLayout(turnPanelLayout);
     		
     				{
-    					TableModel turnTableModel = 
-    							new DefaultTableModel(
-    									new String[][] { { "One", "Two" }, { "Three", "Four" } },
-    									new String[] { "Column 1", "Column 2" });
+    					
     					turnTable = new JTable();
-    					turnTable.setModel(turnTableModel);
+    					turnScroll = new JScrollPane(turnTable);
+    					
     				}
     				{
-    					TableModel moveTableModel = 
-    							new DefaultTableModel(
-    									new String[][] { { "One", "Two" }, { "Three", "Four" } },
-    									new String[] { "Column 1", "Column 2" });
-    					moveTable = new JTable();
-    					moveTable.setModel(moveTableModel);
+    					
+    					DefaultTableModel tmodel = new DefaultTableModel();
+    					moveTable = new JTable(tmodel);
+    					moveTable.setVisible(true);
+    					moveTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    					moveTable.setRowSelectionAllowed(true);
+    					moveTable.setColumnSelectionAllowed(false);
+    					moveScroll = new JScrollPane(moveTable);
+    					
     				}
     				{
     					moveDetails = new JTextArea();
-    					moveDetails.setText("jTextField1");
     					moveScroll = new JScrollPane(moveDetails);
     					moveScroll.setVisible(true);
     					
@@ -405,7 +431,7 @@ public class HomePage extends javax.swing.JFrame implements ActionListener {
     				}
     					turnPanelLayout.setHorizontalGroup(turnPanelLayout.createSequentialGroup()
     					.addContainerGap(17, 17)
-    					.addComponent(turnTable, GroupLayout.PREFERRED_SIZE, 207, GroupLayout.PREFERRED_SIZE)
+    					.addComponent(turnScroll, GroupLayout.PREFERRED_SIZE, 207, GroupLayout.PREFERRED_SIZE)
     					.addGap(42)
     					.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
     					.addGroup(turnPanelLayout.createParallelGroup()
@@ -431,9 +457,40 @@ public class HomePage extends javax.swing.JFrame implements ActionListener {
     					            .addComponent(moveDetailsLabel, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
     					            .addComponent(moveDetails, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE))
     					        .addGap(9))
-    					    .addComponent(turnTable, GroupLayout.Alignment.LEADING, 0, 307, Short.MAX_VALUE))
+    					    .addComponent(turnScroll, GroupLayout.Alignment.LEADING, 0, 307, Short.MAX_VALUE))
     					.addContainerGap());
     			this.setSize(723, 407);
+    	}
+    	
+	private void setupEventHandlers() {
+    		
+    		turnTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+    			public void valueChanged(ListSelectionEvent e) {
+    				int row = turnTable.getSelectedRow();
+    				int turnID = Integer.parseInt((String) turnTable.getValueAt(row, 1));
+    				
+    				try {
+    					DefaultTableModel table = new DefaultTableModel();
+						table = xmlUtil.fillMoveData(turnID);
+						moveTable.setModel(table);
+					} catch (DocumentException e1) {
+						e1.printStackTrace();
+					}
+    				
+    			}
+    		});
+    		
+    		moveTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+    			public void valueChanged(ListSelectionEvent e) {
+    				moveDetails.setText("");
+    				int row = turnTable.getSelectedRow();
+    				String s = (String) moveTable.getValueAt(row, 3);
+    				moveDetails.setText(s);
+    				
+    			}
+    		});
+    		
+    		
     	}
 
     }
@@ -447,7 +504,7 @@ public class HomePage extends javax.swing.JFrame implements ActionListener {
     	 private JScrollPane textScroll;
     	 private JButton addNewMove;
     	 private GroupLayout moveLayout;
-    	 private String initialText = "Add some text here";
+    	 private String initialText;
     	 private JLabel detailsLabel;
     	 private DefaultTableModel t;
     	
@@ -463,28 +520,11 @@ public class HomePage extends javax.swing.JFrame implements ActionListener {
     		
     	}
     	
-    	//not needing to use this at present... servlets still not required!!
+    	
     	public void displayData() throws DocumentException{
-    		OkHttpClient client = new OkHttpClient();
-    		RequestBody req = new FormBody.Builder().build();
-    		Request getreq = new Request.Builder().post(req).url("http://localhost:8080/GPMCGroupProject/MoveData").build();
-    		try {
-    			Response response = client.newCall(getreq).execute();
-    			
-    			if(!response.isSuccessful()) {
-    				JOptionPane.showMessageDialog(listMoves, "Problems accessing server");
-    		} else {
     			DefaultTableModel t = new DefaultTableModel();
     			t= xmlUtil.fillMoveData();
     			listMoves.setModel(t);
-    			
-    		}
-    		} catch (IOException e) {
-    			e.printStackTrace();
-    		}
-    		
-    		
-    		
     	}
     	
     	

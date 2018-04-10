@@ -25,20 +25,12 @@
     <servlet-name>chatPortQuery</servlet-name>
     <url-pattern>/GPMCGroupProject/chatPortQuery</url-pattern>
   </servlet-mapping>
-   <servlet>
+  <servlet>
     <servlet-name>CreateMove</servlet-name>
     <servlet-class>com.gpmc.servletAPI</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>CreateMove</servlet-name>
     <url-pattern>/GPMCGroupProject/CreateMove</url-pattern>
-  </servlet-mapping>
-   <servlet>
-    <servlet-name>MoveData</servlet-name>
-    <servlet-class>com.gpmc.servletAPI</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>MoveData</servlet-name>
-    <url-pattern>/GPMCGroupProject/MoveData</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -19,5 +19,15 @@
 		<status>true</status>
 		<textBody>Some evidence to support the argument</textBody>
 	</move>
+	
+		<move id="3">
+		<type>Evidence</type>
+		<createUserID>Tom</createUserID>
+		<createdAt>22/02/2018</createdAt>
+		<turnID>2</turnID>
+		<linkedDCFile>none</linkedDCFile>
+		<status>true</status>
+		<textBody>Some more of this good ol evidence nonsense</textBody>
+	</move>
 
 </root>
