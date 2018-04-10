@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Turn {
 	private Team ownerTeam;
-	private Map<String, DCFile> dcFileMap;
+	private Map<String, Move> dcFileMap;
 //	private List<Move> MoveList;  //need to discuss again
 	private int IDNumber;
 	
@@ -15,10 +15,10 @@ public class Turn {
 	public void setOwnerTeam(Team ownerTeam) {
 		this.ownerTeam = ownerTeam;
 	}
-	public Map<String, DCFile> getDcFileMap() {
+	public Map<String, Move> getDcFileMap() {
 		return dcFileMap;
 	}
-	public void setDcFileMap(Map<String, DCFile> dcFileMap) {
+	public void setDcFileMap(Map<String, Move> dcFileMap) {
 		this.dcFileMap = dcFileMap;
 	}
 	public int getIDNumber() {

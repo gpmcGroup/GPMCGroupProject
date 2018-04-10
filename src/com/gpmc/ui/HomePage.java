@@ -1,38 +1,31 @@
 package com.gpmc.ui;
-//import com.cloudgarden.layout.AnchorConstraint;
-//import com.cloudgarden.layout.AnchorLayout;
-import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Vector;
 
-import javax.swing.BoxLayout;
-
-import javax.swing.DefaultComboBoxModel;
+import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.JTextPane;
-import javax.swing.ListModel;
+import javax.swing.LayoutStyle;
+import javax.swing.ListSelectionModel;
 import javax.swing.WindowConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -49,8 +42,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
-import javax.swing.SwingUtilities;
 
 
 /**
@@ -76,7 +67,7 @@ public class HomePage extends javax.swing.JFrame implements ActionListener {
         }
     }
 
-    String name;
+    private String name;
     private JTextArea test;
     private JLabel jLaWelcome;
     private JPanel jPBasic;
@@ -96,11 +87,9 @@ public class HomePage extends javax.swing.JFrame implements ActionListener {
     /**
      * Auto-generated main method to display this JFrame
      */
-
-    
     
     class listPanel extends JPanel implements ActionListener{
-
+    	
         private JButton jBPlus;
         private JButton jBReudce;
         private JList jLTopic;
@@ -305,6 +294,9 @@ public class HomePage extends javax.swing.JFrame implements ActionListener {
         }
         if(e.getSource()==jBMove) {
             this.jPBasic.removeAll();
+            movePanel mp = new movePanel();
+			jPBasic.add(mp);
+			mp.setVisible(true);
             jPBasic.updateUI();
             jPBasic.repaint();
 
@@ -312,6 +304,9 @@ public class HomePage extends javax.swing.JFrame implements ActionListener {
         }
         if(e.getSource()==jBTurn) {
             jPBasic.removeAll();
+            turnPanel tp = new turnPanel();
+            jPBasic.add(tp);
+            tp.setVisible(true);
             jPBasic.updateUI();
             jPBasic.repaint();
             //this.jPBasic.add(new turnPanel());
@@ -329,75 +324,328 @@ public class HomePage extends javax.swing.JFrame implements ActionListener {
             //report
         }
     }
+//here
+    class introductionPanel extends JPanel{
+        public introductionPanel() {
+            String title = "Title";
+            String content = "asdffffffffffffff" ;
+            JTextArea introduction = new JTextArea(title + "\n" +content,25,60);
+            introduction.setLineWrap(true);
+            introduction.setWrapStyleWord(true);
+            introduction.setBounds(7, 7, 748, 443);
+            JScrollPane sp = new JScrollPane(introduction);
 
+            sp.setHorizontalScrollBarPolicy( JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            sp.setVerticalScrollBarPolicy( 	JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            this.add(sp);
+            this.setBounds(0, 23, 800, 400);
+            this.setVisible(true);
+
+        }
+
+    }
+
+    class turnPanel extends JPanel {
+    	private JTable moveTable;
+    	private JLabel moveDetailsLabel;
+    	private JTextArea moveDetails;
+    	private JScrollPane moveScroll;
+    	private JTable turnTable;
+      	private JScrollPane turnScroll;
+    	private GroupLayout turnPanelLayout;
+    	private DefaultTableModel t;
+    	
+    	public turnPanel(){
+    		super();
+    		try {
+    		initGUI();
+    		setupEventHandlers();
+    		displayData();
+    	
+    		} catch(DocumentException d) {
+    			d.printStackTrace();
+    		}
+    		this.setVisible(true);
+    	}
+    	
+    
+    	
+      	public void displayData() throws DocumentException{
+      		OkHttpClient client = new OkHttpClient();
+    		RequestBody req = new FormBody.Builder().build();
+    		Request getreq = new Request.Builder().post(req).url("http://localhost:8080/GPMCGroupProject/MoveData").build();
+      		
+    		try {
+    			Response response = client.newCall(getreq).execute();
+    			
+    			if(!response.isSuccessful()) {
+    				JOptionPane.showMessageDialog(moveTable, "Problems accessing server");
+    		} else {
+    			t = new DefaultTableModel();
+    			t = xmlUtil.fillTurnData();
+    			turnTable.setModel(t);
+    			
+    		}
+    		} catch (IOException e) {
+    			e.printStackTrace();
+    		}
+      	}
+   
+    		
+    	
+    	private void initGUI() {
+
+    				turnPanelLayout = new GroupLayout(this);
+    				this.setLayout(turnPanelLayout);
+    		
+    				{
+    					turnTable = new JTable();
+    					turnScroll = new JScrollPane(turnTable);
+    				}
+    				{
+    					
+    					DefaultTableModel tmodel = new DefaultTableModel();
+    					moveTable = new JTable(tmodel);
+    					moveTable.setVisible(true);
+    					moveTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    					moveTable.setRowSelectionAllowed(true);
+    					moveTable.setColumnSelectionAllowed(false);
+    					moveScroll = new JScrollPane(moveTable);
+    					
+    				}
+    				{
+    					moveDetails = new JTextArea();
+    					moveScroll = new JScrollPane(moveDetails);
+    					moveScroll.setVisible(true);
+    					
+    				}
+    				{
+    					moveDetailsLabel = new JLabel();
+    					moveDetailsLabel.setText("Move details");
+    				}
+    					turnPanelLayout.setHorizontalGroup(turnPanelLayout.createSequentialGroup()
+    					.addContainerGap(17, 17)
+    					.addComponent(turnScroll, GroupLayout.PREFERRED_SIZE, 207, GroupLayout.PREFERRED_SIZE)
+    					.addGap(42)
+    					.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+    					.addGroup(turnPanelLayout.createParallelGroup()
+    					    .addGroup(turnPanelLayout.createSequentialGroup()
+    					        .addComponent(moveTable, GroupLayout.PREFERRED_SIZE, 420, GroupLayout.PREFERRED_SIZE)
+    					        .addGap(0, 0, Short.MAX_VALUE))
+    					    .addGroup(GroupLayout.Alignment.LEADING, turnPanelLayout.createSequentialGroup()
+    					        .addGap(0, 0, Short.MAX_VALUE)
+    					        .addComponent(moveDetailsLabel, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+    					        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+    					        .addComponent(moveDetails, GroupLayout.PREFERRED_SIZE, 300, GroupLayout.PREFERRED_SIZE)))
+    					.addContainerGap(41, 41));
+    					turnPanelLayout.setVerticalGroup(turnPanelLayout.createSequentialGroup()
+    					.addContainerGap(17, 17)
+    					.addGroup(turnPanelLayout.createParallelGroup()
+    					    .addGroup(turnPanelLayout.createSequentialGroup()
+    					        .addGroup(turnPanelLayout.createParallelGroup()
+    					            .addComponent(moveTable, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE)
+    					            .addGroup(GroupLayout.Alignment.LEADING, turnPanelLayout.createSequentialGroup()
+    					                .addGap(198)))
+    					        .addGap(28)
+    					        .addGroup(turnPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+    					            .addComponent(moveDetailsLabel, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+    					            .addComponent(moveDetails, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE))
+    					        .addGap(9))
+    					    .addComponent(turnScroll, GroupLayout.Alignment.LEADING, 0, 307, Short.MAX_VALUE))
+    					.addContainerGap());
+    			this.setSize(723, 407);
+    	}
+    	
+	private void setupEventHandlers() {
+    		
+    		turnTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+    			public void valueChanged(ListSelectionEvent e) {
+    				moveDetails.setText(" ");
+    				int row = turnTable.getSelectedRow();
+    				Integer turnID = Integer.parseInt((String) turnTable.getValueAt(row, 1));
+    				
+    				try {
+    					DefaultTableModel table = new DefaultTableModel();
+						table = xmlUtil.fillMoveData(turnID);
+						moveTable.setModel(table);
+					} catch (DocumentException e1) {
+						e1.printStackTrace();
+					}
+    				
+    			}
+    		});
+    		
+    		moveTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+    			public void valueChanged(ListSelectionEvent e) {
+    				moveDetails.updateUI();
+    				int row = moveTable.getSelectedRow();
+    				String s = (String) moveTable.getValueAt(row, 3);
+    				moveDetails.setText(s);
+   				
+    			}
+    		});
+    		
+    		
+    	}
+
+    }
+
+    class movePanel extends JPanel {
+    	
+    	
+    	 private JTable listMoves;
+    	 private JScrollPane moveScroll;
+    	 private JTextArea textEntry;
+    	 private JScrollPane textScroll;
+    	 private JButton addNewMove;
+    	 private GroupLayout moveLayout;
+    	 private String initialText;
+    	 private JLabel detailsLabel;
+    	 private DefaultTableModel t;
+    	
+    	public movePanel() {
+    		super();
+    		try {
+    		setupComponents();
+    		setupEventHandlers();
+    		displayData();
+    		} catch (DocumentException d) {
+    			d.printStackTrace();
+    		}
+    		
+    	}
+    	
+    	
+    	public void displayData() throws DocumentException{
+    			DefaultTableModel t = new DefaultTableModel();
+    			t= xmlUtil.fillMoveData();
+    			listMoves.setModel(t);
+    	}
+    	
+    	
+
+    	//movescroll = move table
+    	//adNewMove = new move button
+    	//textscroll = move details
+    	public void setupComponents() throws DocumentException {
+    		//setup the components
+    		moveLayout = new GroupLayout(this);
+    		this.setLayout(moveLayout);
+    		textEntry = new JTextArea();
+    		textEntry.setText(initialText);
+    		textScroll = new JScrollPane(textEntry);
+    		addNewMove = new JButton();
+    		addNewMove.setText("NEW");
+    		detailsLabel = new JLabel();
+    		detailsLabel.setText("Move Text");
+    		listMoves = new JTable();
+    		listMoves.setVisible(true);
+    		listMoves.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    		listMoves.setRowSelectionAllowed(true);
+    		listMoves.setColumnSelectionAllowed(false);
+    		moveScroll = new JScrollPane(listMoves);			
+    		//setup the layout for the components - grouplayout
+    		moveLayout.setHorizontalGroup(moveLayout.createSequentialGroup()
+    				.addContainerGap()
+    				.addGroup(moveLayout.createParallelGroup()
+    				    .addGroup(moveLayout.createSequentialGroup()
+    				        .addComponent(moveScroll, GroupLayout.PREFERRED_SIZE, 726, GroupLayout.PREFERRED_SIZE)
+    				        .addGap(0, 0, Short.MAX_VALUE))
+    				    .addGroup(GroupLayout.Alignment.LEADING, moveLayout.createSequentialGroup()
+    				        .addComponent(detailsLabel, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
+    				        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+    				        .addGroup(moveLayout.createParallelGroup()
+    				            .addComponent(textScroll, GroupLayout.Alignment.LEADING, 0, 518, Short.MAX_VALUE)
+    				            .addGroup(GroupLayout.Alignment.LEADING, moveLayout.createSequentialGroup()
+    				                .addGap(0, 409, Short.MAX_VALUE)
+    				                .addComponent(addNewMove, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+    				                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 0, GroupLayout.PREFERRED_SIZE)))))
+    				.addGap(7));
+    				moveLayout.setVerticalGroup(moveLayout.createSequentialGroup()
+    				.addContainerGap()
+    				.addComponent(moveScroll, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+    				.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+    				.addGroup(moveLayout.createParallelGroup()
+    				    .addComponent(textScroll, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)
+    				    .addGroup(GroupLayout.Alignment.LEADING, moveLayout.createSequentialGroup()
+    				        .addComponent(detailsLabel, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
+    				        .addGap(17)))
+    				.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+    				.addComponent(addNewMove, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+    				.addContainerGap(37, Short.MAX_VALUE));
+    		//load the initial data into the jtable - for now all moves. next iteration will take the filtered information - ie which topic is selected, which team is logged in.	
+    		this.setSize(750,600);
+    	
+    	}
+    	
+    	public void setupEventHandlers() {
+    		//listselectionlistener for jtable
+    		listMoves.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+    			public void valueChanged(ListSelectionEvent e) {
+    				//find the index of the row selected, that is turnid
+    				//display the message from that row....
+    				int row = listMoves.getSelectedRow();
+    				String s = (String) listMoves.getValueAt(row, 3);
+    				textEntry.setText(s);
+    			}
+    		});
+    		//actionlistener> new form for 'new' button
+    		addNewMove.addActionListener(new ActionListener() {
+    			public void actionPerformed(ActionEvent e) {
+    				//setup the new move class.. 
+    				String[] s = initialData.split("<username>");
+    				String[] ss = s[s.length-1].split("</username>");
+    				String user = ss[0];
+    				
+    				AddMove m = new AddMove(user);
+    				m.setVisible(true);
+    			
+    			}
+    		});
+    		
+    	}
+        
+
+       public void addmove(String title, String content) {
+       	//add move if you need this method
+       }
+    }
+    
+    
+
+    class newTopic extends  JDialog implements ActionListener{
+        JScrollPane sp = new JScrollPane();
+
+        public newTopic (JFrame f) {
+            super(f,"please input topic and introduction",true);
+            Container container = getContentPane();
+            setBounds(0,23,688, 456);
+            setLayout(new GridLayout(0,1,10,10));
+            JTextArea title = new JTextArea(25,60);
+            JTextArea content = new JTextArea(25,60);
+            sp.add(content);
+            this.add(title);
+            this.add(sp);
+        }
+
+    	@Override
+    	public void actionPerformed(ActionEvent e) {
+    		
+    		
+    	}
+    }
+
+    class JPBasic extends JPanel{
+        public JPBasic(){
+            this.setLayout(null);
+            this.setBounds(299, 122, 797, 473);
+        }
+    } 
+    
 }
 
 
 
-class introductionPanel extends JPanel{
-    public introductionPanel() {
-        String title = "Title";
-        String content = "asdffffffffffffff" ;
-        JTextArea introduction = new JTextArea(title + "\n" +content,25,60);
-        introduction.setLineWrap(true);
-        introduction.setWrapStyleWord(true);
-        introduction.setBounds(7, 7, 748, 443);
-        JScrollPane sp = new JScrollPane(introduction);
 
-        sp.setHorizontalScrollBarPolicy( JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        sp.setVerticalScrollBarPolicy( 	JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        this.add(sp);
-        this.setBounds(0, 23, 800, 400);
-        this.setVisible(true);
 
-    }
-
-}
-
-class turnPanel extends JPanel{
-     public turnPanel(List ori_turn[]) {
-    	 //add content showing in the turn panel
-    }
-
-}
-
-class movePanel extends JPanel{
-    public movePanel(List ori_move[]) {
-    	//add content showing in the move panel
-    }
-     
-
-    public void addmove(String title, String content) {
-    	//add move if you need this method
-    }
-}
-
-class newTopic extends  JDialog implements ActionListener{
-    JScrollPane sp = new JScrollPane();
-
-    public newTopic (JFrame f) {
-        super(f,"please input topic and introduction",true);
-        Container container = getContentPane();
-        setBounds(0,23,688, 456);
-        setLayout(new GridLayout(0,1,10,10));
-        JTextArea title = new JTextArea(25,60);
-        JTextArea content = new JTextArea(25,60);
-        sp.add(content);
-        this.add(title);
-        this.add(sp);
-    }
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-		
-	}
-}
-
-class JPBasic extends JPanel{
-    public JPBasic(){
-        this.setLayout(null);
-        this.setBounds(299, 122, 797, 473);
-    }
-}
 

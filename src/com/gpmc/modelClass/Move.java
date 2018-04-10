@@ -2,14 +2,14 @@ package com.gpmc.modelClass;
 
 import java.util.List;
 
-public class DCFile {
+public class Move {
 	private int idNumber;
 	private String type;
 	private String createUserID;
 	private int turnID;
 	private int moveID;
 	private boolean status;
-	private List<DCFile> LinkedDCFileList;
+	private List<Move> LinkedDCFileList;
 	
 	public int getIdNumber() {
 		return idNumber;
@@ -47,10 +47,10 @@ public class DCFile {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-	public List<DCFile> getLinkedDCFileList() {
+	public List<Move> getLinkedDCFileList() {
 		return LinkedDCFileList;
 	}
-	public void setLinkedDCFileList(List<DCFile> linkedDCFileList) {
+	public void setLinkedDCFileList(List<Move> linkedDCFileList) {
 		LinkedDCFileList = linkedDCFileList;
 	}
 	

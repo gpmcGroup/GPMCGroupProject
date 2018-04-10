@@ -7,7 +7,7 @@ public class Team {
 	private List<Student> teamMemberList;
 	private List<Topic> topicList;
 	private Student teamLeader;
-	private List<DCFile> turnFileList;
+	private List<Move> turnFileList;
 	private String topicView;   //replace team
 	
 	public String getTeamName() {
@@ -34,10 +34,10 @@ public class Team {
 	public void setTeamLeader(Student teamLeader) {
 		this.teamLeader = teamLeader;
 	}
-	public List<DCFile> getTurnFileList() {
+	public List<Move> getTurnFileList() {
 		return turnFileList;
 	}
-	public void setTurnFileList(List<DCFile> turnFileList) {
+	public void setTurnFileList(List<Move> turnFileList) {
 		this.turnFileList = turnFileList;
 	}
 	public String getTopicView() {
