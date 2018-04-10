@@ -403,10 +403,8 @@ public class HomePage extends javax.swing.JFrame implements ActionListener {
     				this.setLayout(turnPanelLayout);
     		
     				{
-    					
     					turnTable = new JTable();
     					turnScroll = new JScrollPane(turnTable);
-    					
     				}
     				{
     					
@@ -466,8 +464,9 @@ public class HomePage extends javax.swing.JFrame implements ActionListener {
     		
     		turnTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
     			public void valueChanged(ListSelectionEvent e) {
+    				moveDetails.setText(" ");
     				int row = turnTable.getSelectedRow();
-    				int turnID = Integer.parseInt((String) turnTable.getValueAt(row, 1));
+    				Integer turnID = Integer.parseInt((String) turnTable.getValueAt(row, 1));
     				
     				try {
     					DefaultTableModel table = new DefaultTableModel();
@@ -482,11 +481,11 @@ public class HomePage extends javax.swing.JFrame implements ActionListener {
     		
     		moveTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
     			public void valueChanged(ListSelectionEvent e) {
-    				moveDetails.setText("");
-    				int row = turnTable.getSelectedRow();
+    				moveDetails.updateUI();
+    				int row = moveTable.getSelectedRow();
     				String s = (String) moveTable.getValueAt(row, 3);
     				moveDetails.setText(s);
-    				
+   				
     			}
     		});
     		
@@ -615,6 +614,8 @@ public class HomePage extends javax.swing.JFrame implements ActionListener {
        	//add move if you need this method
        }
     }
+    
+    
 
     class newTopic extends  JDialog implements ActionListener{
         JScrollPane sp = new JScrollPane();

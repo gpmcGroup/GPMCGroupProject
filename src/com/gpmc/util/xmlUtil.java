@@ -231,8 +231,8 @@ public class xmlUtil {
 	        writer.close();
 	        
 	        
-	        Document testDoc = new SAXReader().read(new File(MovePath));
-	        Element ele = (Element)testDoc.selectSingleNode("//move[textBody='Something']");
-	        System.out.println(ele.getStringValue());
+//	        Document testDoc = new SAXReader().read(new File(MovePath));
+//	        Element ele = (Element)testDoc.selectSingleNode("//move[textBody='Something']");
+//	        System.out.println(ele.getStringValue());
 	}
 }
