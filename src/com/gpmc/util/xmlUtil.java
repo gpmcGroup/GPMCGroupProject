@@ -10,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentFactory;
+import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
@@ -18,6 +19,9 @@ public class xmlUtil {
 	
 	public static String Userpath = xmlUtil.class.getClassLoader().getResource("User.xml").getPath();
 	public static String TeamPath = xmlUtil.class.getClassLoader().getResource("Team.xml").getPath();
+	public static String MovePath = xmlUtil.class.getClassLoader().getResource("Move.xml").getPath();
+	public static String TurnPath = xmlUtil.class.getClassLoader().getResource("Turn.xml").getPath();
+	
 	//input username, return password
 	public static String Userlogin(String username) throws DocumentException {
 //		String path = xmlUtil.class.getClassLoader().getResource("User.xml").getPath();
@@ -128,52 +132,78 @@ public class xmlUtil {
 	 
 	}
 	
-	//don't know how to append to an existing xml file rather than creating a new one each time
-	//don't know how to create a new FileOutputStream without getting an error
-	public static void AddMove(String claimType, String claimDetails) throws IOException {
+	public static void AddMove(String claimType, String claimDetails, String username) throws IOException, DocumentException {
 		
-		System.out.println("Attempting testmove.xml addition");
-		 Document document = DocumentFactory.getInstance().createDocument();
+		 Document document = new SAXReader().read(new File(MovePath));
 	        // Create the root element of xml file
-	        Element root = document.addElement("move");
+		 
+		 	Element root = document.getRootElement(); 
+		 	//do a bunch of create elements then add them all to the root.
+		 	
+		 	Element move = DocumentHelper.createElement("move");
+		 	move.addAttribute("id", "!");
+		 	 	
+	        Element type = DocumentHelper.createElement("type");
+	        type.setText(claimType);
+	        
+	        Element user = DocumentHelper.createElement("createUserID");
+	        user.setText(username);
+	        
+	        Element turn = DocumentHelper.createElement("turnID");
+	        turn.setText("1");
+	        
+	        Element linkedFiles = DocumentHelper.createElement("linkedDCFileList");
+	        linkedFiles.setText("none");
+	        
+	        Element status = DocumentHelper.createElement("status");
+	        status.setText("none");
+	        
+	        Element textBody = DocumentHelper.createElement("textBody");
+	        textBody.setText(claimDetails);
+	        
+	        move.add(type);
+	        move.add(user);
+	        move.add(turn);
+	        move.add(linkedFiles);
+	        move.add(status);
+	        move.add(textBody);
+	        
+	        root.add(move);
+	        
+	        
+	        
 	        
 	        // Add some attributes to root element.
 	        //these should all be populated from known attributes... 2nd iteration
 	        
-	        //id should increment with each new element
-	        root.addAttribute("id", "1");
-	        // Add the element name in root element.
-	        Element type = root.addElement("type");
-	        type.addText(claimType);
-	        Element user = root.addElement("createUser");
-	        //populate with the user who created the move
-	        user.addText("Frank");
-	        Element turnID = root.addElement("turnID");
-	        //mirror the turnid integer
-	        turnID.addText("3");
-	        Element linkedFiles = root.addElement("linkedDCFileList");
-	        //not sure how to populate this badboy yet
-	        linkedFiles.addText("none");
-	        Element status = root.addElement("status");
-	        //should actually be an enum with 3 statuses
-	        status.addText("true");
-	        Element textBody = root.addElement("textBody");
-	        textBody.addText(claimDetails);
-	        
-	        
-	        System.out.println("About to create xml file");
-	        // Create a file named testmove.xml
-	        //File f = new File("testmove.xml");
-	        //FileOutputStream fos = new FileOutputStream(f);
+//	        //id should increment with each new element
+//	        entry.addAttribute("id", "1");
+//	        // Add the element name in root element.
+//	        Element type = entry.addElement("type");
+//	        type.addText(claimType);
+//	        Element user = entry.addElement("createUser");
+//	        //populate with the user who created the move
+//	        user.addText(username);
+//	        Element turnID = entry.addElement("turnID");
+//	        //mirror the turnid integer
+//	        turnID.addText("3");
+//	        Element linkedFiles = entry.addElement("linkedDCFileList");
+//	        //not sure how to populate this badboy yet
+//	        linkedFiles.addText("none");
+//	        Element status = entry.addElement("status");
+//	        //should actually be an enum with 3 statuses
+//	        status.addText("true");
+//	        Element textBody = entry.addElement("textBody");
+//	        textBody.addText(claimDetails);
 	       
 	        // Create the compact format of xml document.
 	        OutputFormat format = OutputFormat.createPrettyPrint();
 	        // Create the xml writer by passing outputstream and format
 	        XMLWriter writer = new XMLWriter(System.out, format);
-	        // Write to the xml document
+	        // Write to the xml document, flush and close
 	        writer.write(document);
-	        // Flush after done
 	        writer.flush();
+	        writer.close();
 	
 	}
 }

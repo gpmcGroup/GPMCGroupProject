@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.LayoutStyle;
 import javax.swing.WindowConstants;
 
 import org.jdesktop.application.Application;
@@ -48,16 +49,20 @@ public class AddMove extends JFrame {
 	private JLabel moveDetailsLabel;
 	private JComboBox moveType;
 	private JLabel moveTypeLabel;
+	private JLabel linkedLabel;
+	private JComboBox linkedMoves;
+	private String username;
 
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
 	
 	//textbodylabel, textbody, movetypelabel, movetypefield, save, cancel
-	public AddMove() {
+	public AddMove(String username) {
 		super();
 		initGUI();
 		setupEventHandlers();
+		this.username = username;
 		this.setName("Sse");
 		this.setLocationRelativeTo(this);
 		this.setVisible(true);
@@ -82,6 +87,16 @@ public class AddMove extends JFrame {
 					
 				}
 				{
+					//obviously need to make this return all dc files which have been approved by the team leader
+					linkedMoves = new JComboBox();
+					ComboBoxModel linkoptions = new DefaultComboBoxModel(new String[] {"Editable", "Combo" , "Searches" , "Files"});
+					linkedMoves.setModel(linkoptions);
+					
+					linkedLabel = new JLabel();
+					linkedLabel.setText("linked Files");
+					
+				}
+				{
 					moveDetailsLabel = new JLabel();
 					moveDetailsLabel.setText("Text");
 				}
@@ -91,50 +106,54 @@ public class AddMove extends JFrame {
 				}
 				{
 					save = new JButton();
-					save.setName("Save");
+					save.setText("Save");
 				}
 				{
 					cancel = new JButton();
-					cancel.setName("Cancel");
+					cancel.setText("Cancel");
 				}
 				jPanel1Layout.setHorizontalGroup(jPanel1Layout.createSequentialGroup()
-					.addContainerGap(30, 30)
-					.addGroup(jPanel1Layout.createParallelGroup()
-					    .addComponent(moveTypeLabel, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-					    .addComponent(moveDetailsLabel, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
-					.addGap(26)
-					.addGroup(jPanel1Layout.createParallelGroup()
-					    .addGroup(GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-					        .addComponent(moveScroll, GroupLayout.PREFERRED_SIZE, 343, GroupLayout.PREFERRED_SIZE)
-					        .addGap(0, 8, Short.MAX_VALUE))
-					    .addGroup(GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-					        .addGroup(jPanel1Layout.createParallelGroup()
-					            .addGroup(GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-					                .addGap(114)
-					                .addComponent(save, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE))
-					            .addGroup(GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-					                .addComponent(moveType, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
-					                .addGap(98)))
-					        .addGap(27)
-					        .addComponent(cancel, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
-					        .addGap(0, 0, Short.MAX_VALUE)))
-					.addContainerGap(29, 29));
-				jPanel1Layout.setVerticalGroup(jPanel1Layout.createSequentialGroup()
-					.addContainerGap(23, 23)
-					.addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-					    .addComponent(moveType, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-					    .addComponent(moveTypeLabel, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(48)
-					.addGroup(jPanel1Layout.createParallelGroup()
-					    .addGroup(GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-					        .addComponent(moveDetailsLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-					        .addGap(56))
-					    .addComponent(moveScroll, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE))
-					.addGap(0, 15, GroupLayout.PREFERRED_SIZE)
-					.addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-					    .addComponent(save, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-					    .addComponent(cancel, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap());
+						.addContainerGap(90, 90)
+						.addGroup(jPanel1Layout.createParallelGroup()
+						    .addComponent(moveTypeLabel, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+						    .addComponent(moveDetailsLabel, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+						    .addComponent(linkedLabel, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGap(36)
+						.addGroup(jPanel1Layout.createParallelGroup()
+						    .addGroup(GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+						        .addComponent(moveType, GroupLayout.PREFERRED_SIZE, 283, GroupLayout.PREFERRED_SIZE)
+						        .addGap(0, 102, Short.MAX_VALUE))
+						    .addGroup(GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+						        .addComponent(moveScroll, GroupLayout.PREFERRED_SIZE, 283, GroupLayout.PREFERRED_SIZE)
+						        .addGap(0, 102, Short.MAX_VALUE))
+						    .addGroup(GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+						        .addComponent(linkedMoves, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+						        .addGap(33)
+						        .addComponent(save, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+						        .addGap(21)
+						        .addComponent(cancel, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+						        .addGap(0, 0, Short.MAX_VALUE)))
+						.addGap(6));
+					jPanel1Layout.setVerticalGroup(jPanel1Layout.createSequentialGroup()
+						.addContainerGap(34, 34)
+						.addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						    .addComponent(moveType, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+						    .addComponent(moveTypeLabel, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGap(10)
+						.addGroup(jPanel1Layout.createParallelGroup()
+						    .addGroup(GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+						        .addComponent(moveDetailsLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+						        .addGap(91))
+						    .addComponent(moveScroll, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
+						.addGap(10)
+						.addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						    .addComponent(linkedMoves, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+						    .addComponent(linkedLabel, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+						.addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						    .addComponent(save, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+						    .addComponent(cancel, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addContainerGap());
 			}
 			pack();
 			this.setSize(537, 334);
@@ -149,13 +168,13 @@ public class AddMove extends JFrame {
 		
 		save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String claimType = moveDetails.getText();
+				String claimType = (String) moveType.getSelectedItem();
 				String claimDetails = moveDetails.getText();
 				
 				//create an okhttp request containing the field information
 				//send request
 				OkHttpClient client = new OkHttpClient();
-				RequestBody body = new FormBody.Builder().add("type", claimType).add("textBody", claimDetails).build();
+				RequestBody body = new FormBody.Builder().add("type", claimType).add("textBody", claimDetails).add("username", username).build();
 				Request request = new Request.Builder().post(body).url("http://localhost:8080/GPMCGroupProject/CreateMove").build();
 				try {
 					Response response = client.newCall(request).execute();
