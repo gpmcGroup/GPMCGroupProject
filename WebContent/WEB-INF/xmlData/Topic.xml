@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<root>
+
+	<topic id = "1">
+		<title>Is Abortion is wrong?</title>
+		<teamA>York Duck</teamA>
+		<teamB>York Bird</teamB>
+		<startTime>2018-04-03 24:00:00</startTime>
+		<maxTurn>4</maxTurn>
+		<turnCycleFrequency>200000</turnCycleFrequency>
+		<presentTurnOwner>York Duck</presentTurnOwner>
+		<changeTurnTimeLeft>100000</changeTurnTimeLeft>
+		<status>progressing</status>
+		<winner>null</winner>
+		<creator>Tommy</creator>
+	</topic>
+	<topic id = "2">
+		<title>Are you ok?</title>
+		<teamA>York 1</teamA>
+		<teamB>York 2</teamB>
+		<startTime>2018-06-07 24:00:00</startTime>
+		<maxTurn>4</maxTurn>
+		<turnCycleFrequency>200000</turnCycleFrequency>
+		<presentTurnOwner>York Bird</presentTurnOwner>
+		<changeTurnTimeLeft>200000</changeTurnTimeLeft>
+		<status>pending</status>
+		<winner>null</winner>
+	</topic>
+	
+	<topic id = "3">
+		<title>test1</title>
+		<teamA>York 3</teamA>
+		<teamB>York 4</teamB>
+		<startTime>2018-06-07 24:00:00</startTime>
+		<maxTurn>4</maxTurn>
+		<turnCycleFrequency>200000</turnCycleFrequency>
+		<presentTurnOwner>York Duck</presentTurnOwner>
+		<changeTurnTimeLeft>200000</changeTurnTimeLeft>
+		<status>pending</status>
+		<winner>null</winner>
+	</topic>
+	
+	<topic>
+	</topic>
+
+</root>

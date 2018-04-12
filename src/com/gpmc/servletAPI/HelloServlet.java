@@ -1,35 +1,30 @@
 package com.gpmc.servletAPI;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
-
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.tomcat.util.http.fileupload.servlet.ServletRequestContext;
+import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
-
-import com.gpmc.modelClass.Student;
-import com.gpmc.modelClass.User;
-import com.gpmc.util.xmlUtil;
+import org.dom4j.io.SAXReader;
 
 /**
- * Servlet implementation class loginService
+ * Servlet implementation class HelloServlet
  */
-
-@WebServlet("/loginService")
-public class loginService extends HttpServlet {
+@WebServlet("/HelloServlet")
+public class HelloServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public loginService() {
+    public HelloServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,36 +34,40 @@ public class loginService extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-//			response.getWriter().append("Served at: ").append(request.getContextPath());
-			
-		ServletContext con = this.getServletContext();
-		String path = con.getRealPath("/WEB-INF/classes/User.xml");
-		System.out.println("context path: " + path);
-		// use getAttribute method to get request parameter 
-		String username = (String) request.getParameter("username");
-		String password = (String) request.getParameter("password");
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.getWriter().write("Hello, this is your first servlet!");
 		
-		User user = new Student();
+		String path = HelloServlet.class.getClassLoader().getResource("NewFile.xml").getPath();
 		try {
-			if(user.login(username, password)) {
-				String reponseText = xmlUtil.getUserDetail(username).asXML();
-				response.getWriter().write(reponseText);  //send user detail to front-end 
-			}else {
-				response.getWriter().write("false");
-			}
+			File file = new File(path);
+			SAXReader reader = new SAXReader();
+			Document doc = reader.read(file);
+		
+//			Document doc = new SAXReader.read(file);
+			Element ele =(Element) doc.selectSingleNode("//Hello/tag");
+//			ele.setText("7878");
+//			FileWriter  out = new FileWriter(path);
+//			doc.write(out);
+//			out.close();
+			
+		
+//			response.getWriter().write("taks complete!/n");
+		
+			response.getWriter().write(ele.asXML());
+			response.getWriter().write(path);
+			
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-			
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+
 }

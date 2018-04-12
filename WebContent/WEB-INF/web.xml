@@ -33,4 +33,36 @@
     <servlet-name>CreateMove</servlet-name>
     <url-pattern>/GPMCGroupProject/CreateMove</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>HelloServlet</servlet-name>
+    <servlet-class>com.gpmc.servletAPI</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HelloServlet</servlet-name>
+    <url-pattern>/GPMCGroupProject/HelloServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>fileUpload</servlet-name>
+    <servlet-class>com.gpmc.servletAPI</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>fileUpload</servlet-name>
+    <url-pattern>/GPMCGroupProject/fileUpload</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>fileDownload</servlet-name>
+    <servlet-class>com.gpmc.servletAPI</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>fileDownload</servlet-name>
+    <url-pattern>/GPMCGroupProject/fileDownload</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>logoutService</servlet-name>
+  	<servlet-class>com.gpmc.servletAPI</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>logoutService</servlet-name>
+  	<url-pattern>/GPMCGroupProject/logoutService</url-pattern>
+  </servlet-mapping>
 </web-app>

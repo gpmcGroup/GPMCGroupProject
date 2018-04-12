@@ -26,6 +26,7 @@ public class xmlUtil {
 	public static String Userlogin(String username) throws DocumentException {
 //		String path = xmlUtil.class.getClassLoader().getResource("User.xml").getPath();
 		File file = new File(Userpath);
+		System.out.println("userpath : " +Userpath);
 		SAXReader xmlReader = new SAXReader();
 		Document doc = xmlReader.read(file);
 		
@@ -102,7 +103,6 @@ public class xmlUtil {
 	    return new DefaultTableModel(rowData, columnNames);
 	 
 	}
-	
 	
 	public static DefaultTableModel fillMoveData(int turn) throws DocumentException {
 		
@@ -183,8 +183,9 @@ public class xmlUtil {
 	
 	public static void AddMove(String claimType, String claimDetails, String username) throws IOException, DocumentException {
 		
-		 Document document = new SAXReader().read(new File(TurnPath));
+		 Document document = new SAXReader().read(new File(MovePath));
 	        // Create the root element of xml file
+		 
 		 
 		 	Element root = document.getRootElement(); 
 		 	//do a bunch of create elements then add them all to the root.
@@ -216,7 +217,6 @@ public class xmlUtil {
 	        move.add(linkedFiles);
 	        move.add(status);
 	        move.add(textBody);
-	        
 	        root.add(move);
 	        
 	        document.setRootElement(root);
@@ -231,8 +231,8 @@ public class xmlUtil {
 	        writer.close();
 	        
 	        
-//	        Document testDoc = new SAXReader().read(new File(MovePath));
-//	        Element ele = (Element)testDoc.selectSingleNode("//move[textBody='Something']");
-//	        System.out.println(ele.getStringValue());
+	        Document testDoc = new SAXReader().read(new File(MovePath));
+	        Element ele = (Element)testDoc.selectSingleNode("//move[textBody='123abc']");
+	        System.out.println(testDoc.asXML());
 	}
 }

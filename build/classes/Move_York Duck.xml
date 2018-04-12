@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+	<move id="1">
+		<type>Claim</type>
+		<createUserID>Tom</createUserID>
+		<createdAt>2018-04-03 16:53:45</createdAt>
+		<turnID>1</turnID>
+		<linkedDCFile>none</linkedDCFile>
+		<status>true</status>
+		<textBody>A basic argument</textBody>
+	</move>
+	
+	<move id="2">
+		<type>Evidence</type>
+		<createUserID>Frank</createUserID>
+		<createdAt>2018-04-03 17:53:45</createdAt>
+		<turnID>1</turnID>
+		<linkedDCFile>none</linkedDCFile>
+		<status>true</status>
+		<textBody>Some evidence to support the argument</textBody>
+	</move>
+	
+	<move id="3">
+		<type>CounterClaim</type>
+		<createUserID>Frank</createUserID>
+		<createdAt>2018-04-04 17:53:45</createdAt>
+		<turnID>3</turnID>
+		<linkedDCFile>none</linkedDCFile>
+		<status>true</status>
+		<textBody>546asd4568</textBody>
+	</move>
+	
+	<move id="4">
+		<type>CounterClaim</type>
+		<createUserID>Ryan</createUserID>
+		<createdAt>2018-04-04 18:53:45</createdAt>
+		<turnID>3</turnID>
+		<linkedDCFile>none</linkedDCFile>
+		<status>true</status>
+		<textBody>asfdsagerfserere</textBody>
+	</move>
+	
+	<move id="5">
+		<type>CounterClaim</type>
+		<createUserID>Andy</createUserID>
+		<createdAt>2018-04-04 19:53:45</createdAt>
+		<turnID>5</turnID>
+		<linkedDCFile>none</linkedDCFile>
+		<status>true</status>
+		<textBody>Hello World</textBody>
+	</move>
+	
+	<move id="6">
+		<type>bi-polar question</type>
+		<createUserID>Ryan</createUserID>
+		<createdAt>2018-04-04 20:53:45</createdAt>
+		<turnID>5</turnID>
+		<linkedDCFile>none</linkedDCFile>
+		<status>true</status>
+		<textBody>Ryan's bi-polar question</textBody>
+	</move>
+
+</root>

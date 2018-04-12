@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>  
+<?xml version="1.0" encoding="UTF-8"?>
 <root>
 	<user id="1">
 		<username>frank</username>
@@ -11,9 +11,6 @@
 		<topicList>
 			<topic id = "1">
 				<topicName>Is Abortion is wrong?</topicName>
-			</topic>
-			<topic id = "2">
-				<topicName>Are you ok?</topicName>
 			</topic>
 		</topicList>
 		<teamList>
@@ -51,9 +48,14 @@
 		<fullName>Ryan Chen</fullName>
 		<department>Computer Science</department>
 		<loginStatus>false</loginStatus>
+		<topicList>
+			<topic id = "1">
+				<topicName>Is Abortion is wrong?</topicName>
+			</topic>
+		</topicList>
 		<teamList>
 			<team id = "1">
-				<teamName>York Bird</teamName>
+				<teamName>York Duck</teamName>
 			</team>
 		</teamList>
 	</user>
@@ -67,9 +69,97 @@
 		<department>Computer Science</department>
 		<loginStatus>false</loginStatus>
 		
+		<topicList>
+			<topic id = "1">
+				<topicName>Is Abortion is wrong?</topicName>
+			</topic>
+		</topicList>
+		
 		<teamList>
+			<team id = "1">
+				<teamName>York Duck</teamName>
+			</team>
 		</teamList>
 	</user>
 	
+	<user id="5">
+		<username>Test1</username>
+		<password>12345</password>
+		<firtName>JunHui</firtName>
+		<lastName>Li</lastName>
+		<fullName>JunHui Li</fullName>
+		<department>Computer Science</department>
+		<loginStatus>false</loginStatus>
+		<topicList>
+			<topic id = "1">
+				<topicName>Is Abortion is wrong?</topicName>
+			</topic>
+		</topicList>
+		<teamList>
+			<team id = "1">
+				<teamName>York Bird</teamName>
+			</team>
+		</teamList>
+	</user>
 	
+	<user id="6">
+		<username>Test2</username>
+		<password>12345</password>
+		<firtName>JunHui</firtName>
+		<lastName>Li</lastName>
+		<fullName>JunHui Li</fullName>
+		<department>Computer Science</department>
+		<loginStatus>false</loginStatus>
+		<topicList>
+			<topic id = "1">
+				<topicName>Is Abortion is wrong?</topicName>
+			</topic>
+		</topicList>
+		<teamList>
+			<team id = "1">
+				<teamName>York Bird</teamName>
+			</team>
+		</teamList>
+	</user>	
+	
+	<user id="7">
+	
+		<username>Test3</username>
+		<password>12345</password>
+		<firtName>JunHui</firtName>
+		<lastName>Li</lastName>
+		<fullName>JunHui Li</fullName>
+		<department>Computer Science</department>
+		<loginStatus>false</loginStatus>
+		<topicList>
+			<topic id = "1">
+				<topicName>Is Abortion is wrong?</topicName>
+			</topic>
+		</topicList>
+		<teamList>
+			<team id = "1">
+				<teamName>York Bird</teamName>
+			</team>
+		</teamList>
+	</user>
+	
+	<user id="8">
+		<username>Test4</username>
+		<password>12345</password>
+		<firtName>JunHui</firtName>
+		<lastName>Li</lastName>
+		<fullName>JunHui Li</fullName>
+		<department>Computer Science</department>
+		<loginStatus>false</loginStatus>
+		<topicList>
+			<topic id = "1">
+				<topicName>Is Abortion is wrong?</topicName>
+			</topic>
+		</topicList>
+		<teamList>
+			<team id = "1">
+				<teamName>York Bird</teamName>
+			</team>
+		</teamList>
+	</user>
 </root>

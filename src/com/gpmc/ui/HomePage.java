@@ -187,6 +187,10 @@ public class HomePage extends javax.swing.JFrame implements ActionListener {
                 getContentPane().add(jBLogout);
                 jBLogout.setText("Logout");
                 jBLogout.setBounds(985, 11, 87, 35);
+                jBLogout.addActionListener(l->{
+                		
+                	
+                });
 
             };
 
