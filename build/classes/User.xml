@@ -162,4 +162,8 @@
 			</team>
 		</teamList>
 	</user>
+	
+	<user id="9" teacher="true">
+		
+	</user>
 </root>

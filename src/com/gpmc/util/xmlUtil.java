@@ -19,8 +19,15 @@ public class xmlUtil {
 	
 	public static String Userpath = xmlUtil.class.getClassLoader().getResource("User.xml").getPath();
 	public static String TeamPath = xmlUtil.class.getClassLoader().getResource("Team.xml").getPath();
-	public static String MovePath = xmlUtil.class.getClassLoader().getResource("Move.xml").getPath();
+	public static String MovePath = xmlUtil.class.getClassLoader().getResource("Move_York Bird.xml").getPath();
 	public static String TurnPath = xmlUtil.class.getClassLoader().getResource("Turn.xml").getPath();
+	
+	
+	public static String getTopicFilePath(String topicName,String fileName) {
+		topicName = topicName.replaceAll(" ", "_");
+		return xmlUtil.class.getClassLoader().getResource("").getPath() + topicName + File.separator + fileName +".xml";
+	}
+	
 	
 	//input username, return password
 	public static String Userlogin(String username) throws DocumentException {
@@ -235,4 +242,6 @@ public class xmlUtil {
 	        Element ele = (Element)testDoc.selectSingleNode("//move[textBody='123abc']");
 	        System.out.println(testDoc.asXML());
 	}
+	
+
 }

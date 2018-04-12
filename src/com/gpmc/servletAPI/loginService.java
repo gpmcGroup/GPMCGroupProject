@@ -1,6 +1,10 @@
 package com.gpmc.servletAPI;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -47,6 +51,9 @@ public class loginService extends HttpServlet {
 		// use getAttribute method to get request parameter 
 		String username = (String) request.getParameter("username");
 		String password = (String) request.getParameter("password");
+		
+		
+
 		
 		User user = new Student();
 		try {
