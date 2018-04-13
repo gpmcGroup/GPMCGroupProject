@@ -2,7 +2,7 @@
 
 <root>
 	<turn id="1">
-		<ownerTeam>TeamA</ownerTeam>
+		<ownerTeam>York Duck</ownerTeam>
 		<dcFileMap>
 			<FileId>1</FileId>  <!-- this id is linked with Move_TeamA.xml id -->
 			<FileId>2</FileId>
@@ -13,7 +13,7 @@
 	</turn>
 	
 	<turn id="2">
-		<ownerTeam>TeamB</ownerTeam>
+		<ownerTeam>York Bird</ownerTeam>
 		<dcFileMap>
 			<FileId>1</FileId>
 			<FileId>2</FileId>
@@ -24,7 +24,7 @@
 	</turn>
 	
 	<turn id="3">
-		<ownerTeam>TeamA</ownerTeam>
+		<ownerTeam>York Duck</ownerTeam>
 		<dcFileMap>
 			<FileId>3</FileId>
 			<FileId>4</FileId>
@@ -35,7 +35,7 @@
 	</turn>
 	
 	<turn id="4">
-		<ownerTeam>TeamB</ownerTeam>
+		<ownerTeam>York Bird</ownerTeam>
 		<dcFileMap>
 			<FileId>3</FileId>
 			<FileId>4</FileId>
@@ -46,9 +46,8 @@
 	
 	</turn>
 	
-	
 	<turn id="5">
-		<ownerTeam>TeamA</ownerTeam>
+		<ownerTeam>York Duck</ownerTeam>
 		<dcFileMap>
 			<FileId>5</FileId>
 			<FileId>6</FileId>
@@ -60,7 +59,7 @@
 
 
 	<turn id="6">
-		<ownerTeam>TeamB</ownerTeam>
+		<ownerTeam>York Bird</ownerTeam>
 		<dcFileMap>
 			<FileId>5</FileId>
 			<FileId>6</FileId>

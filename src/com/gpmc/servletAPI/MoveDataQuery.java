@@ -1,41 +1,30 @@
 package com.gpmc.servletAPI;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.List;
-
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.tomcat.util.http.fileupload.servlet.ServletRequestContext;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
-import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
-import com.gpmc.modelClass.Student;
-import com.gpmc.modelClass.User;
 import com.gpmc.util.xmlUtil;
 
 /**
- * Servlet implementation class loginService
+ * Servlet implementation class MoveDataQuery
  */
-
-@WebServlet("/loginService")
-public class loginService extends HttpServlet {
+@WebServlet("/MoveDataQuery")
+public class MoveDataQuery extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public loginService() {
+    public MoveDataQuery() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -44,37 +33,29 @@ public class loginService extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-//			response.getWriter().append("Served at: ").append(request.getContextPath());
-			
-		
-		// use getAttribute method to get request parameter 
-		String username = (String) request.getParameter("username");
-		String password = (String) request.getParameter("password");
 
-	
+		String topicName = request.getParameter("topicName");
+		String username = request.getParameter("username");
+		String turnID = request.getParameter("turnID");
 		
-		User user = new Student();
+		String teamName = xmlUtil.findTeamName(topicName, username);
+		File file = new File(xmlUtil.getTopicFilePath(topicName, "Move_" + teamName));
+		SAXReader xmlReader = new SAXReader();
 		try {
-			if(user.login(username, password)) {
-				String reponseText = xmlUtil.getUserDetail(username).asXML();
-				response.getWriter().write(reponseText);  //send user detail to front-end 
-			}else {
-				response.getWriter().write("false");
-			}
+			Document doc = xmlReader.read(file);
+			response.getWriter().write(doc.asXML());
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-			
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+
 }

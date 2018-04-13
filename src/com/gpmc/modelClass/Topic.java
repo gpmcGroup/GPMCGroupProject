@@ -141,7 +141,7 @@ public class Topic {
 	public String getAll() {
 		String xpath = "//topic[title='" + title + "']";
 		try {
-			System.out.println(xmlUtil.getTopicFilePath(title,"Topic"));
+			
 			Document doc = new SAXReader()
 					.read(new File(xmlUtil.getTopicFilePath(title, "Topic")));
 

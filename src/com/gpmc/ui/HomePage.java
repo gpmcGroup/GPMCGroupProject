@@ -102,7 +102,6 @@ public class HomePage extends javax.swing.JFrame {
 	private JLabel jLaWelcome;
 	private JPanel jPBasic;
 	private JPanel jPShow;
-	
 
 	private JButton jBTurn;
 	private JButton jBMove;
@@ -152,8 +151,7 @@ public class HomePage extends javax.swing.JFrame {
 		}
 
 		try {
-			
-			
+
 			{
 				this.setTitle("system");
 				this.setSize(688, 456);
@@ -210,7 +208,8 @@ public class HomePage extends javax.swing.JFrame {
 						if (!teamName.equals("")) {
 							// request chat port from server
 							OkHttpClient client = new OkHttpClient();
-							RequestBody requestBoday = new FormBody.Builder().add("teamName", teamName).add("topicName",selectName).build();
+							RequestBody requestBoday = new FormBody.Builder().add("teamName", teamName)
+									.add("topicName", selectName).build();
 							Request request = new Request.Builder().post(requestBoday)
 									.url("http://localhost:8080/GPMCGroupProject/chatPortQuery").build();
 
@@ -254,8 +253,8 @@ public class HomePage extends javax.swing.JFrame {
 				getContentPane().add(jBMove);
 				jBMove.setText("Move");
 				jBMove.setBounds(644, 76, 102, 35);
-				jBMove.addActionListener(l->{
-					movePanel mp =new movePanel();
+				jBMove.addActionListener(l -> {
+					movePanel mp = new movePanel();
 					jPShow.removeAll();
 					jPShow.add(mp);
 					jPShow.updateUI();
@@ -266,12 +265,13 @@ public class HomePage extends javax.swing.JFrame {
 				getContentPane().add(jBTurn);
 				this.jBTurn.setText("Turns");
 				this.jBTurn.setBounds(496, 76, 101, 35);
-				jBTurn.addActionListener(l->{
-					turnPanel tp =new turnPanel();
+				jBTurn.addActionListener(l -> {
+					turnPanel tp = new turnPanel();
 					jPShow.removeAll();
-					jPShow.add(tp);	
+					jPShow.add(tp);
 					jPShow.updateUI();
-				});;
+				});
+				;
 			}
 
 			// list add/remove
@@ -354,8 +354,8 @@ public class HomePage extends javax.swing.JFrame {
 							response.close();
 						}
 						OkHttpClient client2 = new OkHttpClient();
-						RequestBody requestBoday2 = new FormBody.Builder().add("topicName",selectName).add("teamAName", teamAName)
-								.add("teamBName", teamBName).build();
+						RequestBody requestBoday2 = new FormBody.Builder().add("topicName", selectName)
+								.add("teamAName", teamAName).add("teamBName", teamBName).build();
 						Request request2 = new Request.Builder().post(requestBoday2)
 								.url("http://localhost:8080/GPMCGroupProject/getUserList").build();
 						Response response1 = client2.newCall(request2).execute();
@@ -471,7 +471,8 @@ public class HomePage extends javax.swing.JFrame {
 					JButton jBEdit = new JButton("Edit");
 					jBEdit.addActionListener(l -> {
 						newTopic np1 = new newTopic(this);
-//						np1.setData(selectName, content_content,teamAName,teamBName, teamAVc, teamBVc,);
+						// np1.setData(selectName, content_content,teamAName,teamBName, teamAVc,
+						// teamBVc,);
 						np1.setVisible(true);
 					});
 					GroupLayout.SequentialGroup vg6 = groupLayout1.createSequentialGroup();
@@ -497,7 +498,7 @@ public class HomePage extends javax.swing.JFrame {
 									.addComponent(jBEdit)));
 
 					jPShow.setVisible(true);
-					
+
 					jPShow.updateUI();
 
 				});
@@ -562,7 +563,7 @@ public class HomePage extends javax.swing.JFrame {
 		private JTextField textFieLd_teamANa;
 		private JTextField textField_teamBNa;
 		private JTextField textField_LeaderA = new JTextField();
-		private JTextField textField_LeaderB= new JTextField();
+		private JTextField textField_LeaderB = new JTextField();
 
 		private JButton buttonSave;
 		private JButton buttonCancel;
@@ -588,9 +589,8 @@ public class HomePage extends javax.swing.JFrame {
 		private JComboBox comboBoxTeamB;
 		private DefaultComboBoxModel modelA;
 		private DefaultComboBoxModel modelB;
-		
 
-		private String[] studentString = new String[] { "frank","Tom","Andy","Ryan" };
+		private String[] studentString = new String[] { "frank", "Tom", "Andy", "Ryan" };
 
 		Vector studentList = new Vector<String>();
 		Vector teamAV = new Vector<String>();
@@ -611,10 +611,10 @@ public class HomePage extends javax.swing.JFrame {
 		}
 
 		public void doDialog() {
-			for(int i =0; i<studentString.length;i++) {
+			for (int i = 0; i < studentString.length; i++) {
 				studentList.addElement(studentString[i]);
 			}
-			
+
 			studentListA = new JList(studentList);
 			studentListA.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 			sp.setViewportView(studentListA);
@@ -622,7 +622,7 @@ public class HomePage extends javax.swing.JFrame {
 			sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 			studentListA.addListSelectionListener(SharedListSelectionHandler -> {
 				teamAList = studentListA.getSelectedValuesList();
-				
+
 			});
 
 			studentListB = new JList(studentList);
@@ -633,11 +633,10 @@ public class HomePage extends javax.swing.JFrame {
 			studentListB.addListSelectionListener(SharedListSelectionHandler -> {
 				teamBList = studentListB.getSelectedValuesList();
 				teamBV = new Vector<String>(teamBList);
-				
+
 				comboBoxTeamB = new JComboBox(modelB);
 				dialogPane.updateUI();
 			});
-
 
 			dialogPane = new JPanel();
 
@@ -669,24 +668,24 @@ public class HomePage extends javax.swing.JFrame {
 			sp1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 			sp1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-			 {
-				
+			{
+
 				comboBoxTeamA = new JComboBox();
 				comboBoxTeamA.addItemListener(aListener -> {
 					teamALeader = (String) comboBoxTeamA.getSelectedItem();
 				});
-			 }
-			 
-			 { 
-				 modelB = new DefaultComboBoxModel(teamBV);
-				 comboBoxTeamB = new JComboBox(modelB);
-				
-				 comboBoxTeamB.setEditable(true);
-				 comboBoxTeamB.addItemListener(aListener -> {
+			}
+
+			{
+				modelB = new DefaultComboBoxModel(teamBV);
+				comboBoxTeamB = new JComboBox(modelB);
+
+				comboBoxTeamB.setEditable(true);
+				comboBoxTeamB.addItemListener(aListener -> {
 					dialogPane.updateUI();
 					teamBLeader = (String) comboBoxTeamB.getSelectedItem();
 				});
-			 }
+			}
 			// }
 			//
 			// {
@@ -713,8 +712,8 @@ public class HomePage extends javax.swing.JFrame {
 			textLabel_TeamA = new JLabel("TeamA:");
 			textLabel_TeamB = new JLabel("TeamB:");
 			textLabel_Leader = new JLabel("Leader:");
-			textLabel_teamALd =new JLabel("TeamA:");
-			textLabel_teamBLd =new JLabel("TeamB:");
+			textLabel_teamALd = new JLabel("TeamA:");
+			textLabel_teamBLd = new JLabel("TeamB:");
 
 			{
 				buttonSave = new JButton("Save");
@@ -734,12 +733,11 @@ public class HomePage extends javax.swing.JFrame {
 						starHour_return = textField_Hour1.getText();
 						teamALeader = textField_LeaderA.getText();
 						teamBLeader = textField_LeaderB.getText();
-						
-						
-						if(judge()) {
+
+						if (judge()) {
 							System.out.println("topic completed");
-//							topicList.addElement(title_return);
-//							jLTopic.setListData(topicList);
+							// topicList.addElement(title_return);
+							// jLTopic.setListData(topicList);
 							sendData();
 							this.dispose();
 						}
@@ -803,17 +801,17 @@ public class HomePage extends javax.swing.JFrame {
 			vpg5.addComponent(textLabel_TeamB);
 			vpg5.addGap(10);
 			vpg5.addComponent(textField_teamBNa, 150, 150, 150);
-			
+
 			GroupLayout.SequentialGroup vpg6 = groupLayout.createSequentialGroup();
 			vpg6.addGap(10);
 			vpg6.addComponent(textLabel_teamALd);
 			vpg6.addGap(10);
-			vpg6.addComponent(textField_LeaderA,90,90,90);
+			vpg6.addComponent(textField_LeaderA, 90, 90, 90);
 			vpg6.addGap(50);
 			vpg6.addComponent(textLabel_teamBLd);
 			vpg6.addGap(10);
-			vpg6.addComponent(textField_LeaderB,90,90,90);
-			
+			vpg6.addComponent(textField_LeaderB, 90, 90, 90);
+
 			groupLayout.setHorizontalGroup(groupLayout.createSequentialGroup().addGap(20)
 					.addGroup(groupLayout.createParallelGroup().addComponent(textlabel_allocate)
 							.addComponent(textLabel_title).addComponent(textLabel_content)
@@ -841,7 +839,8 @@ public class HomePage extends javax.swing.JFrame {
 							.addComponent(sp2))
 					.addGap(15)
 					.addGroup(groupLayout.createParallelGroup().addComponent(textLabel_Leader)
-							.addComponent(textLabel_teamALd).addComponent(textField_LeaderA,20,20,20).addComponent(textLabel_teamBLd).addComponent(textField_LeaderB,20,20,20))
+							.addComponent(textLabel_teamALd).addComponent(textField_LeaderA, 20, 20, 20)
+							.addComponent(textLabel_teamBLd).addComponent(textField_LeaderB, 20, 20, 20))
 					.addGap(15)
 					.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
 							.addComponent(textLabel_MaxTurn).addComponent(textField_MaxTurn)
@@ -883,18 +882,21 @@ public class HomePage extends javax.swing.JFrame {
 		}
 
 		public void sendData() {
-//			String keyStr = "++";
-			String teamAmem ="";
-			String teamBmem ="";
-			teamAmem = String.join("++",teamAList);
+			// String keyStr = "++";
+			String teamAmem = "";
+			String teamBmem = "";
+			teamAmem = String.join("++", teamAList);
 			teamBmem = String.join("++", teamBList);
-		
-			OkHttpClient clientSend = new OkHttpClient();
-			RequestBody requestBodaySend = new FormBody.Builder().add("title", title_return).add("content_teturn", content_teturn).add("teamAName",nameA_return)
-					.add("teamBName", nameB_return).add("teamAMember",teamAmem).add("teamBMember",teamBmem).add("maxTurn", maxTurn_return)
-					.add("freHour",freHour_return ).add("freMin", freMin_return).add("startTime",startTime_return).add("teamALeader", teamALeader).add("teamBLeader",teamBLeader).build();
 
-			Request requestSend = new Request.Builder().post(requestBodaySend).url("http://localhost:8080/GPMCGroupProject/storeTopic").build();
+			OkHttpClient clientSend = new OkHttpClient();
+			RequestBody requestBodaySend = new FormBody.Builder().add("title", title_return)
+					.add("content_teturn", content_teturn).add("teamAName", nameA_return).add("teamBName", nameB_return)
+					.add("teamAMember", teamAmem).add("teamBMember", teamBmem).add("maxTurn", maxTurn_return)
+					.add("freHour", freHour_return).add("freMin", freMin_return).add("startTime", startTime_return)
+					.add("teamALeader", teamALeader).add("teamBLeader", teamBLeader).build();
+
+			Request requestSend = new Request.Builder().post(requestBodaySend)
+					.url("http://localhost:8080/GPMCGroupProject/storeTopic").build();
 			try {
 				Response responseSend = clientSend.newCall(requestSend).execute();
 				if (!responseSend.isSuccessful()) {
@@ -903,336 +905,440 @@ public class HomePage extends javax.swing.JFrame {
 				} else {
 					JOptionPane.showMessageDialog(null, "Finish adding a topic");
 				}
-			}catch (IOException e) {
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} 
+			}
 
 		}
-		
 
 		public boolean judge() {
-			if(title_return==null||content_teturn==null||maxTurn_return==null||nameB_return==null||nameA_return==null||freHour_return==null||freMin_return==null||
-					starYear_return==null||starMon_return==null||starDay_return==null||starHour_return==null||teamAList.size()==0||teamBList.size()==0) {
-				JOptionPane.showMessageDialog(null, "Please complet all blank", "Error",JOptionPane.ERROR_MESSAGE);
+			if (title_return == null || content_teturn == null || maxTurn_return == null || nameB_return == null
+					|| nameA_return == null || freHour_return == null || freMin_return == null
+					|| starYear_return == null || starMon_return == null || starDay_return == null
+					|| starHour_return == null || teamAList.size() == 0 || teamBList.size() == 0) {
+				JOptionPane.showMessageDialog(null, "Please complet all blank", "Error", JOptionPane.ERROR_MESSAGE);
 				return false;
+			} else {
+				if (!Collections.disjoint(teamAList, teamBList)) {
+					JOptionPane.showMessageDialog(null, "Please choose different members in different team", "Error",
+							JOptionPane.ERROR_MESSAGE);
+					return false;
+				} else {
+					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					try {
+						if (teamAList.size() != teamBList.size()) {
+							JOptionPane.showMessageDialog(null,
+									"TeamA and TeamB should contain the same number of students.", "Error",
+									JOptionPane.ERROR_MESSAGE);
+							return false;
+						} else if ((!teamAList.contains(teamALeader)) || (!teamBList.contains(teamBLeader))) {
+							JOptionPane.showMessageDialog(null, "Team leader should be chooesen from members", "Error",
+									JOptionPane.ERROR_MESSAGE);
+							return false;
+						}
+						format.setLenient(false);
+						int test1 = Integer.parseInt(maxTurn_return);
+						if (test1 <= 0 || test1 % 2 != 0) {
+							JOptionPane.showMessageDialog(null, "MaxTurn should be oushu", "Error",
+									JOptionPane.ERROR_MESSAGE);
+							return false;
+						}
+						if (starDay_return.length() < 2) {
+							starDay_return = "0" + starDay_return;
+						}
+						if (starMon_return.length() < 2) {
+							starMon_return = "0" + starMon_return;
+						}
+						if (starHour_return.length() < 2) {
+							starHour_return = "0" + starHour_return;
+						}
+						double test2 = Double.parseDouble(freHour_return);
+						double test3 = Double.parseDouble(freMin_return);
+						String str = starYear_return + '-' + starMon_return + '-' + starDay_return + ' '
+								+ starHour_return + ":00:00";
+						Date settime = format.parse(str);
+						Date now = new Date();
+						format.format(now);
+						format.format(settime);
+						if (now.after(settime)) {
+							throw new ParseException(null, 1);
+						}
+						startTime_return = str;
+						return true;
+					} catch (ParseException e) {
+						JOptionPane.showMessageDialog(null, "date is not valid", "Error", JOptionPane.ERROR_MESSAGE);
+						return false;
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Number is not valid", "Error", JOptionPane.ERROR_MESSAGE);
+						return false;
+					}
+				}
 			}
-			else {
-				if(!Collections.disjoint(teamAList,teamBList)){
-					JOptionPane.showMessageDialog(null, "Please choose different members in different team", "Error",JOptionPane.ERROR_MESSAGE);
-					return false;
-				}
-				else{
-				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				try {
-					if(teamAList.size()!=teamBList.size()) {
-						JOptionPane.showMessageDialog(null, "TeamA and TeamB should contain the same number of students.", "Error",JOptionPane.ERROR_MESSAGE);
-						return false;
-					}
-					else if((!teamAList.contains(teamALeader))||(!teamBList.contains(teamBLeader))) {
-						JOptionPane.showMessageDialog(null, "Team leader should be chooesen from members", "Error",JOptionPane.ERROR_MESSAGE);
-						return false;	
-					}
-					format.setLenient(false);
-					int test1 =  Integer.parseInt(maxTurn_return);
-					if(test1<=0||test1%2!=0) {
-						JOptionPane.showMessageDialog(null, "MaxTurn should be oushu", "Error",JOptionPane.ERROR_MESSAGE);
-						return false;
-					}
-					if(starDay_return.length()<2) {
-						starDay_return = "0"+starDay_return;
-					}
-					if(starMon_return.length()<2) {
-						starMon_return = "0"+starMon_return;
-					}
-					if(starHour_return.length()<2) {
-						starHour_return = "0"+starHour_return;
-					}
-					double test2 = Double.parseDouble(freHour_return);
-					double test3 = Double.parseDouble(freMin_return);
-					String str = starYear_return+'-'+starMon_return+'-'+starDay_return+' '+starHour_return+":00:00";
-					 Date settime=format.parse(str); 
-					 Date now = new Date();
-					 format.format(now);
-					 format.format(settime);
-					 if(now.after(settime)) {
-						 throw new ParseException(null, 1);
-					 }
-					 startTime_return = str;
-					 return true;
-				}catch (ParseException e) {
-					JOptionPane.showMessageDialog(null, "date is not valid", "Error",JOptionPane.ERROR_MESSAGE);
-					return false;
-				}catch(Exception e) {
-					JOptionPane.showMessageDialog(null, "Number is not valid", "Error",JOptionPane.ERROR_MESSAGE);
-					return false;
-				}
-				}
-			}		
 		}
-		
-		
 
 	}
-	 class turnPanel extends JPanel {
-	    	private JTable moveTable;
-	    	private JLabel moveDetailsLabel;
-	    	private JTextArea moveDetails;
-	    	private JScrollPane moveScroll;
-	    	private JTable turnTable;
-	      	private JScrollPane turnScroll;
-	    	private GroupLayout turnPanelLayout;
-	    	private DefaultTableModel t;
-	    	
-	    	public turnPanel(){
-	    		super();
-	    		try {
-	    		initGUI();
-	    		setupEventHandlers();
-	    		displayData();
-	    	
-	    		} catch(DocumentException d) {
-	    			d.printStackTrace();
-	    		}
-	    		this.setVisible(true);
-	    	}
-	    	
-	    
-	    	
-	      	public void displayData() throws DocumentException{
-	      		OkHttpClient client = new OkHttpClient();
-	    		RequestBody req = new FormBody.Builder().build();
-	    		Request getreq = new Request.Builder().post(req).url("http://localhost:8080/GPMCGroupProject/MoveData").build();
-	      		
-	    		try {
-	    			Response response = client.newCall(getreq).execute();
-	    			
-	    			if(!response.isSuccessful()) {
-	    				JOptionPane.showMessageDialog(moveTable, "Problems accessing server");
-	    		} else {
-	    			t = new DefaultTableModel();
-	    			t = xmlUtil.fillTurnData(selectName);
-	    			turnTable.setModel(t);
-	    			
-	    		}
-	    		} catch (IOException e) {
-	    			e.printStackTrace();
-	    		}
-	      	}
-	   
-	    	
-	    	private void initGUI() {
 
-	    				turnPanelLayout = new GroupLayout(this);
-	    				this.setLayout(turnPanelLayout);
-	    		
-	    				{
-	    					turnTable = new JTable();
-	    					turnScroll = new JScrollPane(turnTable);
-	    				}
-	    				{
-	    					
-	    					DefaultTableModel tmodel = new DefaultTableModel();
-	    					moveTable = new JTable(tmodel);
-	    					moveTable.setVisible(true);
-	    					moveTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-	    					moveTable.setRowSelectionAllowed(true);
-	    					moveTable.setColumnSelectionAllowed(false);
-	    					moveScroll = new JScrollPane(moveTable);
-	    					
-	    				}
-	    				{
-	    					moveDetails = new JTextArea();
-	    					moveScroll = new JScrollPane(moveDetails);
-	    					moveScroll.setVisible(true);
-	    					
-	    				}
-	    				{
-	    					moveDetailsLabel = new JLabel();
-	    					moveDetailsLabel.setText("Move details");
-	    				}
-	    					turnPanelLayout.setHorizontalGroup(turnPanelLayout.createSequentialGroup()
-	    					.addContainerGap(17, 17)
-	    					.addComponent(turnScroll, GroupLayout.PREFERRED_SIZE, 207, GroupLayout.PREFERRED_SIZE)
-	    					.addGap(42)
-	    					.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-	    					.addGroup(turnPanelLayout.createParallelGroup()
-	    					    .addGroup(turnPanelLayout.createSequentialGroup()
-	    					        .addComponent(moveTable, GroupLayout.PREFERRED_SIZE, 420, GroupLayout.PREFERRED_SIZE)
-	    					        .addGap(0, 0, Short.MAX_VALUE))
-	    					    .addGroup(GroupLayout.Alignment.LEADING, turnPanelLayout.createSequentialGroup()
-	    					        .addGap(0, 0, Short.MAX_VALUE)
-	    					        .addComponent(moveDetailsLabel, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-	    					        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-	    					        .addComponent(moveDetails, GroupLayout.PREFERRED_SIZE, 300, GroupLayout.PREFERRED_SIZE)))
-	    					.addContainerGap(41, 41));
-	    					turnPanelLayout.setVerticalGroup(turnPanelLayout.createSequentialGroup()
-	    					.addContainerGap(17, 17)
-	    					.addGroup(turnPanelLayout.createParallelGroup()
-	    					    .addGroup(turnPanelLayout.createSequentialGroup()
-	    					        .addGroup(turnPanelLayout.createParallelGroup()
-	    					            .addComponent(moveTable, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE)
-	    					            .addGroup(GroupLayout.Alignment.LEADING, turnPanelLayout.createSequentialGroup()
-	    					                .addGap(198)))
-	    					        .addGap(28)
-	    					        .addGroup(turnPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-	    					            .addComponent(moveDetailsLabel, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
-	    					            .addComponent(moveDetails, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE))
-	    					        .addGap(9))
-	    					    .addComponent(turnScroll, GroupLayout.Alignment.LEADING, 0, 307, Short.MAX_VALUE))
-	    					.addContainerGap());
-	    			this.setSize(723, 407);
-	    	}
-	    	
+	class turnPanel extends JPanel {
+		private JTable moveTable;
+		private JLabel moveDetailsLabel;
+		private JTextArea moveDetails;
+		private JScrollPane moveScroll;
+		private JTable turnTable;
+		private JScrollPane turnScroll;
+		private GroupLayout turnPanelLayout;
+		private DefaultTableModel t;
+
+		public turnPanel() {
+			super();
+			try {
+				initGUI();
+				setupEventHandlers();
+				displayData();
+
+			} catch (DocumentException d) {
+				d.printStackTrace();
+			}
+			this.setVisible(true);
+		}
+
+		public Vector<String> prepareData(){
+			Vector<String> columnNames = new Vector<String>();
+			columnNames.addElement("ownerTeam");
+			columnNames.addElement("turnID");
+			return columnNames;
+		}
+		
+		public void displayData() throws DocumentException {
+			
+			Vector<String> columnNames = prepareData();
+			Vector<Vector> rowData = new Vector<Vector>();
+			OkHttpClient client = new OkHttpClient();
+			RequestBody req = new FormBody.Builder().add("topicName", selectName).build();
+			Request getreq = new Request.Builder().post(req).url("http://localhost:8080/GPMCGroupProject/TurnData")
+					.build();
+			try {
+				Response response = client.newCall(getreq).execute();
+				if (!response.isSuccessful()) {
+					JOptionPane.showMessageDialog(moveTable, "Problems accessing server");
+				} else {
+					String str = response.body().string();
+					Document doc = DocumentHelper.parseText(str);
+					Element root = doc.getRootElement();
+					// iterate through child elements of root with element name "move"
+					for (Iterator i = root.elementIterator("turn"); i.hasNext();) {
+						Element element = (Element) i.next();
+						String type = element.elementText("ownerTeam");
+						String turnID = element.elementText("turnID");
+						Vector<String> rowIt = new Vector<String>();
+						rowIt.addElement(type);
+						rowIt.addElement(turnID);
+						rowData.addElement(rowIt);
+					}
+					t = new DefaultTableModel(rowData, columnNames);
+					turnTable.setModel(t);
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		private void initGUI() {
+
+			turnPanelLayout = new GroupLayout(this);
+			this.setLayout(turnPanelLayout);
+
+			{
+				turnTable = new JTable();
+				turnScroll = new JScrollPane(turnTable);
+			}
+			{
+
+				DefaultTableModel tmodel = new DefaultTableModel();
+				moveTable = new JTable(tmodel);
+				moveTable.setVisible(true);
+				moveTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+				moveTable.setRowSelectionAllowed(true);
+				moveTable.setColumnSelectionAllowed(false);
+				moveScroll = new JScrollPane(moveTable);
+
+			}
+			{
+				moveDetails = new JTextArea();
+				moveScroll = new JScrollPane(moveDetails);
+				moveScroll.setVisible(true);
+
+			}
+			{
+				moveDetailsLabel = new JLabel();
+				moveDetailsLabel.setText("Move details");
+			}
+			turnPanelLayout.setHorizontalGroup(turnPanelLayout.createSequentialGroup().addContainerGap(17, 17)
+					.addComponent(turnScroll, GroupLayout.PREFERRED_SIZE, 207, GroupLayout.PREFERRED_SIZE).addGap(42)
+					.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+					.addGroup(turnPanelLayout.createParallelGroup()
+							.addGroup(turnPanelLayout.createSequentialGroup()
+									.addComponent(moveTable, GroupLayout.PREFERRED_SIZE, 420,
+											GroupLayout.PREFERRED_SIZE)
+									.addGap(0, 0, Short.MAX_VALUE))
+							.addGroup(GroupLayout.Alignment.LEADING,
+									turnPanelLayout.createSequentialGroup().addGap(0, 0, Short.MAX_VALUE)
+											.addComponent(moveDetailsLabel, GroupLayout.PREFERRED_SIZE, 75,
+													GroupLayout.PREFERRED_SIZE)
+											.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+											.addComponent(moveDetails, GroupLayout.PREFERRED_SIZE, 300,
+													GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(41, 41));
+			turnPanelLayout.setVerticalGroup(turnPanelLayout.createSequentialGroup().addContainerGap(17, 17)
+					.addGroup(turnPanelLayout.createParallelGroup().addGroup(turnPanelLayout.createSequentialGroup()
+							.addGroup(turnPanelLayout.createParallelGroup()
+									.addComponent(moveTable, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE,
+											208, GroupLayout.PREFERRED_SIZE)
+									.addGroup(GroupLayout.Alignment.LEADING,
+											turnPanelLayout.createSequentialGroup().addGap(198)))
+							.addGap(28)
+							.addGroup(turnPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+									.addComponent(moveDetailsLabel, GroupLayout.Alignment.BASELINE,
+											GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+									.addComponent(moveDetails, GroupLayout.Alignment.BASELINE,
+											GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE))
+							.addGap(9))
+							.addComponent(turnScroll, GroupLayout.Alignment.LEADING, 0, 307, Short.MAX_VALUE))
+					.addContainerGap());
+			this.setSize(723, 407);
+		}
+
 		private void setupEventHandlers() {
-	    		
-	    		turnTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-	    			public void valueChanged(ListSelectionEvent e) {
-	    				moveDetails.setText(" ");
-	    				int row = turnTable.getSelectedRow();
-	    				Integer turnID = Integer.parseInt((String) turnTable.getValueAt(row, 1));
-	    				
-	    				try {
-	    					DefaultTableModel table = new DefaultTableModel();
-							table = xmlUtil.fillMoveData(selectName,name,turnID);
-							moveTable.setModel(table);
-						} catch (DocumentException e1) {
-							e1.printStackTrace();
+
+			turnTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+				public void valueChanged(ListSelectionEvent e) {
+					
+					
+					
+					moveDetails.setText(" ");
+					int row = turnTable.getSelectedRow();
+					Integer ID = Integer.parseInt((String) turnTable.getValueAt(row, 1));
+					
+					
+					OkHttpClient client = new OkHttpClient();
+					RequestBody req = new FormBody.Builder().add("topicName", selectName).add("username", name).add("turnID",String.valueOf(ID)).build();
+					Request getreq = new Request.Builder().post(req).url("http://localhost:8080/GPMCGroupProject/MoveDataQuery")
+							.build();
+					
+
+					try {
+						Response response = client.newCall(getreq).execute();
+						
+						String txt = response.body().string();
+						Vector<String> columnNames = new Vector<String>();
+						Vector<Vector> rowData = new Vector<Vector>();
+						columnNames.addElement("Type");
+						columnNames.addElement("TurnID");
+						columnNames.addElement("Created By");
+						columnNames.addElement("Text Body");
+						Document doc = DocumentHelper.parseText(txt);
+						Element root = doc.getRootElement();
+						// iterate through child elements of root with element name "move"
+						for (Iterator i = root.elementIterator("move"); i.hasNext();) {
+							Element element = (Element) i.next();
+							String type = element.elementText("type");
+							String turnID = element.elementText("turnID");
+							String createUserID = element.elementText("createUserID");
+							String textBody = element.elementText("textBody");
+							Vector<String> rowIt = new Vector<String>();
+							int turnNumber = Integer.parseInt(turnID);
+							if (turnNumber == ID) {
+								rowIt.addElement(type);
+								rowIt.addElement(turnID);
+								rowIt.addElement(createUserID);
+								rowIt.addElement(textBody);
+								rowData.addElement(rowIt);
+							}
 						}
-	    				
-	    			}
-	    		});
-	    		
-	    		moveTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-	    			public void valueChanged(ListSelectionEvent e) {
-	    				moveDetails.updateUI();
-	    				int row = moveTable.getSelectedRow();
-	    				String s = (String) moveTable.getValueAt(row, 3);
-	    				moveDetails.setText(s);
-	   				
-	    			}
-	    		});
-	    		
-	    		
-	    	}
+						DefaultTableModel table = new DefaultTableModel(rowData,columnNames);
+						moveTable.setModel(table);
+					} catch (DocumentException | IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+			});
 
-	    }
-	 
-	 class movePanel extends JPanel {
-	    	
-	    	
-    	 private JTable listMoves;
-    	 private JScrollPane moveScroll;
-    	 private JTextArea textEntry;
-    	 private JScrollPane textScroll;
-    	 private JButton addNewMove;
-    	 private GroupLayout moveLayout;
-    	 private String initialText;
-    	 private JLabel detailsLabel;
-    	 private DefaultTableModel t;
-    	
-    	public movePanel() {
-    		super();
-    		try {
-    		setupComponents();
-    		setupEventHandlers();
-    		displayData();
-    		} catch (DocumentException d) {
-    			d.printStackTrace();
-    		}
-    		
-    	}
-    	
-    	
-    	public void displayData() throws DocumentException{
-    			DefaultTableModel t = new DefaultTableModel();
-    			t= xmlUtil.fillMoveData(selectName,name);
-    			listMoves.setModel(t);
-    	}
-    	
-    	
+			moveTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+				public void valueChanged(ListSelectionEvent e) {
+					moveDetails.updateUI();
+					int row = moveTable.getSelectedRow();
+					String s = (String) moveTable.getValueAt(row, 3);
+					moveDetails.setText(s);
 
-    	//movescroll = move table
-    	//adNewMove = new move button
-    	//textscroll = move details
-    	public void setupComponents() throws DocumentException {
-    		//setup the components
-    		moveLayout = new GroupLayout(this);
-    		this.setLayout(moveLayout);
-    		textEntry = new JTextArea();
-    		textEntry.setText(initialText);
-    		textScroll = new JScrollPane(textEntry);
-    		addNewMove = new JButton();
-    		addNewMove.setText("NEW");
-    		detailsLabel = new JLabel();
-    		detailsLabel.setText("Move Text");
-    		listMoves = new JTable();
-    		listMoves.setVisible(true);
-    		listMoves.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    		listMoves.setRowSelectionAllowed(true);
-    		listMoves.setColumnSelectionAllowed(false);
-    		moveScroll = new JScrollPane(listMoves);			
-    		//setup the layout for the components - grouplayout
-    		moveLayout.setHorizontalGroup(moveLayout.createSequentialGroup()
-    				.addContainerGap()
-    				.addGroup(moveLayout.createParallelGroup()
-    				    .addGroup(moveLayout.createSequentialGroup()
-    				        .addComponent(moveScroll, GroupLayout.PREFERRED_SIZE, 726, GroupLayout.PREFERRED_SIZE)
-    				        .addGap(0, 0, Short.MAX_VALUE))
-    				    .addGroup(GroupLayout.Alignment.LEADING, moveLayout.createSequentialGroup()
-    				        .addComponent(detailsLabel, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
-    				        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-    				        .addGroup(moveLayout.createParallelGroup()
-    				            .addComponent(textScroll, GroupLayout.Alignment.LEADING, 0, 518, Short.MAX_VALUE)
-    				            .addGroup(GroupLayout.Alignment.LEADING, moveLayout.createSequentialGroup()
-    				                .addGap(0, 409, Short.MAX_VALUE)
-    				                .addComponent(addNewMove, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-    				                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 0, GroupLayout.PREFERRED_SIZE)))))
-    				.addGap(7));
-    				moveLayout.setVerticalGroup(moveLayout.createSequentialGroup()
-    				.addContainerGap()
-    				.addComponent(moveScroll, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
-    				.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-    				.addGroup(moveLayout.createParallelGroup()
-    				    .addComponent(textScroll, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)
-    				    .addGroup(GroupLayout.Alignment.LEADING, moveLayout.createSequentialGroup()
-    				        .addComponent(detailsLabel, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
-    				        .addGap(17)))
-    				.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-    				.addComponent(addNewMove, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-    				.addContainerGap(37, Short.MAX_VALUE));
-    		//load the initial data into the jtable - for now all moves. next iteration will take the filtered information - ie which topic is selected, which team is logged in.	
-    		this.setSize(750,600);
-    	
-    	}
-    	
-    	public void setupEventHandlers() {
-    		//listselectionlistener for jtable
-    		listMoves.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-    			public void valueChanged(ListSelectionEvent e) {
-    				//find the index of the row selected, that is turnid
-    				//display the message from that row....
-    				int row = listMoves.getSelectedRow();
-    				String s = (String) listMoves.getValueAt(row, 3);
-    				textEntry.setText(s);
-    			}
-    		});
-    		//actionlistener> new form for 'new' button
-    		addNewMove.addActionListener(new ActionListener() {
-    			public void actionPerformed(ActionEvent e) {
-    				//setup the new move class.. 
-    				String[] s = initialData.split("<username>");
-    				String[] ss = s[s.length-1].split("</username>");
-    				String user = ss[0];
-    				
-    				AddMove m = new AddMove(selectName,user);
-    				m.setVisible(true);
-    			
-    			}
-    		});
-    		
-    	}
+				}
+			});
+		}
+	}
 
-}
-	 
+	class movePanel extends JPanel {
+
+		private JTable listMoves;
+		private JScrollPane moveScroll;
+		private JTextArea textEntry;
+		private JScrollPane textScroll;
+		private JButton addNewMove;
+		private GroupLayout moveLayout;
+		private String initialText;
+		private JLabel detailsLabel;
+		private DefaultTableModel t;
+
+		public movePanel() {
+			super();
+			try {
+				setupComponents();
+				setupEventHandlers();
+				displayData();
+			} catch (DocumentException d) {
+				d.printStackTrace();
+			}
+
+		}
+
+		public Vector prepareTagData() {
+			Vector<String> columnNames = new Vector<String>();
+			columnNames.addElement("Type");
+			columnNames.addElement("TurnID");
+			columnNames.addElement("Created By");
+			columnNames.addElement("Text Body");
+			return columnNames;
+		}
+
+		public void displayData() throws DocumentException {
+			DefaultTableModel t;
+			// post a request to get data
+			Vector<Vector> rowData = new Vector<Vector>();
+			Vector<String> columnNames = this.prepareTagData();
+			OkHttpClient client = new OkHttpClient();
+			RequestBody body = new FormBody.Builder().add("topicName", selectName).add("username", name).build();
+			Request request = new Request.Builder().post(body).url("http://localhost:8080/GPMCGroupProject/fillMove")
+					.build();
+			try {
+				Response response = client.newCall(request).execute();
+				if (!response.isSuccessful()) {
+					JOptionPane.showMessageDialog(null, "Can't request server, please check server status");
+				} else {
+					String txt = response.body().string();
+					Document doc = DocumentHelper.parseText(txt);
+					Element root = doc.getRootElement();
+					// iterate through child elements of root with element name "move"
+					for (Iterator i = root.elementIterator("move"); i.hasNext();) {
+						Element element = (Element) i.next();
+						String type = element.elementText("type");
+						String turnID = element.elementText("turnID");
+						String createUserID = element.elementText("createUserID");
+						String textBody = element.elementText("textBody");
+						Vector<String> rowIt = new Vector<String>();
+						rowIt.addElement(type);
+						rowIt.addElement(turnID);
+						rowIt.addElement(createUserID);
+						rowIt.addElement(textBody);
+						rowData.addElement(rowIt);
+					}
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			t = new DefaultTableModel(rowData, columnNames);
+			listMoves.setModel(t);
+		}
+
+		// movescroll = move table
+		// adNewMove = new move button
+		// textscroll = move details
+		public void setupComponents() throws DocumentException {
+			// setup the components
+			moveLayout = new GroupLayout(this);
+			this.setLayout(moveLayout);
+			textEntry = new JTextArea();
+			textEntry.setText(initialText);
+			textScroll = new JScrollPane(textEntry);
+			addNewMove = new JButton();
+			addNewMove.setText("NEW");
+			detailsLabel = new JLabel();
+			detailsLabel.setText("Move Text");
+			listMoves = new JTable();
+			listMoves.setVisible(true);
+			listMoves.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			listMoves.setRowSelectionAllowed(true);
+			listMoves.setColumnSelectionAllowed(false);
+			moveScroll = new JScrollPane(listMoves);
+			// setup the layout for the components - grouplayout
+			moveLayout
+					.setHorizontalGroup(moveLayout.createSequentialGroup().addContainerGap()
+							.addGroup(moveLayout.createParallelGroup().addGroup(moveLayout
+									.createSequentialGroup()
+									.addComponent(moveScroll, GroupLayout.PREFERRED_SIZE, 726,
+											GroupLayout.PREFERRED_SIZE)
+									.addGap(0, 0, Short.MAX_VALUE))
+									.addGroup(GroupLayout.Alignment.LEADING, moveLayout.createSequentialGroup()
+											.addComponent(detailsLabel, GroupLayout.PREFERRED_SIZE, 76,
+													GroupLayout.PREFERRED_SIZE)
+											.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+											.addGroup(moveLayout.createParallelGroup()
+													.addComponent(textScroll, GroupLayout.Alignment.LEADING, 0, 518,
+															Short.MAX_VALUE)
+													.addGroup(GroupLayout.Alignment.LEADING, moveLayout
+															.createSequentialGroup().addGap(0, 409, Short.MAX_VALUE)
+															.addComponent(addNewMove, GroupLayout.PREFERRED_SIZE,
+																	GroupLayout.PREFERRED_SIZE,
+																	GroupLayout.PREFERRED_SIZE)
+															.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 0,
+																	GroupLayout.PREFERRED_SIZE)))))
+							.addGap(7));
+			moveLayout.setVerticalGroup(moveLayout.createSequentialGroup().addContainerGap()
+					.addComponent(moveScroll, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+					.addGroup(moveLayout.createParallelGroup()
+							.addComponent(textScroll, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 83,
+									GroupLayout.PREFERRED_SIZE)
+							.addGroup(GroupLayout.Alignment.LEADING,
+									moveLayout.createSequentialGroup()
+											.addComponent(detailsLabel, GroupLayout.PREFERRED_SIZE, 66,
+													GroupLayout.PREFERRED_SIZE)
+											.addGap(17)))
+					.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+					.addComponent(addNewMove, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(37, Short.MAX_VALUE));
+			// load the initial data into the jtable - for now all moves. next iteration
+			// will take the filtered information - ie which topic is selected, which team
+			// is logged in.
+			this.setSize(750, 600);
+
+		}
+
+		public void setupEventHandlers() {
+			// listselectionlistener for jtable
+			listMoves.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+				public void valueChanged(ListSelectionEvent e) {
+					// find the index of the row selected, that is turnid
+					// display the message from that row....
+					int row = listMoves.getSelectedRow();
+					String s = (String) listMoves.getValueAt(row, 3);
+					textEntry.setText(s);
+				}
+			});
+			// actionlistener> new form for 'new' button
+			addNewMove.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					// setup the new move class..
+					String[] s = initialData.split("<username>");
+					String[] ss = s[s.length - 1].split("</username>");
+					String user = ss[0];
+
+					AddMove m = new AddMove(selectName, user);
+					m.setVisible(true);
+
+				}
+			});
+
+		}
+
+	}
+
 }

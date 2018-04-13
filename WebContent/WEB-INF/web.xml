@@ -57,7 +57,6 @@
     <servlet-name>logoutService</servlet-name>
     <url-pattern>/GPMCGroupProject/logoutService</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>queryTopicDetail</servlet-name>
     <servlet-class>com.gpmc.servletAPI</servlet-class>
@@ -82,4 +81,31 @@
     <servlet-name>storeTopic</servlet-name>
     <url-pattern>/GPMCGroupProject/storeTopic</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>fillMove</servlet-name>
+    <servlet-class>com.gpmc.servletAPI</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>fillMove</servlet-name>
+    <url-pattern>/GPMCGroupProject/fillMove</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>TurnData</servlet-name>
+    <servlet-class>com.gpmc.servletAPI</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TurnData</servlet-name>
+    <url-pattern>/GPMCGroupProject/TurnData</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>MoveDataQuery</servlet-name>
+  	<servlet-class>com.gpmc.servletAPI</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>MoveDataQuery</servlet-name>
+  	<url-pattern>/GPMCGroupProject/MoveDataQuery</url-pattern>
+  </servlet-mapping>
+  
+  
 </web-app>

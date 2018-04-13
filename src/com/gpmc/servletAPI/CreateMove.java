@@ -44,10 +44,6 @@ public class CreateMove extends HttpServlet {
 			e.printStackTrace();
 		}
 		response.getWriter().write("Move created");
-		
-		//new xmlutil and new dcfile in the dcfile list
-		
-		
 	}
 
 	/**

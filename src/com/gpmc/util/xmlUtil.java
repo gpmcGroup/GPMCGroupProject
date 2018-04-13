@@ -79,9 +79,18 @@ public class xmlUtil {
 		try {
 			Document doc = new SAXReader().read(new File(xmlUtil.getTopicFilePath(topicName, "Team")));
 			Element ele = doc.getRootElement();
-			Element team = (Element) ele.selectSingleNode("//team[username='" + username + "']");
-			System.out.println("Team name: " + team.attributeValue("name"));
-			return team.attributeValue("name");
+			String name;
+			for(Iterator<Element> it= ele.elementIterator();it.hasNext();) {
+				Element e = it.next();
+				for(Iterator<Element> usr = e.elementIterator();usr.hasNext();) {
+					Element user = usr.next();
+					if(user.valueOf("username").equals(username)) {
+						name = e.attribute("name").getValue();
+						return name;
+					}
+				}
+			}
+			return null;
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -89,43 +98,7 @@ public class xmlUtil {
 		return null;
 	}
 
-	public static DefaultTableModel fillMoveData(String topicName, String username) throws DocumentException {
 
-		Vector<Vector> rowData = new Vector<Vector>();
-		Vector<String> columnNames = new Vector<String>();
-		columnNames.addElement("Type");
-		columnNames.addElement("TurnID");
-		columnNames.addElement("Created By");
-		columnNames.addElement("Text Body");
-
-		String teamName = xmlUtil.findTeamName(topicName, username);
-		File file = new File(xmlUtil.getTopicFilePath(topicName, "Move_" + teamName));
-		SAXReader xmlReader = new SAXReader();
-		Document doc = xmlReader.read(file);
-
-		// create the list
-
-		Element root = doc.getRootElement();
-
-		// iterate through child elements of root with element name "move"
-		for (Iterator i = root.elementIterator("move"); i.hasNext();) {
-			Element element = (Element) i.next();
-			String type = element.elementText("type");
-			String turnID = element.elementText("turnID");
-			String createUserID = element.elementText("createUserID");
-			String textBody = element.elementText("textBody");
-			Vector<String> rowIt = new Vector<String>();
-			rowIt.addElement(type);
-			rowIt.addElement(turnID);
-			rowIt.addElement(createUserID);
-			rowIt.addElement(textBody);
-			rowData.addElement(rowIt);
-
-		}
-
-		return new DefaultTableModel(rowData, columnNames);
-
-	}
 
 	public static DefaultTableModel fillMoveData(String topicName, String username, int turn) throws DocumentException {
 
@@ -162,45 +135,10 @@ public class xmlUtil {
 				rowIt.addElement(textBody);
 				rowData.addElement(rowIt);
 			}
-
 		}
-
-		return new DefaultTableModel(rowData, columnNames);
-
-	}
-
-	public static DefaultTableModel fillTurnData(String topicName) throws DocumentException {
-
-		Vector<Vector> rowData = new Vector<Vector>();
-		Vector<String> columnNames = new Vector<String>();
-		columnNames.addElement("ownerTeam");
-		columnNames.addElement("turnID");
-		columnNames.addElement("dcFileMap");
-
-		File file = new File(xmlUtil.getTopicFilePath(topicName, "Turn"));
-		SAXReader xmlReader = new SAXReader();
-		Document doc = xmlReader.read(file);
-
-		// create the list
-
-		Element root = doc.getRootElement();
-
-		// iterate through child elements of root with element name "move"
-		for (Iterator i = root.elementIterator("turn"); i.hasNext();) {
-			Element element = (Element) i.next();
-			String type = element.elementText("ownerTeam");
-			String turnID = element.elementText("turnID");
-			String createUserID = element.elementText("dcFileMap");
-			Vector<String> rowIt = new Vector<String>();
-			rowIt.addElement(type);
-			rowIt.addElement(turnID);
-			rowIt.addElement(createUserID);
-			rowData.addElement(rowIt);
-
-		}
-
 		return new DefaultTableModel(rowData, columnNames);
 	}
+
 
 	public static void AddMove(String topicName, String claimType, String claimDetails, String username)
 			throws IOException, DocumentException {
@@ -259,7 +197,7 @@ public class xmlUtil {
 
 		Document testDoc = new SAXReader().read(new File(MovePath));
 		Element ele = (Element) testDoc.selectSingleNode("//move[textBody='123abc']");
-		System.out.println(testDoc.asXML());
+		System.out.println("添加后的move：" + testDoc.asXML());
 	}
 
 }
