@@ -107,5 +107,12 @@
   	<url-pattern>/GPMCGroupProject/MoveDataQuery</url-pattern>
   </servlet-mapping>
   
-  
+ <servlet>
+  	<servlet-name>queryTeamLeader</servlet-name>
+  	<servlet-class>com.gmpc.servletAPI</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>queryTeamLeader</servlet-name>
+  	<url-pattern>/GPMCGroupProject/queryTeamLeader</url-pattern>  	
+  </servlet-mapping>
 </web-app>

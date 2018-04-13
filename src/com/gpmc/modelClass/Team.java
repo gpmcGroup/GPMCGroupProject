@@ -16,7 +16,7 @@ public class Team {
 	private String teamName;
 	private List<String> teamMemberList;
 	private List<Topic> topicList;
-	private Student teamLeader;
+	private String teamLeader;
 	private List<Move> turnFileList;
 	private String topicView; // replace team
 	private List<Element> eleList;
@@ -72,11 +72,28 @@ public class Team {
 		this.topicList = topicList;
 	}
 
-	public Student getTeamLeader() {
+	public String getTeamLeader() {
+		String xpath = "//team[@name='" + teamName + "']/user[@teamLeader='true']/username";
+		try {
+			System.out.println(xmlUtil.getTopicFilePath(setTeamBelonged,"team"));
+			Document doc = new SAXReader()
+					.read(new File(xmlUtil.getTopicFilePath(setTeamBelonged,"team")));
+
+			// 1.
+			Element ele = (Element) doc.selectSingleNode(xpath);
+			teamLeader = ele.getStringValue();
+			// 2.
+			// String x = doc.valueOf(xpath);
+			// return x;
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return teamLeader;
+		
 	}
 
-	public void setTeamLeader(Student teamLeader) {
+	public void setTeamLeader(String teamLeader) {
 		this.teamLeader = teamLeader;
 	}
 
@@ -95,4 +112,8 @@ public class Team {
 	public void setTopicView(String topicView) {
 		this.topicView = topicView;
 	}
+	
+
+	
+	
 }

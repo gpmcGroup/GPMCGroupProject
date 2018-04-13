@@ -37,6 +37,10 @@ public class queryTopicDetail extends HttpServlet {
 		String content = topic.getAll();
 
 		// find topic content success:return and introductionpanel
+		if(content == null) {
+			response.getWriter().write("false");
+			return;
+		}
 
 		response.getWriter().write(content);
 	}

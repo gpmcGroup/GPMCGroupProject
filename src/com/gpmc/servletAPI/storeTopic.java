@@ -41,7 +41,6 @@ public class storeTopic extends HttpServlet {
 		// .add("freHour",freHour_return ).add("freMin",
 		// freMin_return).add("startTime",startTime_return).build();
 		String title = (String) request.getParameter("title");
-
 		String content = (String) request.getParameter("content_teturn");
 		String teamAName = (String) request.getParameter("teamAName");
 		String teamBName = (String) request.getParameter("teamBName");
@@ -65,8 +64,9 @@ public class storeTopic extends HttpServlet {
 		System.out.println(startTIme);
 		System.out.println(teamALeader);
 		System.out.println(teamBLeader);
+		
 
-		// System.out.println("shoudaola");
+		System.out.println("shoudaola");
 	}
 
 	/**

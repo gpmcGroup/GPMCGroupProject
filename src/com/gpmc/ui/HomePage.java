@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.text.*;
@@ -65,11 +66,13 @@ import com.gpmc.modelClass.User;
 import com.gpmc.ui.HomePage.newTopic;
 import com.gpmc.util.xmlUtil;
 import com.sun.xml.internal.ws.api.Component;
+import com.sun.xml.internal.ws.server.sei.InvokerTube;
 import com.gpmc.modelClass.*;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Request.Builder;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
@@ -281,7 +284,7 @@ public class HomePage extends javax.swing.JFrame {
 				getContentPane().add(jBPlus);
 				jBPlus.setBounds(64, 580, 79, 39);
 				jBPlus.addActionListener(l -> {
-					newTopic ntPage = new newTopic(this);
+					newTopic ntPage = new newTopic(this, jBPlus.getText());
 					ntPage.setVer();
 				});
 			}
@@ -325,7 +328,7 @@ public class HomePage extends javax.swing.JFrame {
 							JOptionPane.showMessageDialog(null, "Can't request server, please check server status1");
 						} else {
 							String txt = response.body().string();
-							System.out.println("fanhuide :" + txt);
+							// System.out.println("fanhuide :" + txt);
 							Document doc = DocumentHelper.parseText(txt);
 							Element ele = (Element) doc.selectSingleNode("//topic[title='" + selectName + "']/content");
 							content_content = ele.getStringValue();
@@ -395,11 +398,11 @@ public class HomePage extends javax.swing.JFrame {
 					String[] bb = teamMem[1].split(" ");
 					Vector teamAVc = new Vector<String>();
 
-					for (int j = 1; j < aa.length; j++) {
+					for (int j = 0; j < aa.length; j++) {
 						teamAVc.add(aa[j]);
 					}
 					Vector teamBVc = new Vector<String>();
-					for (int j = 1; j < bb.length; j++) {
+					for (int j = 0; j < bb.length; j++) {
 						teamBVc.add(bb[j]);
 					}
 
@@ -470,9 +473,35 @@ public class HomePage extends javax.swing.JFrame {
 
 					JButton jBEdit = new JButton("Edit");
 					jBEdit.addActionListener(l -> {
-						newTopic np1 = new newTopic(this);
-						// np1.setData(selectName, content_content,teamAName,teamBName, teamAVc,
-						// teamBVc,);
+
+						newTopic np1 = new newTopic(this, jBEdit.getText());
+						// ele = (Element) doc.selectSingleNode("//topic[title='" + selectName +
+						// "']/startTime");
+						// content_time = ele.getStringValue();
+						// // System.out.print("startTime:"+content_time+"\n");
+
+						OkHttpClient clientTeam = new OkHttpClient();
+						RequestBody requestBodayTeam = new FormBody.Builder().add("title", selectName)
+								.add("teamAName", teamAName).add("teamBName", teamBName).build();
+						Request requestTeam = new Request.Builder().post(requestBodayTeam)
+								.url("http://localhost:8080/GPMCGroupProject/queryTeamLeader").build();
+						String bothLeader = "";
+						try {
+							Response responseTeam = clientTeam.newCall(requestTeam).execute();
+							if (!responseTeam.isSuccessful()) {
+								JOptionPane.showMessageDialog(null,
+										"Can't request server again, please check server statusTeam");
+							} else {
+								bothLeader = responseTeam.body().string();
+								// System.out.println(bothLeader);
+							}
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+						np1.setData(selectName, content_content, teamAName, teamBName, bothLeader, content_maxTurn,
+								content_time, content_turnFre, teamAVc, teamBVc);
 						np1.setVisible(true);
 					});
 					GroupLayout.SequentialGroup vg6 = groupLayout1.createSequentialGroup();
@@ -590,7 +619,8 @@ public class HomePage extends javax.swing.JFrame {
 		private DefaultComboBoxModel modelA;
 		private DefaultComboBoxModel modelB;
 
-		private String[] studentString = new String[] { "frank", "Tom", "Andy", "Ryan" };
+		private String[] studentString = new String[] { "frank", "Tom", "Andy", "Ryan", "Test1", "Test2", "Test3",
+				"Test4" };
 
 		Vector studentList = new Vector<String>();
 		Vector teamAV = new Vector<String>();
@@ -598,12 +628,15 @@ public class HomePage extends javax.swing.JFrame {
 		List<String> teamAList = new ArrayList<String>();
 		List<String> teamBList = new ArrayList<String>();
 
+		private String sourceButton;
+
 		//
 		// private JComboBox comboBoxTurn;
 		// private JComboBox comboBoxFre;
 		//
-		public newTopic(JFrame f) {
+		public newTopic(JFrame f, String sourceButton) {
 			super(f, "create a new topic", true);
+			this.sourceButton = sourceButton;
 			Container container = getContentPane();
 			setLocation(450, 225);
 			setSize(1000, 600);
@@ -686,21 +719,6 @@ public class HomePage extends javax.swing.JFrame {
 					teamBLeader = (String) comboBoxTeamB.getSelectedItem();
 				});
 			}
-			// }
-			//
-			// {
-			// comboBoxFre = new JComboBox();
-			// comboBoxFre.addItem(20);
-			// comboBoxFre.addItem(40);
-			// comboBoxFre.addItem(60);
-			// comboBoxFre.addItem(80);
-			// comboBoxFre.addItem(100);
-			// comboBoxFre.addItem(120);
-			// comboBoxFre.addItemListener(aListener -> {
-			// int i = (int) comboBoxTurn.getSelectedItem();
-			// System.out.println(i);
-			// });
-			// }
 
 			textLabel_year = new JLabel("year");
 			textLabel_month = new JLabel("month");
@@ -734,12 +752,22 @@ public class HomePage extends javax.swing.JFrame {
 						teamALeader = textField_LeaderA.getText();
 						teamBLeader = textField_LeaderB.getText();
 
-						if (judge()) {
-							System.out.println("topic completed");
-							// topicList.addElement(title_return);
-							// jLTopic.setListData(topicList);
-							sendData();
-							this.dispose();
+						if (sourceButton.equals("Edit")) {
+							if (judge()) {
+								System.out.println("topic completed");
+								// topicList.addElement(title_return);
+								// jLTopic.setListData(topicList);
+								sendData();
+								this.dispose();
+							}
+						} else {
+							if (judgeSame() && judge()) {
+								System.out.println("topic completed");
+								// topicList.addElement(title_return);
+								// jLTopic.setListData(topicList);
+								sendData();
+								this.dispose();
+							}
 						}
 
 					}
@@ -864,15 +892,72 @@ public class HomePage extends javax.swing.JFrame {
 
 		}
 
-		public void setData(String title, String content, Vector<String> teamA, Vector<String> teamB) {
-			textField_title.setText(title);
-			textField_content.setText(content);
+		// selectName, content_content,teamAName,teamBName, bothLeader, content_maxTurn,
+		// content_turnFre, content_time,teamAVc,teamBVc
+		/**
+		 * @param set_title
+		 * @param set_content
+		 * @param set_teamANam
+		 * @param set_teamBNam
+		 * @param set_bothLeader
+		 * @param set_maxTurn
+		 * @param set_startTime
+		 * @param set_turnFre
+		 * @param teamA
+		 * @param teamB
+		 */
+		public void setData(String set_title, String set_content, String set_teamANam, String set_teamBNam,
+				String set_bothLeader, String set_maxTurn, String set_startTime, String set_turnFre,
+				Vector<String> teamA, Vector<String> teamB) {
+			textField_title.setText(set_title);
+			textField_content.setText(set_content);
+			String[] tempLe = set_bothLeader.split(",");
+			textField_LeaderB.setText(tempLe[0]);
+			
+			textField_LeaderA.setText(tempLe[1]);
+			textFieLd_teamANa.setText(set_teamANam);
+			textField_teamBNa.setText(set_teamBNam);
+			textField_MaxTurn.setText(set_maxTurn);
+
+			Vector<Integer> a = new Vector<Integer>();
+			Vector<Integer> b = new Vector<Integer>();
 			for (String s : teamA) {
 				studentListA.setSelectedValue(s, true);
+				System.out.println(s);
+				int i = studentListA.getSelectedIndex();
+				a.add(i);
 			}
-			for (String s : teamA) {
-				studentListA.setSelectedValue(s, true);
+
+			for (String s : teamB) {
+				studentListB.setSelectedValue(s, true);
+				System.out.println(s);
+				int i = studentListB.getSelectedIndex();
+				b.add(i);
 			}
+			Integer[] A = a.toArray(new Integer[a.size()]);
+			int[] a1;
+			a1 = Arrays.stream(A).mapToInt(Integer::valueOf).toArray();
+			studentListA.setSelectedIndices(a1);
+
+			Integer[] B = b.toArray(new Integer[b.size()]);
+			int[] b1;
+			b1 = Arrays.stream(B).mapToInt(Integer::valueOf).toArray();
+			studentListB.setSelectedIndices(b1);
+
+			int fre = Integer.parseInt(set_turnFre);
+			int hour = fre / 3600000;
+			int minute = (fre % 3600000) / 60000;
+			textField_Hour2.setText(String.valueOf(hour));
+			textField_Min.setText(String.valueOf(minute));
+			String[] s1 = set_startTime.split(" ");
+			String[] s2 = s1[0].split("-");
+			String[] s3 = s1[1].split(":");
+
+			textField_Year.setText(s2[0]);
+			textField_Mon.setText(s2[1]);
+			textField_Day.setText(s2[2]);
+			textField_Hour1.setText(s3[0]);
+
 			this.dialogPane.updateUI();
 
 		}
@@ -910,6 +995,36 @@ public class HomePage extends javax.swing.JFrame {
 				e.printStackTrace();
 			}
 
+		}
+
+		public boolean judgeSame() {
+			OkHttpClient clientjudge = new OkHttpClient();
+			RequestBody requestBodayJudge = new FormBody.Builder().add("selectName", title_return).build();
+
+			Request requestjudge = new Request.Builder().post(requestBodayJudge)
+					.url("http://localhost:8080/GPMCGroupProject/queryTopicDetail").build();
+
+			try {
+				Response response = clientjudge.newCall(requestjudge).execute();
+				if (!response.isSuccessful()) {
+					JOptionPane.showMessageDialog(null, "Can't request server, please check server statusjudge");
+					return false;
+				} else {
+					String txt = response.body().string();
+					if (!txt.equals("false")) {
+						JOptionPane.showMessageDialog(null, "There is a topic named your topic name.", "Error",
+								JOptionPane.ERROR_MESSAGE);
+						return false;
+
+					} else
+						return true;
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+
+			}
 		}
 
 		public boolean judge() {
@@ -973,10 +1088,10 @@ public class HomePage extends javax.swing.JFrame {
 						JOptionPane.showMessageDialog(null, "Number is not valid", "Error", JOptionPane.ERROR_MESSAGE);
 						return false;
 					}
+
 				}
 			}
 		}
-
 	}
 
 	class turnPanel extends JPanel {
@@ -1002,15 +1117,15 @@ public class HomePage extends javax.swing.JFrame {
 			this.setVisible(true);
 		}
 
-		public Vector<String> prepareData(){
+		public Vector<String> prepareData() {
 			Vector<String> columnNames = new Vector<String>();
 			columnNames.addElement("ownerTeam");
 			columnNames.addElement("turnID");
 			return columnNames;
 		}
-		
+
 		public void displayData() throws DocumentException {
-			
+
 			Vector<String> columnNames = prepareData();
 			Vector<Vector> rowData = new Vector<Vector>();
 			OkHttpClient client = new OkHttpClient();
@@ -1110,23 +1225,20 @@ public class HomePage extends javax.swing.JFrame {
 
 			turnTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 				public void valueChanged(ListSelectionEvent e) {
-					
-					
-					
+
 					moveDetails.setText(" ");
 					int row = turnTable.getSelectedRow();
 					Integer ID = Integer.parseInt((String) turnTable.getValueAt(row, 1));
-					
-					
+
 					OkHttpClient client = new OkHttpClient();
-					RequestBody req = new FormBody.Builder().add("topicName", selectName).add("username", name).add("turnID",String.valueOf(ID)).build();
-					Request getreq = new Request.Builder().post(req).url("http://localhost:8080/GPMCGroupProject/MoveDataQuery")
-							.build();
-					
+					RequestBody req = new FormBody.Builder().add("topicName", selectName).add("username", name)
+							.add("turnID", String.valueOf(ID)).build();
+					Request getreq = new Request.Builder().post(req)
+							.url("http://localhost:8080/GPMCGroupProject/MoveDataQuery").build();
 
 					try {
 						Response response = client.newCall(getreq).execute();
-						
+
 						String txt = response.body().string();
 						Vector<String> columnNames = new Vector<String>();
 						Vector<Vector> rowData = new Vector<Vector>();
@@ -1153,7 +1265,7 @@ public class HomePage extends javax.swing.JFrame {
 								rowData.addElement(rowIt);
 							}
 						}
-						DefaultTableModel table = new DefaultTableModel(rowData,columnNames);
+						DefaultTableModel table = new DefaultTableModel(rowData, columnNames);
 						moveTable.setModel(table);
 					} catch (DocumentException | IOException e1) {
 						e1.printStackTrace();
@@ -1331,12 +1443,14 @@ public class HomePage extends javax.swing.JFrame {
 
 					AddMove m = new AddMove(selectName, user);
 					m.setVisible(true);
-
 				}
 			});
-
 		}
-
 	}
+
+
+
+
+	
 
 }
