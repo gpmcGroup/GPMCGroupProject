@@ -1053,7 +1053,6 @@ public class HomePage extends javax.swing.JFrame {
 				turnScroll = new JScrollPane(turnTable);
 			}
 			{
-
 				DefaultTableModel tmodel = new DefaultTableModel();
 				moveTable = new JTable(tmodel);
 				moveTable.setVisible(true);
@@ -1061,7 +1060,6 @@ public class HomePage extends javax.swing.JFrame {
 				moveTable.setRowSelectionAllowed(true);
 				moveTable.setColumnSelectionAllowed(false);
 				moveScroll = new JScrollPane(moveTable);
-
 			}
 			{
 				moveDetails = new JTextArea();
