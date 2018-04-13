@@ -24,7 +24,7 @@
 		<user id = "2">
 			<username>Test2</username>
 		</user>
-		<user id = "3">
+		<user id = "3" teamLeader = "true">
 			<username>Test3</username>
 		</user>
 		<user id = "4">

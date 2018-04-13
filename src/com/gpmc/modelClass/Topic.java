@@ -58,6 +58,22 @@ public class Topic {
 	}
 
 	public void setTitle(String tile) {
+//		try {
+//			Document doc = new SAXReader()
+//					.read(new File(xmlUtil.getTopicFilePath(title,"Topic")));
+//
+//			// 1.
+////			Element ele = (Element) doc.selectSingleNode(xpath);
+////
+////			return ele.getStringValue();
+//			// 2.
+//			// String x = doc.valueOf(xpath);
+//			// return x;
+//		} catch (DocumentException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+
 		this.title = tile;
 	}
 
@@ -155,7 +171,6 @@ public class Topic {
 			// return x;
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 			return null;
 		}
 	}
