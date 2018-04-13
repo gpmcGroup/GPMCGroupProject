@@ -51,6 +51,7 @@ public class loginService extends HttpServlet {
 		// use getAttribute method to get request parameter 
 		String username = (String) request.getParameter("username");
 		String password = (String) request.getParameter("password");
+
 		
 		User user = new Student();
 		try {
