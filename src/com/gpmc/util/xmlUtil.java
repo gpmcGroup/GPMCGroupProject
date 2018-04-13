@@ -24,7 +24,7 @@ public class xmlUtil {
 	
 	
 	public static String getTopicFilePath(String topicName,String fileName) {
-		topicName = topicName.replaceAll(" ", "_");
+		topicName = topicName.replaceAll("[^0-9a-zA-Z]", "_");
 		return xmlUtil.class.getClassLoader().getResource("").getPath() + ".." + File.separator + topicName + File.separator + fileName +".xml";
 	}
 	

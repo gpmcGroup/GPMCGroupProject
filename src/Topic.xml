@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <root>
-
+	<maxId>1</maxId>
 	<topic id = "1">
 		<title>Is Abortion is wrong?</title>
 		<teamA>York Duck</teamA>
