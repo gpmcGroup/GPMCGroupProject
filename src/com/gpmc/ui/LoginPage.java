@@ -45,7 +45,7 @@ public class LoginPage extends JFrame{
 		JTextField userText = new JTextField(20);
 		userText.setBounds(123, 10, 160, 25);
 		panel.add(userText);
-
+ 
 		JLabel passwordLabel = new JLabel("Password:");
 		passwordLabel.setBounds(10, 40, 80, 25);
 		panel.add(passwordLabel);

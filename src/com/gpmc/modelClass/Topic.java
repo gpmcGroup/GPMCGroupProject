@@ -26,8 +26,9 @@ public class Topic {
 		if (content == null) {
 			String xpath = "//topic[title='" + title + "']";
 			try {
+				System.out.println(xmlUtil.getTopicFilePath(title,"Topic"));
 				Document doc = new SAXReader()
-						.read(new File(xmlUtil.class.getClassLoader().getResource("Topic.xml").getPath()));
+						.read(new File(xmlUtil.getTopicFilePath(title,"Topic")));
 
 				// 1.
 				Element ele = (Element) doc.selectSingleNode(xpath);
@@ -140,11 +141,13 @@ public class Topic {
 	public String getAll() {
 		String xpath = "//topic[title='" + title + "']";
 		try {
+			System.out.println(xmlUtil.getTopicFilePath(title,"Topic"));
 			Document doc = new SAXReader()
-					.read(new File(xmlUtil.class.getClassLoader().getResource("Topic.xml").getPath()));
+					.read(new File(xmlUtil.getTopicFilePath(title, "Topic")));
 
 			// 1.
 			Element ele = (Element) doc.selectSingleNode(xpath);
+			
 
 			return ele.asXML();
 			// 2.

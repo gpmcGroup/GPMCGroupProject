@@ -33,6 +33,7 @@ public class queryTopicDetail extends HttpServlet {
 		String selectName = (String) request.getParameter("selectName");
 		Topic topic = new Topic();
 		topic.setTitle(selectName);
+
 		String content = topic.getAll();
 
 		// find topic content success:return and introductionpanel

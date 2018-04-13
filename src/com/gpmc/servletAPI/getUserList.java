@@ -34,10 +34,12 @@ public class getUserList extends HttpServlet {
 		// System.out.println("\nhello");
 
 		// response.getWriter().write("Hello");
+		String topicName = (String) request.getParameter("topicName");
 		String teamAName = (String) request.getParameter("teamAName");
 		String teamBName = (String) request.getParameter("teamBName");
 		Team team = new Team();
 		team.setTeamName(teamAName);
+		team.setTitleName(topicName);
 		String s1 = team.getTeamMemberList();
 		team.setTeamName(teamBName);
 		String s2 = team.getTeamMemberList();

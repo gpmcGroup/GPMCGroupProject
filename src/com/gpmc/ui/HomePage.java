@@ -316,17 +316,16 @@ public class HomePage extends javax.swing.JFrame {
 					OkHttpClient client1 = new OkHttpClient();
 					RequestBody requestBoday1 = new FormBody.Builder().add("selectName", selectName).build();
 
-					OkHttpClient client2 = new OkHttpClient();
-
 					Request request1 = new Request.Builder().post(requestBoday1)
 							.url("http://localhost:8080/GPMCGroupProject/queryTopicDetail").build();
 
 					try {
 						Response response = client1.newCall(request1).execute();
 						if (!response.isSuccessful()) {
-							JOptionPane.showMessageDialog(null, "Can't request server, please check server status");
+							JOptionPane.showMessageDialog(null, "Can't request server, please check server status1");
 						} else {
 							String txt = response.body().string();
+							System.out.println("fanhuide :" + txt);
 							Document doc = DocumentHelper.parseText(txt);
 							Element ele = (Element) doc.selectSingleNode("//topic[title='" + selectName + "']/content");
 							content_content = ele.getStringValue();
@@ -354,15 +353,15 @@ public class HomePage extends javax.swing.JFrame {
 							// System.out.print("teamB:"+ele.getStringValue()+"\n");
 							response.close();
 						}
-
-						RequestBody requestBoday2 = new FormBody.Builder().add("teamAName", teamAName)
+						OkHttpClient client2 = new OkHttpClient();
+						RequestBody requestBoday2 = new FormBody.Builder().add("topicName",selectName).add("teamAName", teamAName)
 								.add("teamBName", teamBName).build();
 						Request request2 = new Request.Builder().post(requestBoday2)
 								.url("http://localhost:8080/GPMCGroupProject/getUserList").build();
 						Response response1 = client2.newCall(request2).execute();
 						if (!response.isSuccessful()) {
 							JOptionPane.showMessageDialog(null,
-									"Can't request server again, please check server status");
+									"Can't request server again, please check server status2");
 						} else {
 							String txt1 = response1.body().string();
 							teamMem = txt1.split(";");
@@ -472,7 +471,7 @@ public class HomePage extends javax.swing.JFrame {
 					JButton jBEdit = new JButton("Edit");
 					jBEdit.addActionListener(l -> {
 						newTopic np1 = new newTopic(this);
-						np1.setData(selectName, content_content, teamAVc, teamBVc);
+//						np1.setData(selectName, content_content,teamAName,teamBName, teamAVc, teamBVc,);
 						np1.setVisible(true);
 					});
 					GroupLayout.SequentialGroup vg6 = groupLayout1.createSequentialGroup();

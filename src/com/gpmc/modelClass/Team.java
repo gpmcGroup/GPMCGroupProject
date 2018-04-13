@@ -20,9 +20,14 @@ public class Team {
 	private List<Move> turnFileList;
 	private String topicView; // replace team
 	private List<Element> eleList;
+	private String setTeamBelonged;
 
 	public String getTeamName() {
 		return teamName;
+	}
+	
+	public void setTitleName(String str) {
+		this.setTeamBelonged = str;
 	}
 
 	public void setTeamName(String teamName) {
@@ -30,14 +35,13 @@ public class Team {
 	}
 
 	public String getTeamMemberList() {
-		System.out.println();
 		String xpath = new String("//team[@name ='" + teamName + "']/user/username");
 		eleList = new ArrayList<Element>();
 		String s = "";
 
 		try {
 			Document doc = new SAXReader()
-					.read(new File(xmlUtil.class.getClassLoader().getResource("Team.xml").getPath()));
+					.read(new File(xmlUtil.getTopicFilePath(setTeamBelonged, "Team")));
 
 			for (Node nd : doc.selectNodes(xpath)) {
 				eleList.add((Element) nd);

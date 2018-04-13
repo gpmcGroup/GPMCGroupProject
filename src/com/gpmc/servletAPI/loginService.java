@@ -51,18 +51,6 @@ public class loginService extends HttpServlet {
 		// use getAttribute method to get request parameter 
 		String username = (String) request.getParameter("username");
 		String password = (String) request.getParameter("password");
-		
-		//test
-		Document doc;
-		try {
-			doc = new SAXReader().read(new File(xmlUtil.getTopicFilePath("Is Abortion is wrong?", "Team")));
-			System.out.println(doc.asXML());
-		} catch (DocumentException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		//test
-		
 
 		
 		User user = new Student();

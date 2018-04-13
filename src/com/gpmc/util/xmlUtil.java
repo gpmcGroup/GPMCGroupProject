@@ -18,10 +18,6 @@ import org.dom4j.io.XMLWriter;
 public class xmlUtil {
 	
 	public static String Userpath = xmlUtil.class.getClassLoader().getResource("User.xml").getPath();
-	public static String TeamPath = xmlUtil.class.getClassLoader().getResource("Team.xml").getPath();
-	public static String MovePath = xmlUtil.class.getClassLoader().getResource("Move_York Bird.xml").getPath();
-	public static String TurnPath = xmlUtil.class.getClassLoader().getResource("Turn.xml").getPath();
-	
 	
 	public static String getTopicFilePath(String topicName,String fileName) {
 		topicName = topicName.replaceAll("[^0-9a-zA-Z]", "_");
