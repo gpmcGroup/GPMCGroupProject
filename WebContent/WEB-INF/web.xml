@@ -58,11 +58,36 @@
     <url-pattern>/GPMCGroupProject/fileDownload</url-pattern>
   </servlet-mapping>
   <servlet>
-  	<servlet-name>logoutService</servlet-name>
-  	<servlet-class>com.gpmc.servletAPI</servlet-class>
+    <servlet-name>logoutService</servlet-name>
+    <servlet-class>com.gpmc.servletAPI</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>logoutService</servlet-name>
-  	<url-pattern>/GPMCGroupProject/logoutService</url-pattern>
+    <servlet-name>logoutService</servlet-name>
+    <url-pattern>/GPMCGroupProject/logoutService</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>queryTopicDetail</servlet-name>
+    <servlet-class>com.gpmc.servletAPI</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>queryTopicDetail</servlet-name>
+    <url-pattern>/GPMCGroupProject/queryTopicDetail</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>getUserList</servlet-name>
+    <servlet-class>com.gpmc.servletAPI</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>getUserList</servlet-name>
+    <url-pattern>/GPMCGroupProject/getUserList</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>storeTopic</servlet-name>
+    <servlet-class>com.gpmc.servletAPI</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>storeTopic</servlet-name>
+    <url-pattern>/GPMCGroupProject/storeTopic</url-pattern>
   </servlet-mapping>
 </web-app>
