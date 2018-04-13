@@ -36,8 +36,9 @@ public class CreateMove extends HttpServlet {
 		String claimType = (String) request.getParameter("type");
 		String claimDetails = (String) request.getParameter("textBody");
 		String username = (String) request.getParameter("username");
+		String topicName = (String)request.getParameter("topicName");
 		try {
-			xmlUtil.AddMove(claimType, claimDetails, username);
+			xmlUtil.AddMove(topicName,claimType, claimDetails, username);
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

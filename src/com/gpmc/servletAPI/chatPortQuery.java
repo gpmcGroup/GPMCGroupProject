@@ -33,11 +33,12 @@ public class chatPortQuery extends HttpServlet {
 		
 		
 		String teamName = request.getParameter("teamName");
+		String topicName = request.getParameter("topicName");
 		
 		try {
-			String port = xmlUtil.queryTeamChatPort(teamName);
+			String port = xmlUtil.queryTeamChatPort(topicName,teamName);
 			System.out.println("teamport :" + port);
-			response.getWriter().write(xmlUtil.queryTeamChatPort(teamName));
+			response.getWriter().write(xmlUtil.queryTeamChatPort(topicName,teamName));
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

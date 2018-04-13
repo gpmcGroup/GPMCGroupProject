@@ -34,14 +34,6 @@
     <url-pattern>/GPMCGroupProject/CreateMove</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>HelloServlet</servlet-name>
-    <servlet-class>com.gpmc.servletAPI</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>HelloServlet</servlet-name>
-    <url-pattern>/GPMCGroupProject/HelloServlet</url-pattern>
-  </servlet-mapping>
-  <servlet>
     <servlet-name>fileUpload</servlet-name>
     <servlet-class>com.gpmc.servletAPI</servlet-class>
   </servlet>

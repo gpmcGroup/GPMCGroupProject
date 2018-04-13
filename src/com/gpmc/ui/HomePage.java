@@ -210,7 +210,7 @@ public class HomePage extends javax.swing.JFrame {
 						if (!teamName.equals("")) {
 							// request chat port from server
 							OkHttpClient client = new OkHttpClient();
-							RequestBody requestBoday = new FormBody.Builder().add("teamName", teamName).build();
+							RequestBody requestBoday = new FormBody.Builder().add("teamName", teamName).add("topicName",selectName).build();
 							Request request = new Request.Builder().post(requestBoday)
 									.url("http://localhost:8080/GPMCGroupProject/chatPortQuery").build();
 
@@ -1012,7 +1012,7 @@ public class HomePage extends javax.swing.JFrame {
 	    				JOptionPane.showMessageDialog(moveTable, "Problems accessing server");
 	    		} else {
 	    			t = new DefaultTableModel();
-	    			t = xmlUtil.fillTurnData();
+	    			t = xmlUtil.fillTurnData(selectName);
 	    			turnTable.setModel(t);
 	    			
 	    		}
@@ -1095,7 +1095,7 @@ public class HomePage extends javax.swing.JFrame {
 	    				
 	    				try {
 	    					DefaultTableModel table = new DefaultTableModel();
-							table = xmlUtil.fillMoveData(turnID);
+							table = xmlUtil.fillMoveData(selectName,name,turnID);
 							moveTable.setModel(table);
 						} catch (DocumentException e1) {
 							e1.printStackTrace();
@@ -1147,7 +1147,7 @@ public class HomePage extends javax.swing.JFrame {
     	
     	public void displayData() throws DocumentException{
     			DefaultTableModel t = new DefaultTableModel();
-    			t= xmlUtil.fillMoveData();
+    			t= xmlUtil.fillMoveData(selectName,name);
     			listMoves.setModel(t);
     	}
     	
@@ -1226,7 +1226,7 @@ public class HomePage extends javax.swing.JFrame {
     				String[] ss = s[s.length-1].split("</username>");
     				String user = ss[0];
     				
-    				AddMove m = new AddMove(user);
+    				AddMove m = new AddMove(selectName,user);
     				m.setVisible(true);
     			
     			}

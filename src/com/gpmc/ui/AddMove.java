@@ -28,18 +28,6 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
-/**
-* This code was edited or generated using CloudGarden's Jigloo
-* SWT/Swing GUI Builder, which is free for non-commercial
-* use. If Jigloo is being used commercially (ie, by a corporation,
-* company or business for any purpose whatever) then you
-* should purchase a license for each developer using Jigloo.
-* Please visit www.cloudgarden.com for details.
-* Use of Jigloo implies acceptance of these licensing terms.
-* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
-* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
-* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
-*/
 public class AddMove extends JFrame {
 	private JPanel jPanel1;
 	private JTextArea moveDetails;
@@ -52,20 +40,23 @@ public class AddMove extends JFrame {
 	private JLabel linkedLabel;
 	private JComboBox linkedMoves;
 	private String username;
+	private String topicName;
 
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
 	
 	//textbodylabel, textbody, movetypelabel, movetypefield, save, cancel
-	public AddMove(String username) {
+	public AddMove(String topicName, String username) {
 		super();
 		initGUI();
 		setupEventHandlers();
 		this.username = username;
+		this.topicName = topicName;
 		this.setName("Sse");
 		this.setLocationRelativeTo(this);
 		this.setVisible(true);
+		
 	}
 	
 	private void initGUI() {
@@ -174,7 +165,7 @@ public class AddMove extends JFrame {
 				//create an okhttp request containing the field information
 				//send request
 				OkHttpClient client = new OkHttpClient();
-				RequestBody body = new FormBody.Builder().add("type", claimType).add("textBody", claimDetails).add("username", username).build();
+				RequestBody body = new FormBody.Builder().add("topicName",topicName).add("type", claimType).add("textBody", claimDetails).add("username", username).build();
 				Request request = new Request.Builder().post(body).url("http://localhost:8080/GPMCGroupProject/CreateMove").build();
 				try {
 					Response response = client.newCall(request).execute();
