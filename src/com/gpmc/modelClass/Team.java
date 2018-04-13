@@ -30,6 +30,7 @@ public class Team {
 	}
 
 	public String getTeamMemberList() {
+		System.out.println();
 		String xpath = new String("//team[@name ='" + teamName + "']/user/username");
 		eleList = new ArrayList<Element>();
 		String s = "";
