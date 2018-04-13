@@ -12,7 +12,6 @@ import org.dom4j.Element;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
 public class StasticReport_Overall {
-	
 	private List moveList;
 	private List turnIDList;
 	private List teamNameList;
@@ -34,8 +33,6 @@ public class StasticReport_Overall {
 		typeList = new ArrayList<String>();
 		contentList = new ArrayList<String>();
 	}
-	
-	
 	
 	/*
 	 * receive topic name and return the first team's name to start the turn
@@ -101,7 +98,6 @@ public class StasticReport_Overall {
 				contentList.add(node.get(j).valueOf("textBody"));
 			}
 		}
-		
 		new GenerateOverallReport(moveList,turnIDList,teamNameList,userIDList,typeList,contentList,topicName).getReport();;
 	}
 	public static void main(String args[]) throws DocumentException, FileNotFoundException {

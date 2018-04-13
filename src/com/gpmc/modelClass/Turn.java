@@ -8,7 +8,6 @@ public class Turn {
 	private Map<String, Move> dcFileMap;
 //	private List<Move> MoveList;  //need to discuss again
 	private int IDNumber;
-	
 	public Team getOwnerTeam() {
 		return ownerTeam;
 	}
