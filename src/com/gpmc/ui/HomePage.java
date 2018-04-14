@@ -7,14 +7,18 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,6 +39,7 @@ import javax.swing.GroupLayout.ParallelGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -69,6 +74,8 @@ import com.sun.xml.internal.ws.api.Component;
 import com.sun.xml.internal.ws.server.sei.InvokerTube;
 import com.gpmc.modelClass.*;
 
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -250,21 +257,22 @@ public class HomePage extends javax.swing.JFrame {
 				jBStatisc.setText("Statisc");
 				jBStatisc.setBounds(788, 76, 97, 35);
 				 jBStatisc.addActionListener(l->{
-					 OkHttpClient client = new OkHttpClient();
-					 RequestBody body = new FormBody.Builder().add("topicName", selectName).build();
-					 Request request = new Request.Builder().post(body).url("http://localhost:8080/GPMCGroupProject/requestReport").build();
-					 try {
-						Response response = client.newCall(request).execute();
-						if(!response.isSuccessful()) {
-							JOptionPane.showMessageDialog(null, "Can't request server, please check server status");
-						}else {
-							String txt = response.body().string();
-							JOptionPane.showMessageDialog(null, txt);
-						}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					 new downLoadReportPanel(this,selectName);
+//					 OkHttpClient client = new OkHttpClient();
+//					 RequestBody body = new FormBody.Builder().add("topicName", selectName).build();
+//					 Request request = new Request.Builder().post(body).url("http://localhost:8080/GPMCGroupProject/requestReport").build();
+//					 try {
+//						Response response = client.newCall(request).execute();
+//						if(!response.isSuccessful()) {
+//							JOptionPane.showMessageDialog(null, "Can't request server, please check server status");
+//						}else {
+//							String txt = response.body().string();
+//							JOptionPane.showMessageDialog(null, txt);
+//						}
+//					} catch (IOException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
 				 });
 			}
 			{
@@ -1496,4 +1504,98 @@ public class HomePage extends javax.swing.JFrame {
 		}
 	}
 
+	class downLoadReportPanel  extends JDialog {
+		private JLabel jLUploadFile;
+		private JTextField JTextFileName;
+		private JButton JBStoreFile;
+		private JButton JBUploadFile;
+		private JFileChooser jfc;
+		private String downLoadPath;  //下载存储的路径
+		private String downLoadFileName; //下载文件的名字
+
+		public downLoadReportPanel(JFrame f, String topicName) {
+			super(f, "create a new topic", true);
+			
+			Container container = getContentPane();
+
+			setSize(500, 100);
+			intialUI();
+		}
+		public void intialUI() {
+			jLUploadFile = new JLabel("Store Folder");
+			JTextFileName = new JTextField();
+//			JTextFileName.setSize();
+			JBUploadFile = new JButton("DownLoad");
+			JBStoreFile = new JButton("...");
+			jfc = new JFileChooser();
+			jfc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+			//add actionListener
+			
+			JBStoreFile.addActionListener(l->{
+				jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				int state = jfc.showOpenDialog(null);
+				if(state == 1) {
+						return ;
+				}else {
+					downLoadFileName = JTextFileName.getText();  //get downLoadFile name from text input
+					downLoadPath = jfc.getSelectedFile().getAbsolutePath() + File.separator + downLoadFileName;  // get store directory
+					JTextFileName.setText(downLoadPath);
+					System.out.println(downLoadFileName);
+					
+				}
+			});
+			//send request here
+			JBUploadFile.addActionListener(l->{
+				if(downLoadFileName.equals("") == false) {  //
+					OkHttpClient client = new OkHttpClient();
+					RequestBody requestBody = new FormBody.Builder().add("requestFileName",downLoadFileName).add("topicName", "Test").build();
+					Request request = new Request.Builder().url("http://localhost:8080/GPMCGroupProject/fileDownload").post(requestBody).build();
+					client.newCall(request).enqueue(new Callback() {
+						@Override
+						public void onResponse(Call arg0, Response response) throws IOException {
+							InputStream input = null;
+							byte[] buf = new byte[2048];
+							int len = 0;
+							FileOutputStream fileOutputStream = null;
+							//downLoadPath is the path contains fileName
+							input = response.body().byteStream();
+							long totalByte = response.body().contentLength();
+							File file = new File(downLoadPath);
+							fileOutputStream = new FileOutputStream(file);
+							while((len = input.read(buf))!=-1) {
+								fileOutputStream.write(buf,0,len);
+								//插入更新进度条
+							}
+							fileOutputStream.flush();
+							input.close();
+							fileOutputStream.close();
+							JOptionPane.showMessageDialog(null, "Download Successful!");
+						}
+						@Override
+						public void onFailure(Call arg0, IOException arg1) {
+							JOptionPane.showMessageDialog(null,"Download failed" + arg1);
+						}
+					});
+				}	
+			});
+			
+			this.setLayout(null);
+			this.setResizable(false);
+			jLUploadFile.setBounds(20, 20, 100, 30);
+			JTextFileName.setBounds(120, 20, 100, 30);
+			JBStoreFile.setBounds(220, 20, 100, 30);
+			JBUploadFile.setBounds(320, 20, 100, 30);
+			this.add(jLUploadFile);
+			this.add(JTextFileName);
+			this.add(JBStoreFile);
+			this.add(JBUploadFile);
+			
+			double lx = Toolkit.getDefaultToolkit().getScreenSize().getWidth();  
+	        double ly = Toolkit.getDefaultToolkit().getScreenSize().getHeight();  
+	        this.setLocation(new Point((int) (lx / 2) - 150, (int) (ly / 2) - 150));
+			
+	        
+	        this.setVisible(true);
+		}
+	}
 }
