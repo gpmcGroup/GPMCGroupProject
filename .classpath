@@ -8,21 +8,6 @@
 			<attribute name="owner.project.facets" value="jst.web"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/appFramework-1.0.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/jnlp.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/okhttp-3.9.1.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/okio-1.14.0.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
@@ -34,42 +19,17 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/itext7-io-7.0.2.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/itext7-kernel-7.0.2.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/itext7-pdfa-7.0.2.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/itext7-pdftest-7.0.2.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/itext7-sign-7.0.2.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/slf4j-api-1.7.22.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/slf4j-log4j12-1.7.22.jar"/>
-	<classpathentry kind="lib" path="lib/itext7-layout-7.0.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/appFramework-1.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/dom4j-2.0.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/itext7-io-7.0.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/itext7-kernel-7.0.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/itext7-layout-7.0.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/itext7-pdfa-7.0.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/itext7-pdftest-7.0.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/itext7-sign-7.0.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/okhttp-3.9.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/slf4j-api-1.7.22.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/slf4j-log4j12-1.7.22.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
