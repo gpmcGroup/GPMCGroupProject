@@ -1,26 +1,32 @@
 package com.gpmc.modelClass;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Date;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
+import org.dom4j.io.XMLWriter;
 
 import com.gpmc.util.xmlUtil;
 
 public class Topic {
 	private String title;
-	private Team teamA;
-	private Team teamB;
-	private Date startTime;
-	private int maxTurn;
-	private long turnCycleFrequency; // miliseconds
-	private Team presentTurnOwner;
-	private long changeTurnTimeLeft; // miliseconds
-	private boolean status; // three value: pending, progressing, end
+	private String teamA;
+	private String teamB;
+	private String startTime;
+	private String maxTurn;
+	private String turnCycleFrequency; // miliseconds
+	private String presentTurnOwner;
+	private String changeTurnTimeLeft; // miliseconds
+	private String status; // three value: pending, progressing, end
 	private String content;
+	private String winner;
 
 	public String getContent() {
 		if (content == null) {
@@ -51,8 +57,6 @@ public class Topic {
 		this.content = content;
 	}
 
-	private Team winner;
-
 	public String getTitle() {
 		return title;
 	}
@@ -77,75 +81,75 @@ public class Topic {
 		this.title = tile;
 	}
 
-	public Team getTeamA() {
+	public String getTeamA() {
 		return teamA;
 	}
 
-	public void setTeamA(Team teamA) {
+	public void setTeamA(String teamA) {
 		this.teamA = teamA;
 	}
 
-	public Team getTeamB() {
+	public String getTeamB() {
 		return teamB;
 	}
 
-	public void setTeamB(Team teamB) {
+	public void setTeamB(String teamB) {
 		this.teamB = teamB;
 	}
 
-	public Date getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(Date startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
 
-	public int getMaxTurn() {
+	public String getMaxTurn() {
 		return maxTurn;
 	}
 
-	public void setMaxTurn(int maxTurn) {
+	public void setMaxTurn(String maxTurn) {
 		this.maxTurn = maxTurn;
 	}
 
-	public long getTurnCycleFrequency() {
+	public String getTurnCycleFrequency() {
 		return turnCycleFrequency;
 	}
 
-	public void setTurnCycleFrequency(long turnCycleFrequency) {
+	public void setTurnCycleFrequency(String turnCycleFrequency) {
 		this.turnCycleFrequency = turnCycleFrequency;
 	}
 
-	public Team getPresentTurnOwner() {
+	public String getPresentTurnOwner() {
 		return presentTurnOwner;
 	}
 
-	public void setPresentTurnOwner(Team presentTurnOwner) {
+	public void setPresentTurnOwner(String presentTurnOwner) {
 		this.presentTurnOwner = presentTurnOwner;
 	}
 
-	public long getChangeTurnTimeLeft() {
+	public String getChangeTurnTimeLeft() {
 		return changeTurnTimeLeft;
 	}
 
-	public void setChangeTurnTimeLeft(long changeTurnTimeLeft) {
+	public void setChangeTurnTimeLeft(String changeTurnTimeLeft) {
 		this.changeTurnTimeLeft = changeTurnTimeLeft;
 	}
 
-	public boolean isStatus() {
+	public String isStatus() {
 		return status;
 	}
 
-	public void setStatus(boolean status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
-	public Team getWinner() {
+	public String getWinner() {
 		return winner;
 	}
 
-	public void setWinner(Team winner) {
+	public void setWinner(String winner) {
 		this.winner = winner;
 	}
 
@@ -158,9 +162,13 @@ public class Topic {
 		String xpath = "//topic[title='" + title + "']";
 		try {
 			
+			System.out.println(xmlUtil.getTopicFilePath(title, "Topic"));
+			System.out.println(xpath);
 			Document doc = new SAXReader()
 					.read(new File(xmlUtil.getTopicFilePath(title, "Topic")));
-
+			
+//			System.out.println("houtaidsad ada a asd das: " +doc.asXML());
+			
 			// 1.
 			Element ele = (Element) doc.selectSingleNode(xpath);
 			
@@ -175,4 +183,126 @@ public class Topic {
 		}
 	}
 
+	/*
+	 * 	private String title;
+	private String teamA;
+	private String teamB;
+	private String startTime;
+	private String maxTurn;
+	private String turnCycleFrequency; // miliseconds
+	private String presentTurnOwner;
+	private String changeTurnTimeLeft; // miliseconds
+	private String status; // three value: pending, progressing, end
+	private String content;
+	private String winner;
+	 */
+	public void writeNewTopicXml() throws IOException {
+//		System.out.println("zhe li shi write");
+		String topicName = title.replaceAll("[^0-9a-zA-Z]", "_");
+		String folderpath= xmlUtil.class.getClassLoader().getResource("").getPath() + ".." + File.separator+topicName;
+		File fl = new File(folderpath);
+		if(fl.exists()==false) {
+			fl.mkdir();
+		}
+
+		String filePath = folderpath +File.separator+ "Topic.xml";
+//			File fTopic = new File(filePath);
+		
+		
+		Document doc = DocumentHelper.createDocument();
+		
+		Element root = DocumentHelper.createElement("root");
+		
+		Element topic = root.addElement("topic");
+		topic.addAttribute("id", "1");
+		Element ele_title = topic.addElement("title");
+		ele_title.setText(title);
+		Element ele_teamA = topic.addElement("teamA");
+		ele_teamA.setText(teamA);
+		Element ele_teamB = topic.addElement("teamB");
+		ele_teamB.setText(teamB);
+		Element ele_startTime = topic.addElement("startTime");
+		ele_startTime.setText(startTime);
+		Element ele_maxTurn = topic.addElement("maxTurn");
+		ele_maxTurn.setText(maxTurn);
+		Element ele_turnCycl = topic.addElement("turnCycleFrequency");
+		ele_turnCycl.setText(turnCycleFrequency);
+		Element ele_presenTurnOwner = topic.addElement("presentTurnOwner");
+		ele_presenTurnOwner.setText(teamA);
+		Element ele_changeTurnLeft = topic.addElement("changeTurnTimeLeft");
+		ele_changeTurnLeft.setText(turnCycleFrequency);
+		Element ele_status = topic.addElement("status");
+		ele_status.setText("pending");
+		Element ele_winner = topic.addElement("winner");
+		ele_winner.setText("null");
+		Element ele_content = topic.addElement("content");
+		ele_content.setText(content);
+		
+					
+		doc.setRootElement(root);
+		
+//		System.out.println(doc.asXML());
+		OutputFormat format = OutputFormat.createPrettyPrint();
+		// Create the xml writer by passing outputstream and format
+		//get teamName
+		XMLWriter writer = new XMLWriter(new FileWriter(filePath), format);
+		// Write to the xml document, flush and close
+		writer.write(doc);
+		writer.flush();
+		writer.close();
+		
+	}
+	
+	public void changeTopic() throws IOException {
+		try {
+			String filePath = xmlUtil.getTopicFilePath(title,"Topic");
+			Document doc = new SAXReader()
+					.read(new File(xmlUtil.getTopicFilePath(title,"Topic")));
+			doc.clearContent();
+			Element root = DocumentHelper.createElement("root");
+			
+			Element topic = root.addElement("topic");
+			topic.addAttribute("id", "1");
+			Element ele_title = topic.addElement("title");
+			ele_title.setText(title);
+			Element ele_teamA = topic.addElement("teamA");
+			ele_teamA.setText(teamA);
+			Element ele_teamB = topic.addElement("teamB");
+			ele_teamB.setText(teamB);
+			Element ele_startTime = topic.addElement("startTime");
+			ele_startTime.setText(startTime);
+			Element ele_maxTurn = topic.addElement("maxTurn");
+			ele_maxTurn.setText(maxTurn);
+			Element ele_turnCycl = topic.addElement("turnCycleFrequency");
+			ele_turnCycl.setText(turnCycleFrequency);
+			Element ele_presenTurnOwner = topic.addElement("presentTurnOwner");
+			ele_presenTurnOwner.setText(teamA);
+			Element ele_changeTurnLeft = topic.addElement("changeTurnTimeLeft");
+			ele_changeTurnLeft.setText(turnCycleFrequency);
+			Element ele_status = topic.addElement("status");
+			ele_status.setText("pending");
+			Element ele_winner = topic.addElement("winner");
+			ele_winner.setText("null");
+			Element ele_content = topic.addElement("content");
+			ele_content.setText(content);
+			
+						
+			doc.setRootElement(root);
+
+			System.out.println(doc.asXML());
+			OutputFormat format = OutputFormat.createPrettyPrint();
+			// Create the xml writer by passing outputstream and format
+			//get teamName
+			XMLWriter writer = new XMLWriter(new FileWriter(filePath), format);
+			// Write to the xml document, flush and close
+			writer.write(doc);
+			writer.flush();
+			writer.close();
+			
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 }

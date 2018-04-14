@@ -97,22 +97,28 @@
     <servlet-name>TurnData</servlet-name>
     <url-pattern>/GPMCGroupProject/TurnData</url-pattern>
   </servlet-mapping>
-  
   <servlet>
-  	<servlet-name>MoveDataQuery</servlet-name>
-  	<servlet-class>com.gpmc.servletAPI</servlet-class>
+    <servlet-name>MoveDataQuery</servlet-name>
+    <servlet-class>com.gpmc.servletAPI</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>MoveDataQuery</servlet-name>
-  	<url-pattern>/GPMCGroupProject/MoveDataQuery</url-pattern>
+    <servlet-name>MoveDataQuery</servlet-name>
+    <url-pattern>/GPMCGroupProject/MoveDataQuery</url-pattern>
   </servlet-mapping>
-  
- <servlet>
-  	<servlet-name>queryTeamLeader</servlet-name>
-  	<servlet-class>com.gmpc.servletAPI</servlet-class>
+  <servlet>
+    <servlet-name>queryTeamLeader</servlet-name>
+    <servlet-class>com.gmpc.servletAPI</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>queryTeamLeader</servlet-name>
-  	<url-pattern>/GPMCGroupProject/queryTeamLeader</url-pattern>  	
+    <servlet-name>queryTeamLeader</servlet-name>
+    <url-pattern>/GPMCGroupProject/queryTeamLeader</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>changeDetail</servlet-name>
+  	<servlet-class>com.gpmc.servletAPI</servlet-class>  
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>changeDetail</servlet-name>
+  	<url-pattern>/GPMCGroupProject/changeDetail</url-pattern>
   </servlet-mapping>
 </web-app>

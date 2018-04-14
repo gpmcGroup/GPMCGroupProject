@@ -312,224 +312,7 @@ public class HomePage extends javax.swing.JFrame {
 				getContentPane().add(jLTopic);
 				jScrollPane.setViewportView(jLTopic);
 				jLTopic.addListSelectionListener(listener -> {
-					selectNumber = jLTopic.getSelectedIndex();
-					selectName = (String) topicList.get(selectNumber);
-					System.out.printf("LeadSelectionIndex is %s%n", selectName);
-
-					OkHttpClient client1 = new OkHttpClient();
-					RequestBody requestBoday1 = new FormBody.Builder().add("selectName", selectName).build();
-
-					Request request1 = new Request.Builder().post(requestBoday1)
-							.url("http://localhost:8080/GPMCGroupProject/queryTopicDetail").build();
-
-					try {
-						Response response = client1.newCall(request1).execute();
-						if (!response.isSuccessful()) {
-							JOptionPane.showMessageDialog(null, "Can't request server, please check server status1");
-						} else {
-							String txt = response.body().string();
-							// System.out.println("fanhuide :" + txt);
-							Document doc = DocumentHelper.parseText(txt);
-							Element ele = (Element) doc.selectSingleNode("//topic[title='" + selectName + "']/content");
-							content_content = ele.getStringValue();
-							// System.out.print("content:"+content_content+"\n");
-
-							ele = (Element) doc.selectSingleNode("//topic[title='" + selectName + "']/startTime");
-							content_time = ele.getStringValue();
-							// System.out.print("startTime:"+content_time+"\n");
-
-							ele = (Element) doc.selectSingleNode("//topic[title='" + selectName + "']/maxTurn");
-							content_maxTurn = ele.getStringValue();
-							// System.out.println("content_maxTurn:"+ele.getStringValue());
-
-							ele = (Element) doc
-									.selectSingleNode("//topic[title='" + selectName + "']/turnCycleFrequency");
-							content_turnFre = ele.getStringValue();
-							// System.out.print("content_turnFre:"+ele.getStringValue()+"\n");
-
-							ele = (Element) doc.selectSingleNode("//topic[title='" + selectName + "']/teamA");
-							teamAName = ele.getStringValue();
-							// System.out.print("teamA:"+ele.getStringValue()+"\n");
-
-							ele = (Element) doc.selectSingleNode("//topic[title='" + selectName + "']/teamB");
-							teamBName = ele.getStringValue();
-							// System.out.print("teamB:"+ele.getStringValue()+"\n");
-							response.close();
-						}
-						OkHttpClient client2 = new OkHttpClient();
-						RequestBody requestBoday2 = new FormBody.Builder().add("topicName", selectName)
-								.add("teamAName", teamAName).add("teamBName", teamBName).build();
-						Request request2 = new Request.Builder().post(requestBoday2)
-								.url("http://localhost:8080/GPMCGroupProject/getUserList").build();
-						Response response1 = client2.newCall(request2).execute();
-						if (!response.isSuccessful()) {
-							JOptionPane.showMessageDialog(null,
-									"Can't request server again, please check server status2");
-						} else {
-							String txt1 = response1.body().string();
-							teamMem = txt1.split(";");
-							// for(int i =0;i<2;i++) {
-							// System.out.println(teamMem[i]);
-							// }
-						}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (DocumentException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
-					jPShow.removeAll();
-					GroupLayout groupLayout1 = new GroupLayout(jPShow);
-					jPShow.setLayout(groupLayout1);
-
-					JTextField jt_title = new JTextField(selectName);
-					jt_title.setEditable(false);
-
-					JTextArea jt_content = new JTextArea(content_content);
-					jt_content.setBackground(null);
-					jt_content.setEditable(false);
-
-					JList jls_teamA = new JList();
-					JList jls_teamB = new JList();
-
-					String[] aa = teamMem[0].split(" ");
-					String[] bb = teamMem[1].split(" ");
-					Vector teamAVc = new Vector<String>();
-
-					for (int j = 0; j < aa.length; j++) {
-						teamAVc.add(aa[j]);
-					}
-					Vector teamBVc = new Vector<String>();
-					for (int j = 0; j < bb.length; j++) {
-						teamBVc.add(bb[j]);
-					}
-
-					JScrollPane jsp1 = new JScrollPane();
-					JScrollPane jsp2 = new JScrollPane();
-					JScrollPane jsp3 = new JScrollPane();
-
-					jsp1.setViewportView(jt_content);
-
-					jls_teamA.setListData(teamAVc);
-					jls_teamA.setBackground(null);
-					jls_teamA.setForeground(Color.BLACK);
-					jls_teamB.setListData(teamBVc);
-					jls_teamB.setBackground(null);
-					jls_teamB.setForeground(Color.BLACK);
-
-					jls_teamA.setEnabled(false);
-					jls_teamB.setEnabled(false);
-					jsp2.setViewportView(jls_teamA);
-					jsp3.setViewportView(jls_teamB);
-
-					JLabel jl_startTiem = new JLabel(content_time);
-					JLabel jl_maxTurn = new JLabel(content_maxTurn);
-					JLabel jl_turnFre = new JLabel(content_turnFre);
-
-					// JLabel jlt_title = new JLabel("title:");
-					// JLabel jlt_content = new JLabel("content:" );
-					JLabel jlt_teamA = new JLabel("TeamA:" + teamAName);
-					JLabel jlt_teamB = new JLabel("TeamB:" + teamBName);
-					JLabel jlt_startTime = new JLabel("StartTime:");
-					JLabel jlt_maxTurn = new JLabel("MaxTurn:");
-					JLabel jlt_TurnFre = new JLabel("TurnCycleFrequency:");
-
-					GroupLayout.SequentialGroup vg1 = groupLayout1.createSequentialGroup();
-					// vg1.addComponent(jlt_title);
-					vg1.addGap(5);
-					vg1.addComponent(jt_title);
-					vg1.addGap(5);
-
-					GroupLayout.SequentialGroup vg2 = groupLayout1.createSequentialGroup();
-					// vg2.addComponent(jt_content);
-					vg2.addGap(5);
-					vg2.addComponent(jsp1);
-					vg2.addGap(5);
-
-					GroupLayout.SequentialGroup vg3 = groupLayout1.createSequentialGroup();
-					vg3.addComponent(jlt_teamA);
-					vg3.addGap(5);
-					vg3.addComponent(jsp2);
-					vg3.addGap(10);
-					vg3.addComponent(jlt_teamB);
-					vg3.addGap(5);
-					vg3.addComponent(jsp3);
-
-					GroupLayout.SequentialGroup vg4 = groupLayout1.createSequentialGroup();
-					vg4.addComponent(jlt_maxTurn);
-					vg4.addGap(5);
-					vg4.addComponent(jl_maxTurn);
-					vg4.addGap(50);
-					vg4.addComponent(jlt_TurnFre);
-					vg4.addGap(5);
-					vg4.addComponent(jl_turnFre);
-
-					GroupLayout.SequentialGroup vg5 = groupLayout1.createSequentialGroup();
-					vg5.addComponent(jlt_startTime);
-					vg5.addGap(20);
-					vg5.addComponent(jl_startTiem);
-
-					JButton jBEdit = new JButton("Edit");
-					jBEdit.addActionListener(l -> {
-
-						newTopic np1 = new newTopic(this, jBEdit.getText());
-						// ele = (Element) doc.selectSingleNode("//topic[title='" + selectName +
-						// "']/startTime");
-						// content_time = ele.getStringValue();
-						// // System.out.print("startTime:"+content_time+"\n");
-
-						OkHttpClient clientTeam = new OkHttpClient();
-						RequestBody requestBodayTeam = new FormBody.Builder().add("title", selectName)
-								.add("teamAName", teamAName).add("teamBName", teamBName).build();
-						Request requestTeam = new Request.Builder().post(requestBodayTeam)
-								.url("http://localhost:8080/GPMCGroupProject/queryTeamLeader").build();
-						String bothLeader = "";
-						try {
-							Response responseTeam = clientTeam.newCall(requestTeam).execute();
-							if (!responseTeam.isSuccessful()) {
-								JOptionPane.showMessageDialog(null,
-										"Can't request server again, please check server statusTeam");
-							} else {
-								bothLeader = responseTeam.body().string();
-								// System.out.println(bothLeader);
-							}
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-
-						np1.setData(selectName, content_content, teamAName, teamBName, bothLeader, content_maxTurn,
-								content_time, content_turnFre, teamAVc, teamBVc);
-						np1.setVisible(true);
-					});
-					GroupLayout.SequentialGroup vg6 = groupLayout1.createSequentialGroup();
-					vg6.addGap(350);
-					vg6.addComponent(jBEdit);
-
-					groupLayout1.setHorizontalGroup(groupLayout1.createParallelGroup().addGap(20).addGroup(vg1)
-							.addGroup(vg2).addGroup(vg3).addGroup(vg4).addGroup(vg5).addGroup(vg6));
-
-					groupLayout1.setVerticalGroup(groupLayout1.createSequentialGroup().addGap(15)
-							.addComponent(jt_title, 30, 30, 30).addGap(10)
-							.addGroup(groupLayout1.createParallelGroup().addComponent(jsp1, 200, 200, 200)).addGap(10)
-							.addGroup(groupLayout1.createParallelGroup().addComponent(jlt_teamA)
-									.addComponent(jsp2, 100, 100, 100).addComponent(jlt_teamB)
-									.addComponent(jsp3, 100, 100, 100))
-							.addGap(10)
-							.addGroup(groupLayout1.createParallelGroup().addComponent(jlt_maxTurn)
-									.addComponent(jl_maxTurn).addComponent(jlt_TurnFre).addComponent(jl_turnFre))
-							.addGap(10)
-							.addGroup(groupLayout1.createParallelGroup().addComponent(jlt_startTime)
-									.addComponent(jl_startTiem))
-							.addGap(10).addGroup(groupLayout1.createParallelGroup(GroupLayout.Alignment.BASELINE)
-									.addComponent(jBEdit)));
-
-					jPShow.setVisible(true);
-
-					jPShow.updateUI();
-
+					getSelectedTopicData();
 				});
 			}
 
@@ -537,8 +320,10 @@ public class HomePage extends javax.swing.JFrame {
 				jBIntroduction = new JButton();
 				getContentPane().add(jBIntroduction);
 				jBIntroduction.setText("Introduction");
-				jBIntroduction.setBounds(349, 76, 102, 35);
+				jBIntroduction.setBounds(310, 76, 102, 35);
 				jBIntroduction.addActionListener(l -> {
+
+					getSelectedTopicData();
 
 				});
 			}
@@ -549,6 +334,224 @@ public class HomePage extends javax.swing.JFrame {
 			// add your error handling code here
 			e.printStackTrace();
 		}
+	}
+
+	public void getSelectedTopicData() {
+//		if(jLTopic.getSelectedValue()==null) {
+//			return;
+//		}
+		selectNumber = jLTopic.getSelectedIndex();
+		selectName = (String) topicList.get(selectNumber);
+		System.out.printf("LeadSelectionIndex is %s%n", selectName);
+
+		OkHttpClient client1 = new OkHttpClient();
+		RequestBody requestBoday1 = new FormBody.Builder().add("selectName", selectName).build();
+
+		Request request1 = new Request.Builder().post(requestBoday1)
+				.url("http://localhost:8080/GPMCGroupProject/queryTopicDetail").build();
+
+		try {
+			Response response = client1.newCall(request1).execute();
+			if (!response.isSuccessful()) {
+				JOptionPane.showMessageDialog(null, "Can't request server, please check server status1");
+			} else {
+				String txt = response.body().string();
+				// System.out.println("fanhuide :" + txt);
+				Document doc = DocumentHelper.parseText(txt);
+				Element ele = (Element) doc.selectSingleNode("//topic[title='" + selectName + "']/content");
+				content_content = ele.getStringValue();
+				// System.out.print("content:"+content_content+"\n");
+
+				ele = (Element) doc.selectSingleNode("//topic[title='" + selectName + "']/startTime");
+				content_time = ele.getStringValue();
+				// System.out.print("startTime:"+content_time+"\n");
+
+				ele = (Element) doc.selectSingleNode("//topic[title='" + selectName + "']/maxTurn");
+				content_maxTurn = ele.getStringValue();
+				// System.out.println("content_maxTurn:"+ele.getStringValue());
+
+				ele = (Element) doc.selectSingleNode("//topic[title='" + selectName + "']/turnCycleFrequency");
+				content_turnFre = ele.getStringValue();
+				// System.out.print("content_turnFre:"+ele.getStringValue()+"\n");
+
+				ele = (Element) doc.selectSingleNode("//topic[title='" + selectName + "']/teamA");
+				teamAName = ele.getStringValue();
+				// System.out.print("teamA:"+ele.getStringValue()+"\n");
+
+				ele = (Element) doc.selectSingleNode("//topic[title='" + selectName + "']/teamB");
+				teamBName = ele.getStringValue();
+				// System.out.print("teamB:"+ele.getStringValue()+"\n");
+				response.close();
+			}
+			OkHttpClient client2 = new OkHttpClient();
+			RequestBody requestBoday2 = new FormBody.Builder().add("topicName", selectName).add("teamAName", teamAName)
+					.add("teamBName", teamBName).build();
+			Request request2 = new Request.Builder().post(requestBoday2)
+					.url("http://localhost:8080/GPMCGroupProject/getUserList").build();
+			Response response1 = client2.newCall(request2).execute();
+			if (!response.isSuccessful()) {
+				JOptionPane.showMessageDialog(null, "Can't request server again, please check server status2");
+			} else {
+				String txt1 = response1.body().string();
+				teamMem = txt1.split(";");
+				// for(int i =0;i<2;i++) {
+				// System.out.println(teamMem[i]);
+				// }
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		jPShow.removeAll();
+		GroupLayout groupLayout1 = new GroupLayout(jPShow);
+		jPShow.setLayout(groupLayout1);
+
+		JTextField jt_title = new JTextField(selectName);
+		jt_title.setEditable(false);
+
+		JTextArea jt_content = new JTextArea(content_content);
+		jt_content.setBackground(null);
+		jt_content.setEditable(false);
+
+		JList jls_teamA = new JList();
+		JList jls_teamB = new JList();
+
+		String[] aa = teamMem[0].split(" ");
+		String[] bb = teamMem[1].split(" ");
+		Vector teamAVc = new Vector<String>();
+
+		for (int j = 0; j < aa.length; j++) {
+			teamAVc.add(aa[j]);
+		}
+		Vector teamBVc = new Vector<String>();
+		for (int j = 0; j < bb.length; j++) {
+			teamBVc.add(bb[j]);
+		}
+
+		JScrollPane jsp1 = new JScrollPane();
+		JScrollPane jsp2 = new JScrollPane();
+		JScrollPane jsp3 = new JScrollPane();
+
+		jsp1.setViewportView(jt_content);
+
+		jls_teamA.setListData(teamAVc);
+		jls_teamA.setBackground(null);
+		jls_teamA.setForeground(Color.BLACK);
+		jls_teamB.setListData(teamBVc);
+		jls_teamB.setBackground(null);
+		jls_teamB.setForeground(Color.BLACK);
+
+		jls_teamA.setEnabled(false);
+		jls_teamB.setEnabled(false);
+		jsp2.setViewportView(jls_teamA);
+		jsp3.setViewportView(jls_teamB);
+
+		JLabel jl_startTiem = new JLabel(content_time);
+		JLabel jl_maxTurn = new JLabel(content_maxTurn);
+		JLabel jl_turnFre = new JLabel(content_turnFre);
+
+		// JLabel jlt_title = new JLabel("title:");
+		// JLabel jlt_content = new JLabel("content:" );
+		JLabel jlt_teamA = new JLabel("TeamA:" + teamAName);
+		JLabel jlt_teamB = new JLabel("TeamB:" + teamBName);
+		JLabel jlt_startTime = new JLabel("StartTime:");
+		JLabel jlt_maxTurn = new JLabel("MaxTurn:");
+		JLabel jlt_TurnFre = new JLabel("TurnCycleFrequency:");
+
+		GroupLayout.SequentialGroup vg1 = groupLayout1.createSequentialGroup();
+		// vg1.addComponent(jlt_title);
+		vg1.addGap(5);
+		vg1.addComponent(jt_title);
+		vg1.addGap(5);
+
+		GroupLayout.SequentialGroup vg2 = groupLayout1.createSequentialGroup();
+		// vg2.addComponent(jt_content);
+		vg2.addGap(5);
+		vg2.addComponent(jsp1);
+		vg2.addGap(5);
+
+		GroupLayout.SequentialGroup vg3 = groupLayout1.createSequentialGroup();
+		vg3.addComponent(jlt_teamA);
+		vg3.addGap(5);
+		vg3.addComponent(jsp2);
+		vg3.addGap(10);
+		vg3.addComponent(jlt_teamB);
+		vg3.addGap(5);
+		vg3.addComponent(jsp3);
+
+		GroupLayout.SequentialGroup vg4 = groupLayout1.createSequentialGroup();
+		vg4.addComponent(jlt_maxTurn);
+		vg4.addGap(5);
+		vg4.addComponent(jl_maxTurn);
+		vg4.addGap(50);
+		vg4.addComponent(jlt_TurnFre);
+		vg4.addGap(5);
+		vg4.addComponent(jl_turnFre);
+
+		GroupLayout.SequentialGroup vg5 = groupLayout1.createSequentialGroup();
+		vg5.addComponent(jlt_startTime);
+		vg5.addGap(20);
+		vg5.addComponent(jl_startTiem);
+
+		JButton jBEdit = new JButton("Edit");
+		jBEdit.addActionListener(l -> {
+
+			newTopic np1 = new newTopic(this, jBEdit.getText());
+			// ele = (Element) doc.selectSingleNode("//topic[title='" + selectName +
+			// "']/startTime");
+			// content_time = ele.getStringValue();
+			// // System.out.print("startTime:"+content_time+"\n");
+
+			OkHttpClient clientTeam = new OkHttpClient();
+			RequestBody requestBodayTeam = new FormBody.Builder().add("title", selectName).add("teamAName", teamAName)
+					.add("teamBName", teamBName).build();
+			Request requestTeam = new Request.Builder().post(requestBodayTeam)
+					.url("http://localhost:8080/GPMCGroupProject/queryTeamLeader").build();
+			String bothLeader = "";
+			try {
+				Response responseTeam = clientTeam.newCall(requestTeam).execute();
+				if (!responseTeam.isSuccessful()) {
+					JOptionPane.showMessageDialog(null, "Can't request server again, please check server statusTeam");
+				} else {
+					bothLeader = responseTeam.body().string();
+					// System.out.println(bothLeader);
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			np1.setData(selectName, content_content, teamAName, teamBName, bothLeader, content_maxTurn, content_time,
+					content_turnFre, teamAVc, teamBVc);
+			np1.setVisible(true);
+		});
+		GroupLayout.SequentialGroup vg6 = groupLayout1.createSequentialGroup();
+		vg6.addGap(350);
+		vg6.addComponent(jBEdit);
+
+		groupLayout1.setHorizontalGroup(groupLayout1.createParallelGroup().addGap(20).addGroup(vg1).addGroup(vg2)
+				.addGroup(vg3).addGroup(vg4).addGroup(vg5).addGroup(vg6));
+
+		groupLayout1.setVerticalGroup(groupLayout1.createSequentialGroup().addGap(15).addComponent(jt_title, 30, 30, 30)
+				.addGap(10).addGroup(groupLayout1.createParallelGroup().addComponent(jsp1, 200, 200, 200)).addGap(10)
+				.addGroup(groupLayout1.createParallelGroup().addComponent(jlt_teamA).addComponent(jsp2, 100, 100, 100)
+						.addComponent(jlt_teamB).addComponent(jsp3, 100, 100, 100))
+				.addGap(10)
+				.addGroup(groupLayout1.createParallelGroup().addComponent(jlt_maxTurn).addComponent(jl_maxTurn)
+						.addComponent(jlt_TurnFre).addComponent(jl_turnFre))
+				.addGap(10)
+				.addGroup(groupLayout1.createParallelGroup().addComponent(jlt_startTime).addComponent(jl_startTiem))
+				.addGap(10)
+				.addGroup(groupLayout1.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(jBEdit)));
+
+		jPShow.setVisible(true);
+
+		jPShow.updateUI();
+
 	}
 
 	class newTopic extends JDialog {
@@ -757,7 +760,7 @@ public class HomePage extends javax.swing.JFrame {
 								System.out.println("topic completed");
 								// topicList.addElement(title_return);
 								// jLTopic.setListData(topicList);
-								sendData();
+								changeData();
 								this.dispose();
 							}
 						} else {
@@ -910,10 +913,11 @@ public class HomePage extends javax.swing.JFrame {
 				String set_bothLeader, String set_maxTurn, String set_startTime, String set_turnFre,
 				Vector<String> teamA, Vector<String> teamB) {
 			textField_title.setText(set_title);
+			textField_title.setEditable(false);
 			textField_content.setText(set_content);
 			String[] tempLe = set_bothLeader.split(",");
 			textField_LeaderB.setText(tempLe[0]);
-			
+
 			textField_LeaderA.setText(tempLe[1]);
 			textFieLd_teamANa.setText(set_teamANam);
 			textField_teamBNa.setText(set_teamBNam);
@@ -962,6 +966,34 @@ public class HomePage extends javax.swing.JFrame {
 
 		}
 
+		public void changeData() {
+			String teamAmem = "";
+			String teamBmem = "";
+			teamAmem = String.join("_", teamAList);
+			teamBmem = String.join("_", teamBList);
+
+			OkHttpClient clientSend = new OkHttpClient();
+			RequestBody requestBodaySend = new FormBody.Builder().add("title", title_return)
+					.add("content_teturn", content_teturn).add("teamAName", nameA_return).add("teamBName", nameB_return)
+					.add("teamAMember", teamAmem).add("teamBMember", teamBmem).add("maxTurn", maxTurn_return)
+					.add("freHour", freHour_return).add("freMin", freMin_return).add("startTime", startTime_return)
+					.add("teamALeader", teamALeader).add("teamBLeader", teamBLeader).build();
+
+			Request requestSend = new Request.Builder().post(requestBodaySend)
+					.url("http://localhost:8080/GPMCGroupProject/changeDetail").build();
+			try {
+				Response responseSend = clientSend.newCall(requestSend).execute();
+				if (!responseSend.isSuccessful()) {
+//					System.out.println("wanchengle/");
+					JOptionPane.showMessageDialog(null, "Can't request server, please check server status");
+				} else {
+					JOptionPane.showMessageDialog(null, "Finish adding a topic");
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		public void setVer() {
 			this.setVisible(true);
 		}
@@ -970,8 +1002,8 @@ public class HomePage extends javax.swing.JFrame {
 			// String keyStr = "++";
 			String teamAmem = "";
 			String teamBmem = "";
-			teamAmem = String.join("++", teamAList);
-			teamBmem = String.join("++", teamBList);
+			teamAmem = String.join("_", teamAList);
+			teamBmem = String.join("_", teamBList);
 
 			OkHttpClient clientSend = new OkHttpClient();
 			RequestBody requestBodaySend = new FormBody.Builder().add("title", title_return)
@@ -1447,10 +1479,5 @@ public class HomePage extends javax.swing.JFrame {
 			});
 		}
 	}
-
-
-
-
-	
 
 }

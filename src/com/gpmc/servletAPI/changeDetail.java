@@ -1,6 +1,5 @@
 package com.gpmc.servletAPI;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,20 +13,17 @@ import javax.servlet.http.HttpServletResponse;
 import com.gpmc.modelClass.Team;
 import com.gpmc.modelClass.Topic;
 
-import okhttp3.FormBody;
-import okhttp3.RequestBody;
-
 /**
- * Servlet implementation class storeTopic
+ * Servlet implementation class changeDetail
  */
-@WebServlet("/storeTopic")
-public class storeTopic extends HttpServlet {
+@WebServlet("/changeDetail")
+public class changeDetail extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public storeTopic() {
+	public changeDetail() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -39,14 +35,6 @@ public class storeTopic extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		// RequestBody requestBodaySend = new FormBody.Builder().add("title",
-		// title_return).add("content_teturn",
-		// content_teturn).add("teamAName",nameA_return)
-		// .add("teamBName",
-		// nameB_return).add("teamAMember",teamAmem).add("teamBMember",teamBmem).add("maxTurn",
-		// maxTurn_return)
-		// .add("freHour",freHour_return ).add("freMin",
-		// freMin_return).add("startTime",startTime_return).build();
 		String title = (String) request.getParameter("title");
 		String content = (String) request.getParameter("content_teturn");
 		String teamAName = (String) request.getParameter("teamAName");
@@ -59,11 +47,11 @@ public class storeTopic extends HttpServlet {
 		String startTIme = (String) request.getParameter("startTime");
 		String teamALeader = (String) request.getParameter("teamALeader");
 		String teamBLeader = (String) request.getParameter("teamBLeader");
-		
+
 		Topic np = new Topic();
-				
-		int fre = Integer.parseInt(freHour)*3600000 + Integer.parseInt(freMin)*60000;
-		
+
+		int fre = Integer.parseInt(freHour) * 3600000 + Integer.parseInt(freMin) * 60000;
+
 		np.setTitle(title);
 		np.setChangeTurnTimeLeft(String.valueOf(fre));
 		np.setContent(content);
@@ -75,32 +63,33 @@ public class storeTopic extends HttpServlet {
 		np.setTeamB(teamBName);
 		np.setTurnCycleFrequency(String.valueOf(fre));
 		np.setWinner("null");
-		
-		np.writeNewTopicXml();
-		
+
+		np.changeTopic();
+
 		Team tm = new Team();
-		
+
 		tm.setTitleName(title);
 		tm.setTeamName(teamAName);
 		tm.setTeamLeader(teamALeader);
 		System.out.println(teamAMember + teamBMember);
 		String[] tempMemA = teamAMember.split("_");
 		List<String> lsmemA = new ArrayList<String>();
-		for(int i =0; i<tempMemA.length;i++) {
+		for (int i = 0; i < tempMemA.length; i++) {
 			lsmemA.add(tempMemA[i]);
 		}
-		
-		String[] tempMemB = teamAMember.split("_");
+
+		String[] tempMemB = teamBMember.split("_");
 		List<String> lsmemB = new ArrayList<String>();
-		for(int i =0; i<tempMemB.length;i++) {
+		for (int i = 0; i < tempMemB.length; i++) {
 			lsmemB.add(tempMemB[i]);
 		}
 		tm.setTeamMemberList(lsmemA);
-		tm.setAnotherTeam(lsmemB,teamBLeader,teamBName);
-		tm.writeNewTeamXml();
-		
+		tm.setAnotherTeam(lsmemB, teamBLeader, teamBName);
+		tm.changeNewTeamXml();
+
 		System.out.println("shoudaola");
 	}
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse

@@ -31,6 +31,7 @@ public class queryTopicDetail extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String selectName = (String) request.getParameter("selectName");
+		System.out.println("houtai nadaode :" + selectName); 
 		Topic topic = new Topic();
 		topic.setTitle(selectName);
 
