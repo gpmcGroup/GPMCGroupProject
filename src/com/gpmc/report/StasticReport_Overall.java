@@ -11,6 +11,8 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
+import com.itextpdf.layout.element.IBlockElement;
+import com.gpmc.util.xmlUtil;
 public class StasticReport_Overall {
 	private List moveList;
 	private List turnIDList;
@@ -40,7 +42,7 @@ public class StasticReport_Overall {
 	public String findFirstTeam() throws DocumentException {
 		
 		String path = "Topic.xml";
-		Document topicDoc = new SAXReader().read(new File("Topic.xml"));
+		Document topicDoc = new SAXReader().read(new File(xmlUtil.getTopicFilePath(topicName, "Topic")));
 		String xPath = "//topic[title='" + topicName + "']";
 		//first check null
 		if(!topicDoc.valueOf(xPath).equals("")) {
@@ -51,8 +53,8 @@ public class StasticReport_Overall {
 			maxTurn = Integer.parseInt(ele.valueOf("//maxTurn"));
 			teamAName = ele.valueOf("//teamA");
 			teamBName = ele.valueOf("//teamB");
-			teamAFilePath = "Move_" + teamAName + ".xml";
-			teamBFilePath = "Move_" + teamBName + ".xml";
+			teamAFilePath = xmlUtil.getTopicFilePath(topicName, "Move_" + teamAName);
+			teamBFilePath = xmlUtil.getTopicFilePath(topicName, "Move_" + teamBName);
 			Document docA = new SAXReader().read(new File(teamAFilePath));
 			int t = Integer.parseInt(docA.valueOf("//move[@id='1']/turnID"));
 			if(t == 1) {
@@ -65,7 +67,7 @@ public class StasticReport_Overall {
 		}
 	}
 	
-	public void generateReportData() throws DocumentException, FileNotFoundException {
+	public boolean generateReportData() throws DocumentException, FileNotFoundException {
 		
 		String firstTeamName = findFirstTeam();
 		Document doc1,doc2;
@@ -98,7 +100,8 @@ public class StasticReport_Overall {
 				contentList.add(node.get(j).valueOf("textBody"));
 			}
 		}
-		new GenerateOverallReport(moveList,turnIDList,teamNameList,userIDList,typeList,contentList,topicName).getReport();;
+		new GenerateOverallReport(moveList,turnIDList,teamNameList,userIDList,typeList,contentList,topicName,teamAName,teamBName).getReport();
+		return true;
 	}
 	public static void main(String args[]) throws DocumentException, FileNotFoundException {
 		

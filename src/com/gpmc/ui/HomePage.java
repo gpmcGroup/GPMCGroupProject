@@ -249,7 +249,23 @@ public class HomePage extends javax.swing.JFrame {
 				getContentPane().add(jBStatisc);
 				jBStatisc.setText("Statisc");
 				jBStatisc.setBounds(788, 76, 97, 35);
-				// jBStatisc.addActionListener();
+				 jBStatisc.addActionListener(l->{
+					 OkHttpClient client = new OkHttpClient();
+					 RequestBody body = new FormBody.Builder().add("topicName", selectName).build();
+					 Request request = new Request.Builder().post(body).url("http://localhost:8080/GPMCGroupProject/requestReport").build();
+					 try {
+						Response response = client.newCall(request).execute();
+						if(!response.isSuccessful()) {
+							JOptionPane.showMessageDialog(null, "Can't request server, please check server status");
+						}else {
+							String txt = response.body().string();
+							JOptionPane.showMessageDialog(null, txt);
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				 });
 			}
 			{
 				jBMove = new JButton();
