@@ -1510,8 +1510,8 @@ public class HomePage extends javax.swing.JFrame {
 		private JButton JBStoreFile;
 		private JButton JBUploadFile;
 		private JFileChooser jfc;
-		private String downLoadPath;  //ÏÂÔØ´æ´¢µÄÂ·¾¶
-		private String downLoadFileName; //ÏÂÔØÎÄ¼şµÄÃû×Ö
+		private String downLoadPath;  
+		private String downLoadFileName; 
 
 		public downLoadReportPanel(JFrame f, String topicName) {
 			super(f, "create a new topic", true);
@@ -1564,7 +1564,7 @@ public class HomePage extends javax.swing.JFrame {
 							fileOutputStream = new FileOutputStream(file);
 							while((len = input.read(buf))!=-1) {
 								fileOutputStream.write(buf,0,len);
-								//²åÈë¸üĞÂ½ø¶ÈÌõ
+								//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â½ï¿½ï¿½ï¿½ï¿½ï¿½
 							}
 							fileOutputStream.flush();
 							input.close();
