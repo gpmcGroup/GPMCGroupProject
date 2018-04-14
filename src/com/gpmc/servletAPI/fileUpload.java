@@ -64,14 +64,14 @@ public class fileUpload extends HttpServlet {
 		
 		//setUp Upload file basic directory
 		String uploadPath = request.getServletContext().getRealPath("./")+File.separator + topicName + UPLOAD_DIRECTORY;
-		
+		//filefolder
 		System.out.println("Upload Path : " + uploadPath);
 		File uploadDir = new File(uploadPath);
 		System.out.println(uploadDir.exists());
 		if(uploadDir.exists() == false) {
 			uploadDir.mkdirs();
 		}
-		
+		//file
 		Collection<Part> parts = request.getParts();
 		System.out.println(parts.size());
 		Part filePart = 	request.getPart("file");

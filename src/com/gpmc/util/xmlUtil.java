@@ -21,6 +21,8 @@ import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
 public class xmlUtil {
+	
+	public static int Number_port = 10000;
 
 	public static String Userpath = xmlUtil.class.getClassLoader().getResource("User.xml").getPath();
 
@@ -173,9 +175,7 @@ public class xmlUtil {
 		}
 		// do a bunch of create elements then add them all to the root.
 
-//		Document testDoc = new SAXReader().read(new File(MovePath));
-//		Element ele = (Element) testDoc.selectSingleNode("//move[textBody='123abc']");
-//		System.out.println("添加后的move：" + testDoc.asXML());
+
 	}
 
 }
