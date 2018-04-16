@@ -42,6 +42,7 @@ public class StasticReport_Overall {
 	public String findFirstTeam() throws DocumentException {
 		
 		String path = "Topic.xml";
+		System.out.println(xmlUtil.getTopicFilePath(topicName, "Topic"));
 		Document topicDoc = new SAXReader().read(new File(xmlUtil.getTopicFilePath(topicName, "Topic")));
 		String xPath = "//topic[title='" + topicName + "']";
 		//first check null

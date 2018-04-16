@@ -11,6 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.dom4j.DocumentException;
+
+import com.gpmc.report.StasticReport_Overall;
+import com.gpmc.util.xmlUtil;
+
 /**
  * Servlet implementation class fileDownload
  */
@@ -30,36 +35,42 @@ public class fileDownload extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-//		response.getWriter().append("Served at: ").append(request.getContextPath());
 		
 		String requestFileName = request.getParameter("requestFileName");
 		String topicName = request.getParameter("topicName");
-		String fileUrl = request.getServletContext().getRealPath("./")+File.separator + topicName + "_Materil_upload" + File.separator + requestFileName;
-//		System.out.println(fileUrl);
+//		String fileUrl = request.getServletContext().getRealPath("./")+File.separator + topicName + "_Materil_upload" + File.separator + requestFileName;
 		
-		File file = new File(fileUrl);
-		if(file.exists() == true) {
-			response.setContentType("application/octet-stream");  //
-            Long length=file.length();
-            response.setContentLength(length.intValue());
-//            fileName = URLEncoder.encode(downloadFile.getName(), enc);
-            response.addHeader("Content-Disposition", "attachment; filename=" + requestFileName);
-            ServletOutputStream servletOutputStream=response.getOutputStream();
-            FileInputStream fileInputStream=new FileInputStream(file);
-            BufferedInputStream bufferedInputStream=new BufferedInputStream(fileInputStream);
-            int size=0;
-            byte[] b=new byte[2048];
-            while ((size=bufferedInputStream.read(b))!=-1) {
-                servletOutputStream.write(b, 0, size);
-            }
-            servletOutputStream.flush();
-            servletOutputStream.close();
-            bufferedInputStream.close();
-		}else response.getWriter().write("false");   //file doesn't exists 
+		System.out.println("topicname in file down: " + topicName);
 		
+		try {
+			boolean status = new StasticReport_Overall(topicName).generateReportData();
+			if(status == true) {
+				String fileUrl = xmlUtil.getTopicFilePath(topicName, "report.pdf");
+				File file = new File(fileUrl);
+				if(file.exists() == true) {
+					response.setContentType("application/octet-stream");  //
+		            Long length=file.length();
+		            response.setContentLength(length.intValue());
+//		            fileName = URLEncoder.encode(downloadFile.getName(), enc);
+		            response.addHeader("Content-Disposition", "attachment; filename=" + requestFileName);
+		            ServletOutputStream servletOutputStream=response.getOutputStream();
+		            FileInputStream fileInputStream=new FileInputStream(file);
+		            BufferedInputStream bufferedInputStream=new BufferedInputStream(fileInputStream);
+		            int size=0;
+		            byte[] b=new byte[2048];
+		            while ((size=bufferedInputStream.read(b))!=-1) {
+		                servletOutputStream.write(b, 0, size);
+		            }
+		            servletOutputStream.flush();
+		            servletOutputStream.close();
+		            bufferedInputStream.close();
+				}else response.getWriter().write("false");   //file doesn't exists 
+			}else response.getWriter().write("false");
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

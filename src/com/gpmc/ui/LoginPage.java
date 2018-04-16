@@ -10,6 +10,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import com.gpmc.ChatTest.ChatServerManage;
+
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -89,6 +91,7 @@ public class LoginPage extends JFrame{
 				                inst.setVisible(true);
 				            }
 				        });
+						
 					}
 				}
 			} catch (IOException e) {

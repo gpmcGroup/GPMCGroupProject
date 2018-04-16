@@ -257,22 +257,8 @@ public class HomePage extends javax.swing.JFrame {
 				jBStatisc.setText("Statisc");
 				jBStatisc.setBounds(788, 76, 97, 35);
 				 jBStatisc.addActionListener(l->{
+					 System.out.println("select name in Statisc : " + selectName);
 					 new downLoadReportPanel(this,selectName);
-//					 OkHttpClient client = new OkHttpClient();
-//					 RequestBody body = new FormBody.Builder().add("topicName", selectName).build();
-//					 Request request = new Request.Builder().post(body).url("http://localhost:8080/GPMCGroupProject/requestReport").build();
-//					 try {
-//						Response response = client.newCall(request).execute();
-//						if(!response.isSuccessful()) {
-//							JOptionPane.showMessageDialog(null, "Can't request server, please check server status");
-//						}else {
-//							String txt = response.body().string();
-//							JOptionPane.showMessageDialog(null, txt);
-//						}
-//					} catch (IOException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
 				 });
 			}
 			{
@@ -1512,13 +1498,15 @@ public class HomePage extends javax.swing.JFrame {
 		private JFileChooser jfc;
 		private String downLoadPath;  
 		private String downLoadFileName; 
-
+		private String topicName;
 		public downLoadReportPanel(JFrame f, String topicName) {
-			super(f, "create a new topic", true);
+			super(f, "Download file", true);
 			
 			Container container = getContentPane();
 
 			setSize(500, 100);
+			this.topicName = topicName;
+			System.out.println("topic name fomr download panel : " + topicName);
 			intialUI();
 		}
 		public void intialUI() {
@@ -1546,9 +1534,9 @@ public class HomePage extends javax.swing.JFrame {
 			});
 			//send request here
 			JBUploadFile.addActionListener(l->{
-				if(downLoadFileName.equals("") == false) {  //
+				if(downLoadPath.equals("") == false) {  //
 					OkHttpClient client = new OkHttpClient();
-					RequestBody requestBody = new FormBody.Builder().add("requestFileName",downLoadFileName).add("topicName", "Test").build();
+					RequestBody requestBody = new FormBody.Builder().add("topicName", topicName).build();
 					Request request = new Request.Builder().url("http://localhost:8080/GPMCGroupProject/fileDownload").post(requestBody).build();
 					client.newCall(request).enqueue(new Callback() {
 						@Override
@@ -1560,11 +1548,11 @@ public class HomePage extends javax.swing.JFrame {
 							//downLoadPath is the path contains fileName
 							input = response.body().byteStream();
 							long totalByte = response.body().contentLength();
+							downLoadPath = downLoadPath + File.separator + "report.pdf";
 							File file = new File(downLoadPath);
 							fileOutputStream = new FileOutputStream(file);
 							while((len = input.read(buf))!=-1) {
 								fileOutputStream.write(buf,0,len);
-								//������½�����
 							}
 							fileOutputStream.flush();
 							input.close();

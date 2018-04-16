@@ -17,21 +17,23 @@ public class ChatServerManage {
 	
 	private List portList = new ArrayList<Integer>();
 	private List chatServerList = new ArrayList<ChatServer>();
-	
 	public ChatServerManage() {
-		try {
-			Document doc = new SAXReader().read(new File(xmlUtil.class.getClassLoader().getResource("Team.xml").getPath()));
-			Element ele = doc.getRootElement();
-			for(Iterator<Element> it = ele.elementIterator("team"); it.hasNext();) {
-				Element element = it.next();
+//		try {
+//			Document doc = new SAXReader().read(new File(xmlUtil.getTopicFilePath(topicName, fileName)));
+//			Element ele = doc.getRootElement();
+//			for(Iterator<Element> it = ele.elementIterator("team"); it.hasNext();) {
+//				Element element = it.next();
 				//
-				System.out.println(element.elementText("chatPort"));
-				portList.add(Integer.parseInt(element.elementText("chatPort")));
+			for(int i = 9998 ; i < 10098 ; i++) {
+				System.out.println("port :  "  + i);
+				portList.add(i);
 			}
-		} catch (DocumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+				
+//			}
+//		} catch (DocumentException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 	
 	public void openChatServer() {
