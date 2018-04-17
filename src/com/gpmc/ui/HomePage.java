@@ -66,12 +66,12 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
-import com.gpmc.ChatTest.ChatClient;
 import com.gpmc.modelClass.User;
 import com.gpmc.ui.HomePage.newTopic;
 import com.gpmc.util.xmlUtil;
 import com.sun.xml.internal.ws.api.Component;
 import com.sun.xml.internal.ws.server.sei.InvokerTube;
+import com.gpmc.ChatServer.ChatClient;
 import com.gpmc.modelClass.*;
 
 import okhttp3.Call;

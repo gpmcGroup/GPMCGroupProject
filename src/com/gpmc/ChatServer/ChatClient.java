@@ -1,4 +1,4 @@
-package com.gpmc.ChatTest;
+package com.gpmc.ChatServer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;

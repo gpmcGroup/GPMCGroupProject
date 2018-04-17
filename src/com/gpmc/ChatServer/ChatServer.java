@@ -1,4 +1,4 @@
-package com.gpmc.ChatTest;
+package com.gpmc.ChatServer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
