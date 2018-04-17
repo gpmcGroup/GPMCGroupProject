@@ -16,6 +16,7 @@ import com.gpmc.util.xmlUtil;
 
 /**
  * Servlet implementation class MoveDataQuery
+ * response move data to user client
  */
 @WebServlet("/MoveDataQuery")
 public class MoveDataQuery extends HttpServlet {
@@ -36,7 +37,7 @@ public class MoveDataQuery extends HttpServlet {
 
 		String topicName = request.getParameter("topicName");
 		String username = request.getParameter("username");
-		String turnID = request.getParameter("turnID");
+//		String turnID = request.getParameter("turnID");
 		
 		String teamName = xmlUtil.findTeamName(topicName, username);
 		File file = new File(xmlUtil.getTopicFilePath(topicName, "Move_" + teamName));

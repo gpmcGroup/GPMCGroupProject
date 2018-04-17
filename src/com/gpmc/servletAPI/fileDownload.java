@@ -18,6 +18,7 @@ import com.gpmc.util.xmlUtil;
 
 /**
  * Servlet implementation class fileDownload
+ * solve topic material and statistic report download request
  */
 @WebServlet("/fileDownload")
 public class fileDownload extends HttpServlet {
@@ -38,20 +39,21 @@ public class fileDownload extends HttpServlet {
 		
 		String requestFileName = request.getParameter("requestFileName");
 		String topicName = request.getParameter("topicName");
-//		String fileUrl = request.getServletContext().getRealPath("./")+File.separator + topicName + "_Materil_upload" + File.separator + requestFileName;
-		
-		System.out.println("topicname in file down: " + topicName);
+		String fileUrl = null;
+		File file = null;
 		
 		try {
 			boolean status = new StasticReport_Overall(topicName).generateReportData();
 			if(status == true) {
-				String fileUrl = xmlUtil.getTopicFilePath(topicName, "report.pdf");
-				File file = new File(fileUrl);
+				if(requestFileName.equals("report")) {
+					fileUrl = xmlUtil.getTopicFilePath(topicName, "report.pdf");
+					file = new File(fileUrl);
+				}
+				
 				if(file.exists() == true) {
-					response.setContentType("application/octet-stream");  //
+					response.setContentType("application/octet-stream");  
 		            Long length=file.length();
 		            response.setContentLength(length.intValue());
-//		            fileName = URLEncoder.encode(downloadFile.getName(), enc);
 		            response.addHeader("Content-Disposition", "attachment; filename=" + requestFileName);
 		            ServletOutputStream servletOutputStream=response.getOutputStream();
 		            FileInputStream fileInputStream=new FileInputStream(file);
@@ -67,7 +69,6 @@ public class fileDownload extends HttpServlet {
 				}else response.getWriter().write("false");   //file doesn't exists 
 			}else response.getWriter().write("false");
 		} catch (DocumentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -75,7 +76,6 @@ public class fileDownload extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

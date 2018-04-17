@@ -2,6 +2,11 @@ package com.gpmc.modelClass;
 
 import java.util.Map;
 
+/**
+ * 
+ * tutor model class
+ *
+ */
 public class Tutor extends User{
 	private Map<String,Topic> CreatedTopics;
 	private Map<String,Team> ManagementTeams;

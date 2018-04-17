@@ -13,6 +13,7 @@ import com.gpmc.util.xmlUtil;
 
 /**
  * Servlet implementation class chatPortQuery
+ * receive team chat port query and return port data
  */
 @WebServlet("/chatPortQuery")
 public class chatPortQuery extends HttpServlet {

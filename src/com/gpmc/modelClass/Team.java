@@ -17,6 +17,12 @@ import org.dom4j.io.XMLWriter;
 
 import com.gpmc.util.xmlUtil;
 
+
+/**
+ * 
+ * Team model class
+ *
+ */
 public class Team {
 	private String setTeamBelonged;
 	private String teamName;
@@ -48,6 +54,10 @@ public class Team {
 		this.teamName = teamName;
 	}
 
+	/**
+	 * get team member data from xml file
+	 * @return team member data string value
+	 */
 	public String getTeamMemberList() {
 		String xpath = new String("//team[@name ='" + teamName + "']/user/username");
 		eleList = new ArrayList<Element>();
@@ -84,7 +94,11 @@ public class Team {
 	public void setTopicList(List<Topic> topicList) {
 		this.topicList = topicList;
 	}
-
+	
+	/**
+	 * find team leader username
+	 * @return team leader username
+	 */
 	public String getTeamLeader() {
 		String xpath = "//team[@name='" + teamName + "']/user[@teamLeader='true']/username";
 		try {
@@ -124,15 +138,11 @@ public class Team {
 	public void setTopicView(String topicView) {
 		this.topicView = topicView;
 	}
-
-	// private String setTeamBelonged;
-	// private String teamName;
-	// private List<String> teamMemberList;
-	// private String teamLeader;
-	// private List<String> teamMemberListB;
-	// private String teamBName;
-	// private String teamBLeader;
 	
+	/**
+	 * writeNew
+	 * @throws IOException
+	 */
 	public void writeNewTeamXml() throws IOException {
 
 		String filePath = xmlUtil.getTopicFilePath(setTeamBelonged, "Team");

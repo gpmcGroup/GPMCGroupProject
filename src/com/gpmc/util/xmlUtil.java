@@ -26,6 +26,12 @@ public class xmlUtil {
 
 	public static String Userpath = xmlUtil.class.getClassLoader().getResource("User.xml").getPath();
 
+	/**
+	 * provide file path search function
+	 * @param topicName 
+	 * @param fileName
+	 * @return
+	 */
 	public static String getTopicFilePath(String topicName, String fileName) {
 		topicName = topicName.replaceAll("[^0-9a-zA-Z]", "_");
 		if(fileName.equals("report.pdf"))
@@ -34,35 +40,50 @@ public class xmlUtil {
 		else return xmlUtil.class.getClassLoader().getResource("").getPath() + ".." + File.separator + topicName
 				+ File.separator + fileName + ".xml";
 	}
-
+	
+	/**
+	 * search username data from xml file 
+	 * @param username
+	 * @return user password
+	 * @throws DocumentException
+	 */
 	// input username, return password
 	public static String Userlogin(String username) throws DocumentException {
 		// String path =
 		// xmlUtil.class.getClassLoader().getResource("User.xml").getPath();
 		File file = new File(Userpath);
-		System.out.println("userpath : " + Userpath);
 		SAXReader xmlReader = new SAXReader();
 		Document doc = xmlReader.read(file);
 
 		String xpath = "//user[username='" + username + "']/password";
-		System.out.println(xpath);
 		String password = doc.valueOf(xpath);
 		return password;
 	}
-
+	
+	/**
+	 * query user detail
+	 * @param username
+	 * @return
+	 * @throws DocumentException
+	 */
 	public static Element getUserDetail(String username) throws DocumentException {
 		File file = new File(Userpath);
 		SAXReader xmlReader = new SAXReader();
 		Document doc = xmlReader.read(file);
-
 		Element element = (Element) doc.selectSingleNode("//user[username='" + username + "']");
 		return element;
 	}
-
+	
+	/**
+	 * change user data detail and write to xml file
+	 * @param username
+	 * @param tagName
+	 * @param tagValue
+	 * @throws DocumentException
+	 */
 	public static void modifyUserValue(String username, String tagName, String tagValue) throws DocumentException {
 		Document doc = new SAXReader().read(new File(Userpath));
 		Element ele = (Element) doc.selectSingleNode("//user[username='" + username + "']/" + tagName);
-		System.out.println(ele.getStringValue());
 		ele.setText(tagValue);
 		OutputFormat format = OutputFormat.createPrettyPrint();
 		try {
@@ -70,13 +91,16 @@ public class xmlUtil {
 			output.write(doc);
 			output.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	/*
-	 * param topicName, teamName
+	/**
+	 * query team chat port
+	 * @param topicName
+	 * @param teamName
+	 * @return
+	 * @throws DocumentException
 	 */
 	public static String queryTeamChatPort(String topicName, String teamName) throws DocumentException {
 		Document doc = new SAXReader().read(xmlUtil.getTopicFilePath(topicName, "Team"));
@@ -101,17 +125,28 @@ public class xmlUtil {
 			}
 			return null;
 		} catch (DocumentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
 
+	/**
+	 * get max turn information with fixed topicName
+	 * @param topicName
+	 * @return
+	 * @throws DocumentException
+	 */
 	public static String getMaxTurn(String topicName) throws DocumentException {
 		Document doc = new SAXReader().read(new File(xmlUtil.getTopicFilePath(topicName, "Topic")));
 		return doc.selectSingleNode("//topic/maxTurn").getStringValue();
 	}
 	
+	/**
+	 * get present turn ID with fixed topicName
+	 * @param topicName
+	 * @return
+	 * @throws DocumentException
+	 */
 	public static String getNowTurnID(String topicName) throws DocumentException {
 		Document doc = new SAXReader().read(new File(xmlUtil.getTopicFilePath(topicName, "Turn")));
 		List<Node> nodes = doc.selectNodes("//turn");
@@ -120,6 +155,16 @@ public class xmlUtil {
 		}else return "false";  //now turn status is true, which means it closed
 	}
 	
+	/**
+	 * add a move and store data into xml file
+	 * @param topicName
+	 * @param claimType
+	 * @param claimDetails
+	 * @param username
+	 * @return
+	 * @throws IOException
+	 * @throws DocumentException
+	 */
 	public static boolean AddMove(String topicName, String claimType, String claimDetails, String username)
 			throws IOException, DocumentException {
 		String teamName = xmlUtil.findTeamName(topicName, username);
@@ -132,7 +177,7 @@ public class xmlUtil {
 
 		Element root = document.getRootElement();
 		List<Node> nodes = root.selectNodes("//move");
-		if(nowTurnID<=maxTurn) {  //可以写入turn
+		if(nowTurnID<=maxTurn) {  //
 			int nowMoveID = nodes.size();
 			Element move = DocumentHelper.createElement("move");
 			move.addAttribute("id", nowMoveID+"");

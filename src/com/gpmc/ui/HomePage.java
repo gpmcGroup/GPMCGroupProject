@@ -1,22 +1,13 @@
 package com.gpmc.ui;
 
-//import com.cloudgarden.layout.AnchorConstraint;
-//import com.cloudgarden.layout.AnchorLayout;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
@@ -25,17 +16,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.text.*;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import javax.swing.BoxLayout;
 
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.ParallelGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -43,16 +30,13 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.LayoutStyle;
-import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
@@ -64,27 +48,23 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
 
 import com.gpmc.modelClass.User;
-import com.gpmc.ui.HomePage.newTopic;
-import com.gpmc.util.xmlUtil;
-import com.sun.xml.internal.ws.api.Component;
-import com.sun.xml.internal.ws.server.sei.InvokerTube;
-import com.gpmc.ChatServer.ChatClient;
-import com.gpmc.modelClass.*;
+import com.gpmc.ChatClient.ChatClient;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Request.Builder;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import javax.swing.SwingUtilities;
-
+/**
+ * 
+ * user client UI class
+ *
+ */
 public class HomePage extends javax.swing.JFrame {
 
 	{
@@ -139,7 +119,10 @@ public class HomePage extends javax.swing.JFrame {
 		topicList = new Vector<String>();
 		initGUI();
 	}
-
+	
+	/**
+	 * initialize jframe component
+	 */
 	private void initGUI() {
 
 		try {
@@ -156,7 +139,6 @@ public class HomePage extends javax.swing.JFrame {
 			}
 
 		} catch (DocumentException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
@@ -242,10 +224,8 @@ public class HomePage extends javax.swing.JFrame {
 						}
 
 					} catch (DocumentException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 
@@ -345,7 +325,10 @@ public class HomePage extends javax.swing.JFrame {
 			e.printStackTrace();
 		}
 	}
-
+	
+	/**
+	 * get selected topic data 
+	 */
 	public void getSelectedTopicData() {
 //		if(jLTopic.getSelectedValue()==null) {
 //			return;
@@ -404,15 +387,10 @@ public class HomePage extends javax.swing.JFrame {
 			} else {
 				String txt1 = response1.body().string();
 				teamMem = txt1.split(";");
-				// for(int i =0;i<2;i++) {
-				// System.out.println(teamMem[i]);
-				// }
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (DocumentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -528,10 +506,8 @@ public class HomePage extends javax.swing.JFrame {
 					JOptionPane.showMessageDialog(null, "Can't request server again, please check server statusTeam");
 				} else {
 					bothLeader = responseTeam.body().string();
-					// System.out.println(bothLeader);
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -563,7 +539,12 @@ public class HomePage extends javax.swing.JFrame {
 		jPShow.updateUI();
 
 	}
-
+	
+	/**
+	 * 
+	 * new topic window class
+	 *
+	 */
 	class newTopic extends JDialog {
 		private JScrollPane sp = new JScrollPane();
 		private JScrollPane sp1 = new JScrollPane();
@@ -994,13 +975,11 @@ public class HomePage extends javax.swing.JFrame {
 			try {
 				Response responseSend = clientSend.newCall(requestSend).execute();
 				if (!responseSend.isSuccessful()) {
-//					System.out.println("wanchengle/");
 					JOptionPane.showMessageDialog(null, "Can't request server, please check server status");
 				} else {
 					JOptionPane.showMessageDialog(null, "Finish adding a topic");
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -1033,7 +1012,6 @@ public class HomePage extends javax.swing.JFrame {
 					JOptionPane.showMessageDialog(null, "Finish adding a topic");
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -1062,7 +1040,6 @@ public class HomePage extends javax.swing.JFrame {
 						return true;
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return false;
 
@@ -1135,7 +1112,12 @@ public class HomePage extends javax.swing.JFrame {
 			}
 		}
 	}
-
+	
+	/**
+	 * 
+	 * new turn window class
+	 *
+	 */
 	class turnPanel extends JPanel {
 		private JTable moveTable;
 		private JLabel moveDetailsLabel;
@@ -1326,7 +1308,12 @@ public class HomePage extends javax.swing.JFrame {
 			});
 		}
 	}
-
+	
+	/**
+	 * 
+	 * new move input window class
+	 *
+	 */
 	class movePanel extends JPanel {
 
 		private JTable listMoves;
@@ -1393,16 +1380,12 @@ public class HomePage extends javax.swing.JFrame {
 					}
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			t = new DefaultTableModel(rowData, columnNames);
 			listMoves.setModel(t);
 		}
 
-		// movescroll = move table
-		// adNewMove = new move button
-		// textscroll = move details
 		public void setupComponents() throws DocumentException {
 			// setup the components
 			moveLayout = new GroupLayout(this);
@@ -1489,7 +1472,12 @@ public class HomePage extends javax.swing.JFrame {
 			});
 		}
 	}
-
+	
+	/**
+	 * 
+	 * download statistic report window class
+	 *
+	 */
 	class downLoadReportPanel  extends JDialog {
 		private JLabel jLUploadFile;
 		private JTextField JTextFileName;
@@ -1506,18 +1494,15 @@ public class HomePage extends javax.swing.JFrame {
 
 			setSize(500, 100);
 			this.topicName = topicName;
-			System.out.println("topic name fomr download panel : " + topicName);
 			intialUI();
 		}
 		public void intialUI() {
 			jLUploadFile = new JLabel("Store Folder");
 			JTextFileName = new JTextField();
-//			JTextFileName.setSize();
 			JBUploadFile = new JButton("DownLoad");
 			JBStoreFile = new JButton("...");
 			jfc = new JFileChooser();
 			jfc.setCurrentDirectory(new File(System.getProperty("user.dir")));
-			//add actionListener
 			
 			JBStoreFile.addActionListener(l->{
 				jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -1528,7 +1513,6 @@ public class HomePage extends javax.swing.JFrame {
 					downLoadFileName = JTextFileName.getText();  //get downLoadFile name from text input
 					downLoadPath = jfc.getSelectedFile().getAbsolutePath() + File.separator + downLoadFileName;  // get store directory
 					JTextFileName.setText(downLoadPath);
-					System.out.println(downLoadFileName);
 					
 				}
 			});
@@ -1536,7 +1520,7 @@ public class HomePage extends javax.swing.JFrame {
 			JBUploadFile.addActionListener(l->{
 				if(downLoadPath.equals("") == false) {  //
 					OkHttpClient client = new OkHttpClient();
-					RequestBody requestBody = new FormBody.Builder().add("topicName", topicName).build();
+					RequestBody requestBody = new FormBody.Builder().add("requestFileName", "report").add("topicName", topicName).build();
 					Request request = new Request.Builder().url("http://localhost:8080/GPMCGroupProject/fileDownload").post(requestBody).build();
 					client.newCall(request).enqueue(new Callback() {
 						@Override

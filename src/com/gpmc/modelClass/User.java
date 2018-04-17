@@ -9,10 +9,11 @@ import org.dom4j.io.SAXReader;
 
 import com.gpmc.util.xmlUtil;
 
-//import org.dom4j.DocumentException;
-
-//import com.gpmc.util.xmlUtil;
-
+/**
+ * 
+ * User model class
+ *
+ */
 public abstract class User {
 	private String ID;
 	private String username;
@@ -23,7 +24,8 @@ public abstract class User {
 	private String department;
 	private boolean loginStatus; 
 	
-	/*
+	/**
+	 * 
 	 * true logout successful, false logout failed. 
 	 */
 	
@@ -38,7 +40,8 @@ public abstract class User {
 		return true;
 	}
 	
-	/*
+	/**
+	 * 
 	 * 1.check username and password first 2. check loginStatus
 	 */
 	public boolean login(String username, String password) throws DocumentException {

@@ -21,14 +21,12 @@ public class queryTeamLeader extends HttpServlet {
      */
     public queryTeamLeader() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		String topicName= (String) request.getParameter("title");
 		String teamBName = (String)request.getParameter("teamAName");
 		String teamAName = (String)request.getParameter("teamBName");
@@ -46,7 +44,6 @@ public class queryTeamLeader extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

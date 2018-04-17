@@ -14,7 +14,8 @@ import com.gpmc.modelClass.Team;
 import com.gpmc.modelClass.Topic;
 
 /**
- * Servlet implementation class changeDetail
+ * Servlet implementation class changeDetail to 
+ * receive http request from user client and store changed data to xml file
  */
 @WebServlet("/changeDetail")
 public class changeDetail extends HttpServlet {
@@ -87,7 +88,6 @@ public class changeDetail extends HttpServlet {
 		tm.setAnotherTeam(lsmemB, teamBLeader, teamBName);
 		tm.changeNewTeamXml();
 
-		System.out.println("shoudaola");
 	}
 
 

@@ -16,6 +16,7 @@ import com.gpmc.util.xmlUtil;
 
 /**
  * Servlet implementation class fillMove
+ * deal fill move request from user client
  */
 @WebServlet("/fillMove")
 public class fillMove extends HttpServlet {

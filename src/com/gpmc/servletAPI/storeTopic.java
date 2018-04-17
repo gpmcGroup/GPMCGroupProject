@@ -4,21 +4,18 @@ package com.gpmc.servletAPI;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.gpmc.modelClass.Team;
 import com.gpmc.modelClass.Topic;
 
-import okhttp3.FormBody;
-import okhttp3.RequestBody;
 
 /**
  * Servlet implementation class storeTopic
+ * receive store topic data request and write it into xml file
  */
 @WebServlet("/storeTopic")
 public class storeTopic extends HttpServlet {
@@ -38,15 +35,6 @@ public class storeTopic extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		// RequestBody requestBodaySend = new FormBody.Builder().add("title",
-		// title_return).add("content_teturn",
-		// content_teturn).add("teamAName",nameA_return)
-		// .add("teamBName",
-		// nameB_return).add("teamAMember",teamAmem).add("teamBMember",teamBmem).add("maxTurn",
-		// maxTurn_return)
-		// .add("freHour",freHour_return ).add("freMin",
-		// freMin_return).add("startTime",startTime_return).build();
 		String title = (String) request.getParameter("title");
 		String content = (String) request.getParameter("content_teturn");
 		String teamAName = (String) request.getParameter("teamAName");
@@ -83,7 +71,6 @@ public class storeTopic extends HttpServlet {
 		tm.setTitleName(title);
 		tm.setTeamName(teamAName);
 		tm.setTeamLeader(teamALeader);
-		System.out.println(teamAMember + teamBMember);
 		String[] tempMemA = teamAMember.split("_");
 		List<String> lsmemA = new ArrayList<String>();
 		for(int i =0; i<tempMemA.length;i++) {
@@ -99,7 +86,6 @@ public class storeTopic extends HttpServlet {
 		tm.setAnotherTeam(lsmemB,teamBLeader,teamBName);
 		tm.writeNewTeamXml();
 		
-		System.out.println("shoudaola");
 	}
 
 	/**

@@ -2,24 +2,26 @@ package com.gpmc.report;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
-import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
-import com.itextpdf.layout.element.IBlockElement;
 import com.gpmc.util.xmlUtil;
+
+/**
+ * 
+ * create statistic report
+ */
 public class StasticReport_Overall {
-	private List moveList;
-	private List turnIDList;
-	private List teamNameList;
-	private List userIDList;
-	private List typeList;
-	private List contentList;
+	private List<String> moveList;
+	private List<String> turnIDList;
+	private List<String> teamNameList;
+	private List<String> userIDList;
+	private List<String> typeList;
+	private List<String> contentList;
 	private String topicName;
 	private String teamAName;
 	private String teamAFilePath;
@@ -36,13 +38,11 @@ public class StasticReport_Overall {
 		contentList = new ArrayList<String>();
 	}
 	
-	/*
+	/**
 	 * receive topic name and return the first team's name to start the turn
 	 */
 	public String findFirstTeam() throws DocumentException {
 		
-		String path = "Topic.xml";
-		System.out.println(xmlUtil.getTopicFilePath(topicName, "Topic"));
 		Document topicDoc = new SAXReader().read(new File(xmlUtil.getTopicFilePath(topicName, "Topic")));
 		String xPath = "//topic[title='" + topicName + "']";
 		//first check null
@@ -68,6 +68,12 @@ public class StasticReport_Overall {
 		}
 	}
 	
+	/**
+	 * prepare statistic report data and call generateOverallReport.getReport() method to create statistic report
+	 * @return if the report is successfully created, return true, else return false
+	 * @throws DocumentException
+	 * @throws FileNotFoundException
+	 */
 	public boolean generateReportData() throws DocumentException, FileNotFoundException {
 		
 		String firstTeamName = findFirstTeam();
@@ -103,10 +109,5 @@ public class StasticReport_Overall {
 		}
 		new GenerateOverallReport(moveList,turnIDList,teamNameList,userIDList,typeList,contentList,topicName,teamAName,teamBName).getReport();
 		return true;
-	}
-	public static void main(String args[]) throws DocumentException, FileNotFoundException {
-		
-		StasticReport_Overall sta = new StasticReport_Overall("Is Abortion is wrong?");
-		sta.generateReportData();
 	}
 }

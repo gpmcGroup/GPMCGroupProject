@@ -1,6 +1,5 @@
 package com.gpmc.ui;
 import java.io.IOException;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -9,9 +8,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-
-import com.gpmc.ChatServer.ChatServerManage;
-
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -19,6 +15,10 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
+/**
+ * User login page
+ *
+ */
 public class LoginPage extends JFrame{
 
 	public static void main(String[] args) {
@@ -35,7 +35,10 @@ public class LoginPage extends JFrame{
 		page.setVisible(true);
 		page.setPreferredSize(new java.awt.Dimension(350, 177));
 	}
-
+/**
+ * place components in fixed location
+ * @param panel
+ */
 	private void placeComponents(JPanel panel) {
 
 		panel.setLayout(null);

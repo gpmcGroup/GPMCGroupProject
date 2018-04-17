@@ -1,6 +1,5 @@
 package com.gpmc.modelClass;
 
-import java.util.List;
 import java.util.Map;
 
 public class Turn {

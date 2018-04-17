@@ -14,6 +14,7 @@ import com.gpmc.util.xmlUtil;
 
 /**
  * Servlet implementation class AddMove
+ * response add move operation to GUI test
  */
 @WebServlet("/CreateMove")
 public class CreateMove extends HttpServlet {

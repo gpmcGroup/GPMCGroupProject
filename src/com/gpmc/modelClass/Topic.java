@@ -3,8 +3,6 @@ package com.gpmc.modelClass;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Date;
-
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -15,6 +13,12 @@ import org.dom4j.io.XMLWriter;
 
 import com.gpmc.util.xmlUtil;
 
+
+/**
+ * 
+ * topic model class
+ *
+ */
 public class Topic {
 	private String title;
 	private String teamA;
@@ -28,6 +32,10 @@ public class Topic {
 	private String content;
 	private String winner;
 
+	/**
+	 * get topic content detail
+	 * @return return topic content string
+	 */
 	public String getContent() {
 		if (content == null) {
 			String xpath = "//topic[title='" + title + "']";
@@ -62,22 +70,6 @@ public class Topic {
 	}
 
 	public void setTitle(String tile) {
-//		try {
-//			Document doc = new SAXReader()
-//					.read(new File(xmlUtil.getTopicFilePath(title,"Topic")));
-//
-//			// 1.
-////			Element ele = (Element) doc.selectSingleNode(xpath);
-////
-////			return ele.getStringValue();
-//			// 2.
-//			// String x = doc.valueOf(xpath);
-//			// return x;
-//		} catch (DocumentException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-
 		this.title = tile;
 	}
 
@@ -153,11 +145,7 @@ public class Topic {
 		this.winner = winner;
 	}
 
-	// public String getDetail(String detailTag) {
-	// String xpath = "//topic[title='dasdas'/" + detailTag + "]";
-	//
-	// }
-	//
+	
 	public String getAll() {
 		String xpath = "//topic[title='" + title + "']";
 		try {
@@ -183,21 +171,8 @@ public class Topic {
 		}
 	}
 
-	/*
-	 * 	private String title;
-	private String teamA;
-	private String teamB;
-	private String startTime;
-	private String maxTurn;
-	private String turnCycleFrequency; // miliseconds
-	private String presentTurnOwner;
-	private String changeTurnTimeLeft; // miliseconds
-	private String status; // three value: pending, progressing, end
-	private String content;
-	private String winner;
-	 */
+
 	public void writeNewTopicXml() throws IOException {
-//		System.out.println("zhe li shi write");
 		String topicName = title.replaceAll("[^0-9a-zA-Z]", "_");
 		String folderpath= xmlUtil.class.getClassLoader().getResource("").getPath() + ".." + File.separator+topicName;
 		File fl = new File(folderpath);
@@ -300,7 +275,6 @@ public class Topic {
 			writer.close();
 			
 		} catch (DocumentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

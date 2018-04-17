@@ -2,6 +2,11 @@ package com.gpmc.modelClass;
 
 import java.util.List;
 
+/**
+ * 
+ * @author fighting_frank
+ *
+ */
 public class Move {
 	private int idNumber;
 	private String type;

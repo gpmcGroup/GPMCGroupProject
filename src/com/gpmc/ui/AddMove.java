@@ -1,9 +1,9 @@
 package com.gpmc.ui;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -18,16 +18,18 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle;
 import javax.swing.WindowConstants;
-
 import org.jdesktop.application.Application;
-
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-
+/**
+ * 
+ * add move window class
+ *
+ */
 public class AddMove extends JFrame {
 	private JPanel jPanel1;
 	private JTextArea moveDetails;
@@ -155,6 +157,9 @@ public class AddMove extends JFrame {
 		}
 	}
 	
+	/**
+	 * add save button listener 
+	 */
 	private void setupEventHandlers() {
 		
 		save.addActionListener(new ActionListener() {
@@ -182,24 +187,16 @@ public class AddMove extends JFrame {
 				
 				//2nd iteration - add the values of the userid and datetime, and turn and team etc
 	
-				
 				//receive response and control with text statements
-				
-				
-				
 				
 				//then close the window
 				dispose();
 			}
-			
 		});
-		
-		
 		cancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
-			
 		});
 	}
 

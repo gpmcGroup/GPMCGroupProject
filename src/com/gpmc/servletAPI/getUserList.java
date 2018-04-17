@@ -11,6 +11,7 @@ import com.gpmc.modelClass.Team;
 
 /**
  * Servlet implementation class getUserList
+ * return User list to user client
  */
 @WebServlet("/getUserList")
 public class getUserList extends HttpServlet {

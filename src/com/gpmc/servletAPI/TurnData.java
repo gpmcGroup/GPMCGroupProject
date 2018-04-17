@@ -7,11 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
-
 import com.gpmc.util.xmlUtil;
 
 /**
@@ -39,14 +37,11 @@ public class TurnData extends HttpServlet {
 		SAXReader xmlReader = new SAXReader();
 		try {
 			Document doc = xmlReader.read(file);
-			
 			response.getWriter().write(doc.asXML());
-			
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 
 	/**
@@ -56,5 +51,4 @@ public class TurnData extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }
