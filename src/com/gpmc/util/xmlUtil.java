@@ -37,6 +37,9 @@ public class xmlUtil {
 		if(fileName.equals("report.pdf"))
 			return xmlUtil.class.getClassLoader().getResource("").getPath() + ".." + File.separator + topicName
 					+ File.separator + fileName;
+		else if(fileName.equals("material")) 
+			return xmlUtil.class.getClassLoader().getResource("").getPath() + ".." + File.separator + topicName
+				+ File.separator + "material";
 		else return xmlUtil.class.getClassLoader().getResource("").getPath() + ".." + File.separator + topicName
 				+ File.separator + fileName + ".xml";
 	}

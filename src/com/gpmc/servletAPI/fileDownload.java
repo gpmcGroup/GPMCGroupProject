@@ -48,6 +48,9 @@ public class fileDownload extends HttpServlet {
 				if(requestFileName.equals("report")) {
 					fileUrl = xmlUtil.getTopicFilePath(topicName, "report.pdf");
 					file = new File(fileUrl);
+				}else {
+					fileUrl = xmlUtil.getTopicFilePath(topicName, "material");
+					file = new File(fileUrl);
 				}
 				
 				if(file.exists() == true) {
