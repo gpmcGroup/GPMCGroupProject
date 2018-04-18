@@ -117,11 +117,7 @@ public class HomePage extends javax.swing.JFrame {
 
 	private Vector topicList;
 
-	
-	
-	
 	public HomePage(String initialData) {
-
 		super();
 		this.initialData = initialData;
 		topicList = new Vector<String>();
@@ -258,7 +254,6 @@ public class HomePage extends javax.swing.JFrame {
 				jBStatisc.setText("Statistic");
 				jBStatisc.setBounds(675, 76, 100, 35);
 				 jBStatisc.addActionListener(l->{
-//					 System.out.println("select name in Statisc : " + selectName);
 					 new downLoadReportPanel(this,selectName);
 				 });
 			}
@@ -300,12 +295,10 @@ public class HomePage extends javax.swing.JFrame {
 						jPShow.add(rp);
 						jPShow.updateUI();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				});
 			}
-
 			// list add/remove
 			{
 				jBPlus = new JButton();
@@ -371,13 +364,9 @@ public class HomePage extends javax.swing.JFrame {
 	 * get selected topic data 
 	 */
 	public void getSelectedTopicData() {
-//		if(jLTopic.getSelectedValue()==null) {
-//			return;
-//		}
 		selectNumber = jLTopic.getSelectedIndex();
 		
 		selectName = (String) topicList.get(selectNumber);
-//		System.out.printf("LeadSelectionIndex is %s%n", selectName);
 
 		OkHttpClient client1 = new OkHttpClient();
 		RequestBody requestBoday1 = new FormBody.Builder().add("selectName", selectName).build();
@@ -391,31 +380,24 @@ public class HomePage extends javax.swing.JFrame {
 				JOptionPane.showMessageDialog(null, "Can't request server, please check server status1");
 			} else {
 				String txt = response.body().string();
-				// System.out.println("fanhuide :" + txt);
 				Document doc = DocumentHelper.parseText(txt);
 				Element ele = (Element) doc.selectSingleNode("//topic[title='" + selectName + "']/content");
 				content_content = ele.getStringValue();
-				// System.out.print("content:"+content_content+"\n");
 
 				ele = (Element) doc.selectSingleNode("//topic[title='" + selectName + "']/startTime");
 				content_time = ele.getStringValue();
-				// System.out.print("startTime:"+content_time+"\n");
 
 				ele = (Element) doc.selectSingleNode("//topic[title='" + selectName + "']/maxTurn");
 				content_maxTurn = ele.getStringValue();
-				// System.out.println("content_maxTurn:"+ele.getStringValue());
 
 				ele = (Element) doc.selectSingleNode("//topic[title='" + selectName + "']/turnCycleFrequency");
 				content_turnFre = ele.getStringValue();
-				// System.out.print("content_turnFre:"+ele.getStringValue()+"\n");
 
 				ele = (Element) doc.selectSingleNode("//topic[title='" + selectName + "']/teamA");
 				teamAName = ele.getStringValue();
-				// System.out.print("teamA:"+ele.getStringValue()+"\n");
 
 				ele = (Element) doc.selectSingleNode("//topic[title='" + selectName + "']/teamB");
 				teamBName = ele.getStringValue();
-				// System.out.print("teamB:"+ele.getStringValue()+"\n");
 				response.close();
 			}
 			OkHttpClient client2 = new OkHttpClient();
@@ -484,8 +466,6 @@ public class HomePage extends javax.swing.JFrame {
 		JLabel jl_maxTurn = new JLabel(content_maxTurn);
 		JLabel jl_turnFre = new JLabel(content_turnFre);
 
-		// JLabel jlt_title = new JLabel("title:");
-		// JLabel jlt_content = new JLabel("content:" );
 		JLabel jlt_teamA = new JLabel("TeamA:" + teamAName);
 		JLabel jlt_teamB = new JLabel("TeamB:" + teamBName);
 		JLabel jlt_startTime = new JLabel("StartTime:");
@@ -493,13 +473,11 @@ public class HomePage extends javax.swing.JFrame {
 		JLabel jlt_TurnFre = new JLabel("TurnCycleFrequency:");
 
 		GroupLayout.SequentialGroup vg1 = groupLayout1.createSequentialGroup();
-		// vg1.addComponent(jlt_title);
 		vg1.addGap(5);
 		vg1.addComponent(jt_title);
 		vg1.addGap(5);
 
 		GroupLayout.SequentialGroup vg2 = groupLayout1.createSequentialGroup();
-		// vg2.addComponent(jt_content);
 		vg2.addGap(5);
 		vg2.addComponent(jsp1);
 		vg2.addGap(5);
@@ -532,11 +510,6 @@ public class HomePage extends javax.swing.JFrame {
 		jBEdit.addActionListener(l -> {
 
 			newTopic np1 = new newTopic(this, jBEdit.getText());
-			// ele = (Element) doc.selectSingleNode("//topic[title='" + selectName +
-			// "']/startTime");
-			// content_time = ele.getStringValue();
-			// // System.out.print("startTime:"+content_time+"\n");
-
 			OkHttpClient clientTeam = new OkHttpClient();
 			RequestBody requestBodayTeam = new FormBody.Builder().add("title", selectName).add("teamAName", teamAName)
 					.add("teamBName", teamBName).build();
@@ -553,7 +526,6 @@ public class HomePage extends javax.swing.JFrame {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
 			np1.setData(selectName, content_content, teamAName, teamBName, bothLeader, content_maxTurn, content_time,
 					content_turnFre, teamAVc, teamBVc);
 			np1.setVisible(true);
@@ -601,7 +573,6 @@ public class HomePage extends javax.swing.JFrame {
 		private JLabel textLabel_allocate1;
 		private JLabel textLabel_allocate2;
 		private JLabel textLabel_StartTime;
-		// private JLabel textLabel_startTimeS;
 		private JLabel textLabel_MaxTurn;
 		private JLabel textLabel_TurnTime;
 		private JLabel textLabel_hour1;
@@ -719,7 +690,6 @@ public class HomePage extends javax.swing.JFrame {
 			textLabel_TurnTime = new JLabel("TurnFrequency:");
 			textlabel_allocate = new JLabel("Allocate:");
 			textLabel_StartTime = new JLabel("Start at:");
-			// textLabel_startTimeS = new JLabel("eg: xxxx/xx/xx xx:xx ");
 
 			textFieLd_teamANa = new JTextField();
 			textField_teamBNa = new JTextField();
@@ -791,17 +761,13 @@ public class HomePage extends javax.swing.JFrame {
 
 						if (sourceButton.equals("Edit")) {
 							if (judge()) {
-//								System.out.println("topic completed");
-//								topicList.addElement(title_return);
-//								jLTopic.setListData(topicList);
 								changeData();
 								this.dispose();
 							}
 						} else {
 							if (judgeSame() && judge()) {
-//								System.out.println("topic completed");
-								 topicList.addElement(title_return);
-								 jLTopic.setListData(topicList);
+								topicList.addElement(title_return);
+								jLTopic.setListData(topicList);
 								sendData();
 								this.dispose();
 							}
@@ -961,14 +927,11 @@ public class HomePage extends javax.swing.JFrame {
 			Vector<Integer> b = new Vector<Integer>();
 			for (String s : teamA) {
 				studentListA.setSelectedValue(s, true);
-//				System.out.println(s);
 				int i = studentListA.getSelectedIndex();
 				a.add(i);
 			}
-
 			for (String s : teamB) {
 				studentListB.setSelectedValue(s, true);
-//				System.out.println(s);
 				int i = studentListB.getSelectedIndex();
 				b.add(i);
 			}
@@ -1031,7 +994,6 @@ public class HomePage extends javax.swing.JFrame {
 		}
 
 		public void sendData() {
-			// String keyStr = "++";
 			String teamAmem = "";
 			String teamBmem = "";
 			teamAmem = String.join("_", teamAList);
@@ -1049,7 +1011,6 @@ public class HomePage extends javax.swing.JFrame {
 			try {
 				Response responseSend = clientSend.newCall(requestSend).execute();
 				if (!responseSend.isSuccessful()) {
-//					System.out.println("wanchengle/");
 					JOptionPane.showMessageDialog(null, "Can't request server, please check server status");
 				} else {
 					JOptionPane.showMessageDialog(null, "Finish adding a topic");
@@ -1063,10 +1024,8 @@ public class HomePage extends javax.swing.JFrame {
 		public boolean judgeSame() {
 			OkHttpClient clientjudge = new OkHttpClient();
 			RequestBody requestBodayJudge = new FormBody.Builder().add("selectName", title_return).build();
-
 			Request requestjudge = new Request.Builder().post(requestBodayJudge)
 					.url("http://localhost:8080/GPMCGroupProject/queryTopicDetail").build();
-
 			try {
 				Response response = clientjudge.newCall(requestjudge).execute();
 				if (!response.isSuccessful()) {
@@ -1150,7 +1109,6 @@ public class HomePage extends javax.swing.JFrame {
 						JOptionPane.showMessageDialog(null, "Number is not valid", "Error", JOptionPane.ERROR_MESSAGE);
 						return false;
 					}
-
 				}
 			}
 		}

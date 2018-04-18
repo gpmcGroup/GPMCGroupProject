@@ -72,7 +72,6 @@ public class changeDetail extends HttpServlet {
 		tm.setTitleName(title);
 		tm.setTeamName(teamAName);
 		tm.setTeamLeader(teamALeader);
-		System.out.println(teamAMember + teamBMember);
 		String[] tempMemA = teamAMember.split("_");
 		List<String> lsmemA = new ArrayList<String>();
 		for (int i = 0; i < tempMemA.length; i++) {

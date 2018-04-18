@@ -52,12 +52,9 @@ public class xmlUtil {
 	 */
 	// input username, return password
 	public static String Userlogin(String username) throws DocumentException {
-		// String path =
-		// xmlUtil.class.getClassLoader().getResource("User.xml").getPath();
 		File file = new File(Userpath);
 		SAXReader xmlReader = new SAXReader();
 		Document doc = xmlReader.read(file);
-
 		String xpath = "//user[username='" + username + "']/password";
 		String password = doc.valueOf(xpath);
 		return password;
@@ -222,8 +219,6 @@ public class xmlUtil {
 			return false;
 		}
 		// do a bunch of create elements then add them all to the root.
-
-
 	}
 
 }

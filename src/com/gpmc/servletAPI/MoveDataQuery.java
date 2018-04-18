@@ -37,7 +37,6 @@ public class MoveDataQuery extends HttpServlet {
 
 		String topicName = request.getParameter("topicName");
 		String username = request.getParameter("username");
-//		String turnID = request.getParameter("turnID");
 		
 		String teamName = xmlUtil.findTeamName(topicName, username);
 		File file = new File(xmlUtil.getTopicFilePath(topicName, "Move_" + teamName));

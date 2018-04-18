@@ -95,7 +95,6 @@ public class GenerateOverallReport {
 			document.add(new Paragraph(" "));
 			document.add(studentTableList.get(i));
 		}
-		
 		document.close();
 	}
 	

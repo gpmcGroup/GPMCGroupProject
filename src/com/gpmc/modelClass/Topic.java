@@ -40,7 +40,6 @@ public class Topic {
 		if (content == null) {
 			String xpath = "//topic[title='" + title + "']";
 			try {
-				System.out.println(xmlUtil.getTopicFilePath(title,"Topic"));
 				Document doc = new SAXReader()
 						.read(new File(xmlUtil.getTopicFilePath(title,"Topic")));
 
@@ -149,13 +148,10 @@ public class Topic {
 	public String getAll() {
 		String xpath = "//topic[title='" + title + "']";
 		try {
-			
-			System.out.println(xmlUtil.getTopicFilePath(title, "Topic"));
-			System.out.println(xpath);
+	
 			Document doc = new SAXReader()
 					.read(new File(xmlUtil.getTopicFilePath(title, "Topic")));
 			
-//			System.out.println("houtaidsad ada a asd das: " +doc.asXML());
 			
 			// 1.
 			Element ele = (Element) doc.selectSingleNode(xpath);
@@ -264,7 +260,6 @@ public class Topic {
 						
 			doc.setRootElement(root);
 
-			System.out.println(doc.asXML());
 			OutputFormat format = OutputFormat.createPrettyPrint();
 			// Create the xml writer by passing outputstream and format
 			//get teamName

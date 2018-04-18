@@ -67,14 +67,10 @@ public class fileUpload extends HttpServlet {
 		
 		
 		//filefolder
-		System.out.println("Upload Path : " + uploadPath);
 		//file
 		Collection<Part> parts = request.getParts();
-		System.out.println(parts.size());
 		Part filePart = 	request.getPart("file");
-		System.out.println("filePart" + filePart);
 		String fileName = getFileName(filePart.getHeader("content-disposition"));
-		System.out.println("file upload name: " + fileName);
 		String filePath = uploadPath + File.separator + fileName;
 		if(writeTo(fileName,filePart,filePath)) {
 			response.getWriter().write("true");

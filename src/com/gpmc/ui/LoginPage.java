@@ -14,7 +14,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-
 /**
  * User login page
  *
@@ -23,8 +22,6 @@ public class LoginPage extends JFrame{
 
 	public static void main(String[] args) {
 		LoginPage page = new LoginPage();
-		
-		
 	}
 	
 	public LoginPage() {
@@ -101,7 +98,6 @@ public class LoginPage extends JFrame{
 					}
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		});
