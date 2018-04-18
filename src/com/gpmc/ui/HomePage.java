@@ -56,6 +56,9 @@ import com.gpmc.ChatClient.ChatClient;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
+import okhttp3.Headers;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -1497,13 +1500,105 @@ public class HomePage extends javax.swing.JFrame {
 		}
 	}
 	
+	//test
+	
+	
+	class upLoadMaterialPanel  extends JDialog {
+		private JLabel jLUploadFile;
+		private JTextField JTextFileName;
+		private JButton JBStoreFile;
+		private JButton JBUploadFile;
+		private JFileChooser jfc;
+		private String topicName;
+		private JPanel panel = null;
+		private File file ;
+		public upLoadMaterialPanel(JPanel f, String topicName) {
+			panel = f;
+			setSize(500, 100);
+			this.topicName = topicName;
+			intialUI();
+		}
+		public void intialUI() {
+			jLUploadFile = new JLabel("File Name:");
+			JTextFileName = new JTextField();
+			JBUploadFile = new JButton("Upload");
+			JBStoreFile = new JButton("...");
+			jfc = new JFileChooser();
+			jfc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+			
+			JBStoreFile.addActionListener(l->{
+				int state = jfc.showOpenDialog(null);
+				if(state == 1) {
+						return ;
+				}else {
+					
+					file= jfc.getSelectedFile();
+					JTextFileName.setText(file.getAbsolutePath());
+				}
+			});
+			//send request here
+			JBUploadFile.addActionListener(l->{
+				if(file!=null) {  //
+					OkHttpClient client = new OkHttpClient();
+					RequestBody mediaBody = RequestBody.create(MediaType.parse("application/octet-stream"), file);
+					topicName = topicName.replaceAll("[^0-9A-Za-z]", "");
+					FormBody formbody = new FormBody.Builder().add("topicName", topicName).build();
+					String fileHeader = "form-data; name=\"file\"; filename=\"" + file.getName() + "\"";
+					RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.ALTERNATIVE)
+							.addPart(Headers.of(
+						            "Content-Disposition",
+						            "form-data; name=\"name\"")
+						                ,formbody)
+							.addPart(Headers.of(
+						            "Content-Disposition",
+						            fileHeader)
+						                , mediaBody).build();
+					Request request = new Request.Builder().url("http://localhost:8080/GPMCGroupProject/fileUpload").post(requestBody).build();
+				
+					client.newCall(request).enqueue(new Callback() {
+						@Override
+						public void onResponse(Call arg0, Response arg1) throws IOException {
+							JOptionPane.showMessageDialog(null, "Upload Successful! " + arg1.body().string());
+						}
+						@Override
+						public void onFailure(Call arg0, IOException arg1) {
+							JOptionPane.showMessageDialog(null,"Upload File failed: " + arg1);
+						}
+					});
+				}else JOptionPane.showConfirmDialog(null, "Select a file first");
+			});
+			
+			this.setLayout(null);
+			this.setResizable(false);
+			jLUploadFile.setBounds(20, 20, 100, 30);
+			JTextFileName.setBounds(120, 20, 100, 30);
+			JBStoreFile.setBounds(220, 20, 100, 30);
+			JBUploadFile.setBounds(320, 20, 100, 30);
+			this.add(jLUploadFile);
+			this.add(JTextFileName);
+			this.add(JBStoreFile);
+			this.add(JBUploadFile);
+			
+			double lx = Toolkit.getDefaultToolkit().getScreenSize().getWidth();  
+	        double ly = Toolkit.getDefaultToolkit().getScreenSize().getHeight();  
+	        this.setLocation(new Point((int) (lx / 2) - 150, (int) (ly / 2) - 150));
+			
+	        
+	        this.setVisible(true);
+		}
+	}
+	
+	//test
+	
+	
+	
 	class resourcePanel extends JPanel{
 		private JList jLResource;
 		private JButton jBDown;
 		private JButton jBUp;
 		private String selectedFileName;
 		
-		
+
 		
 		public resourcePanel() throws IOException {
 			OkHttpClient client = new OkHttpClient();
@@ -1535,6 +1630,12 @@ public class HomePage extends javax.swing.JFrame {
 			sp1.setViewportView(jLResource);
 			jBDown.setBounds(240, 425, 110, 50);
 			jBUp.setBounds(100,425,110,50);
+			
+			
+			jBUp.addActionListener(l->{
+				new upLoadMaterialPanel(this,selectName);
+			});
+			
 			this.add(sp1);
 			this.add(jBDown);
 			this.add(jBUp);

@@ -33,7 +33,7 @@ public class xmlUtil {
 	 * @return
 	 */
 	public static String getTopicFilePath(String topicName, String fileName) {
-		topicName = topicName.replaceAll("[^0-9a-zA-Z]", "_");
+		topicName = topicName.replaceAll("[^0-9a-zA-Z]", "");
 		if(fileName.equals("report.pdf"))
 			return xmlUtil.class.getClassLoader().getResource("").getPath() + ".." + File.separator + topicName
 					+ File.separator + fileName;
