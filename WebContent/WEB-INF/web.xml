@@ -122,11 +122,12 @@
     <url-pattern>/GPMCGroupProject/changeDetail</url-pattern>
   </servlet-mapping>
   <servlet>
-  	<servlet-name>queryTopicMaterial</servlet-name>
-  	<servlet-class>com.gpmc.servletAPI</servlet-class>
+    <servlet-name>queryTopicMaterial</servlet-name>
+    <servlet-class>com.gpmc.servletAPI</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>queryTopicMaterial</servlet-name>
-  	<url-pattern>/GPMCGroupProject/queryTopicMaterial</url-pattern>
+    <servlet-name>queryTopicMaterial</servlet-name>
+    <url-pattern>/GPMCGroupProject/queryTopicMaterial</url-pattern>
   </servlet-mapping>
+  
 </web-app>

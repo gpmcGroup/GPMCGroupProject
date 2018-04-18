@@ -18,6 +18,8 @@ import javax.servlet.http.Part;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
+import com.gpmc.util.xmlUtil;
+
 /**
  * Servlet implementation class fileUpload
  * solve file upload request, such as topic related material upload
@@ -48,8 +50,10 @@ public class fileUpload extends HttpServlet {
 		}
 		String topicName =  (inputStream2String(request.getPart("name").getInputStream())).split("=")[1]; //get TopicName
 		topicName = topicName.replaceAll(" ", "_");
+		
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		factory.setSizeThreshold(MEMORY_THRESHOLD);
+		
 		
 		factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
 		
@@ -58,14 +62,12 @@ public class fileUpload extends HttpServlet {
 		upload.setFileSizeMax(MAX_UPLOAD_SIZE);
 		
 		//setUp Upload file basic directory
-		String uploadPath = request.getServletContext().getRealPath("./")+File.separator + topicName + UPLOAD_DIRECTORY;
+		String uploadPath = xmlUtil.getTopicFilePath(topicName, "material");
+		
+		
+		
 		//filefolder
 		System.out.println("Upload Path : " + uploadPath);
-		File uploadDir = new File(uploadPath);
-		System.out.println(uploadDir.exists());
-		if(uploadDir.exists() == false) {
-			uploadDir.mkdirs();
-		}
 		//file
 		Collection<Part> parts = request.getParts();
 		System.out.println(parts.size());
@@ -123,7 +125,8 @@ public class fileUpload extends HttpServlet {
 	public String inputStream2String(InputStream in) throws IOException {  
         StringBuffer out = new StringBuffer();  
         byte[] b = new byte[1024];  
-        for (int n; (n = in.read(b)) != -1;) {  
+        for (int n; (n = in.read(b)) != -1;) { 
+        		
             out.append(new String(b, 0, n));  
         }  
         return out.toString();  

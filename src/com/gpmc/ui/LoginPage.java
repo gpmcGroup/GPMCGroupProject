@@ -74,7 +74,6 @@ public class LoginPage extends JFrame{
 			RequestBody requestBoday = new FormBody.Builder().add("username",username).add("password", password).build();
 			
 			Request request = new Request.Builder().post(requestBoday).url("http://localhost:8080/GPMCGroupProject/loginService").build();
-			
 			try {
 				Response response = client.newCall(request).execute();
 				if(!response.isSuccessful()) {	

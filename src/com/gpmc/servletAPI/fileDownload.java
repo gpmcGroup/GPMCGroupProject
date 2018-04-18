@@ -40,6 +40,7 @@ public class fileDownload extends HttpServlet {
 		String requestFileName = request.getParameter("requestFileName");
 		String topicName = request.getParameter("topicName");
 		String fileUrl = null;
+		String selectedFileName = request.getParameter("selectedFileName");
 		File file = null;
 		
 		try {
@@ -50,7 +51,8 @@ public class fileDownload extends HttpServlet {
 					file = new File(fileUrl);
 				}else {
 					fileUrl = xmlUtil.getTopicFilePath(topicName, "material");
-					file = new File(fileUrl);
+					file = new File(fileUrl + File.separator + selectedFileName);
+					System.out.println("要下载的文件路径:" + file.getPath());
 				}
 				
 				if(file.exists() == true) {
