@@ -57,6 +57,102 @@ public class ChatClient extends javax.swing.JFrame {
 		initGUI();
 	}
 	
+	
+	public void initGUI() {
+		try {
+			getContentPane().setLayout(null);
+			{
+				jButtonSendMessage = new JButton();
+				getContentPane().add(jButtonSendMessage);
+				jButtonSendMessage.setBounds(285, 234, 80, 22);
+				jButtonSendMessage.setText("SendMessage");
+				jButtonSendMessage.addActionListener(l -> sendMessage(jTextFieldMessage.getText()));
+			}
+			{
+				jTextFieldMessage = new JTextField();
+				getContentPane().add(jTextFieldMessage);
+				
+				jTextFieldMessage.setBounds(12, 232, 275, 26);
+			}
+			{
+				jLabel1ServerIP = new JLabel();
+				getContentPane().add(jLabel1ServerIP);
+				jLabel1ServerIP.setBounds(7, 12, 92, 15);
+				jLabel1ServerIP.setText("ServerIP");
+			}
+			{
+				jTextFieldServerIP = new JTextField();
+				getContentPane().add(jTextFieldServerIP);
+				jTextFieldServerIP.setBounds(80, 9, 74, 22);
+				jTextFieldServerIP.setText(ServerIP);
+			}
+			{
+				jLabelServerPort = new JLabel();
+				getContentPane().add(jLabelServerPort);
+				jLabelServerPort.setBounds(180, 12, 65, 15);
+				jLabelServerPort.setText("ServerPort");
+			}
+			{
+				jTextFieldServerPort = new JTextField();
+				getContentPane().add(jTextFieldServerPort);
+				jTextFieldServerPort.setBounds(250, 9, 73, 22);
+				jTextFieldServerPort.setText(ServerPort);
+			}
+			{
+				jLabelName = new JLabel();
+				getContentPane().add(jLabelName);
+				jLabelName.setBounds(12, 47, 40, 15);
+				jLabelName.setText("Name");
+			}
+			{
+				jTextFieldName = new JTextField();
+				getContentPane().add(jTextFieldName);
+				jTextFieldName.setBounds(64, 44, 62, 22);
+				jTextFieldName.setText(name);
+			}
+			{
+				jButtonConnect = new JButton();
+				getContentPane().add(jButtonConnect);
+				jButtonConnect.setBounds(161, 44, 95, 22);
+				jButtonConnect.setText("Connect");
+				jButtonConnect.addActionListener(e-> {
+					connect();
+				});
+			}
+			{
+				jScrollPane1 = new JScrollPane();
+				getContentPane().add(jScrollPane1);
+				jScrollPane1.setBounds(12, 71, 325, 149);
+				{
+					jTextArea1 = new JTextArea();
+					jScrollPane1.setViewportView(jTextArea1);
+					jTextArea1.setName("jTextArea1");
+				}
+			}
+			{
+				jButtonClose = new JButton();
+				getContentPane().add(jButtonClose);
+				jButtonClose.setBounds(275, 44, 45, 22);
+				jButtonClose.setText("Close");
+				jButtonClose.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						if(closeConnection()==true)
+							System.out.println("close successful!");
+					}
+				});
+			}
+			pack();
+			setSize(400, 300);
+			Application.getInstance().getContext().getResourceMap(getClass()).injectComponents(getContentPane());
+			this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	/**
 	 * connect chat client with chat server
 	 */
@@ -82,7 +178,6 @@ public class ChatClient extends javax.swing.JFrame {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 	/**
@@ -148,102 +243,7 @@ public class ChatClient extends javax.swing.JFrame {
 		return true;
 	}
 	
-	/**
-	 * initial client gui component
-	 */
 	
-	private void initGUI() {
-		try {
-			getContentPane().setLayout(null);
-			{
-				jButtonSendMessage = new JButton();
-				getContentPane().add(jButtonSendMessage);
-				jButtonSendMessage.setBounds(293, 234, 60, 22);
-				jButtonSendMessage.setName("jButtonSendMessage");
-				jButtonSendMessage.addActionListener(l -> sendMessage(jTextFieldMessage.getText()));
-			}
-			{
-				jTextFieldMessage = new JTextField();
-				getContentPane().add(jTextFieldMessage);
-				jTextFieldMessage.setBounds(12, 232, 275, 26);
-			}
-			{
-				jLabel1ServerIP = new JLabel();
-				getContentPane().add(jLabel1ServerIP);
-				jLabel1ServerIP.setBounds(7, 12, 92, 15);
-				jLabel1ServerIP.setName("jLabel1ServerIP");
-				
-			}
-			{
-				jTextFieldServerIP = new JTextField();
-				getContentPane().add(jTextFieldServerIP);
-				jTextFieldServerIP.setBounds(111, 9, 74, 22);
-				jTextFieldServerIP.setText(ServerIP);
-			}
-			{
-				jLabelServerPort = new JLabel();
-				getContentPane().add(jLabelServerPort);
-				jLabelServerPort.setBounds(191, 12, 37, 15);
-				jLabelServerPort.setName("jLabelServerPort");
-			}
-			{
-				jTextFieldServerPort = new JTextField();
-				getContentPane().add(jTextFieldServerPort);
-				jTextFieldServerPort.setBounds(240, 9, 73, 22);
-				jTextFieldServerPort.setText(ServerPort);
-			}
-			{
-				jLabelName = new JLabel();
-				getContentPane().add(jLabelName);
-				jLabelName.setBounds(12, 47, 40, 15);
-				jLabelName.setName("jLabelName");
-			}
-			{
-				jTextFieldName = new JTextField();
-				getContentPane().add(jTextFieldName);
-				jTextFieldName.setBounds(64, 44, 62, 22);
-				jTextFieldName.setText(name);
-			}
-			{
-				jButtonConnect = new JButton();
-				getContentPane().add(jButtonConnect);
-				jButtonConnect.setBounds(161, 44, 95, 22);
-				jButtonConnect.setName("jButtonConnect");
-				jButtonConnect.addActionListener(e-> {
-					connect();
-				});
-			}
-			{
-				jScrollPane1 = new JScrollPane();
-				getContentPane().add(jScrollPane1);
-				jScrollPane1.setBounds(12, 71, 325, 149);
-				{
-					jTextArea1 = new JTextArea();
-					jScrollPane1.setViewportView(jTextArea1);
-					jTextArea1.setName("jTextArea1");
-				}
-			}
-			{
-				jButtonClose = new JButton();
-				getContentPane().add(jButtonClose);
-				jButtonClose.setBounds(275, 44, 45, 22);
-				jButtonClose.setName("jButtonClose");
-				jButtonClose.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-						if(closeConnection()==true)
-							System.out.println("close successful!");
-					}
-				});
-			}
-			pack();
-			setSize(400, 300);
-			Application.getInstance().getContext().getResourceMap(getClass()).injectComponents(getContentPane());
-			this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	
 
 }

@@ -46,7 +46,7 @@ public class queryTopicMaterial extends HttpServlet {
 				for(int i = 0 ; i < fileList.length-1;i++) {
 					responseTxt += fileList[i] +";";
 				}
-				responseTxt += fileList[fileList.length+1];
+				responseTxt += fileList[fileList.length-1];
 				response.getWriter().write(responseTxt);
 			}
 		}
