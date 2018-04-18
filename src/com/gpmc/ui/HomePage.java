@@ -113,7 +113,6 @@ public class HomePage extends javax.swing.JFrame {
 	private Document doc;
 
 	private Vector topicList;
-	private Vector resourceList;
 
 	
 	
@@ -278,12 +277,16 @@ public class HomePage extends javax.swing.JFrame {
 				getContentPane().add(jBFile);
 				jBFile.setBounds(915, 76, 100, 35);
 				jBFile.addActionListener(l -> {
-					resourcePanel rp = new resourcePanel();
-					rp.init();
-					jPShow.removeAll();
-					jPShow.add(rp);
-					jPShow.updateUI();
-					jPShow.setVisible(true);
+					resourcePanel rp;
+					try {
+						rp = new resourcePanel();
+						jPShow.removeAll();
+						jPShow.add(rp);
+						jPShow.updateUI();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				});
 			}
 
@@ -1497,11 +1500,23 @@ public class HomePage extends javax.swing.JFrame {
 		private JList jLResource;
 		private JButton jBDown;
 		private JButton jBUp;
+
+		public resourcePanel() throws IOException {
+			OkHttpClient client = new OkHttpClient();
+			RequestBody req1 = new FormBody.Builder().add("topicName", selectName).add("requestFileName", "material")
+					.build();
+			Request getreq1 = new Request.Builder().post(req1)
+					.url("http://localhost:8080/GPMCGroupProject/fileDownload").build();
+			Response rp1 =client.newCall(getreq1).execute();
+			String s = rp1.body().string();
+			String[] temp = s.split(";");
+
 		
-		public resourcePanel() {
+			
 			jBDown = new JButton("Download");
 			jBUp = new JButton("upload");
 			jLResource = new JList();
+			jLResource.setListData(temp);
 			jLResource.setSelectionMode(0);
 			JScrollPane sp1 = new JScrollPane();
 			this.setLayout(null);
