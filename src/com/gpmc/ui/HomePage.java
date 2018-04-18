@@ -357,6 +357,7 @@ public class HomePage extends javax.swing.JFrame {
 //			return;
 //		}
 		selectNumber = jLTopic.getSelectedIndex();
+		
 		selectName = (String) topicList.get(selectNumber);
 		System.out.printf("LeadSelectionIndex is %s%n", selectName);
 
@@ -1500,13 +1501,16 @@ public class HomePage extends javax.swing.JFrame {
 		private JList jLResource;
 		private JButton jBDown;
 		private JButton jBUp;
-
+		private String selectedFileName;
+		
+		
+		
 		public resourcePanel() throws IOException {
 			OkHttpClient client = new OkHttpClient();
 			RequestBody req1 = new FormBody.Builder().add("topicName", selectName).add("requestFileName", "material")
 					.build();
 			Request getreq1 = new Request.Builder().post(req1)
-					.url("http://localhost:8080/GPMCGroupProject/fileDownload").build();
+					.url("http://localhost:8080/GPMCGroupProject/queryTopicMaterial").build();
 			Response rp1 =client.newCall(getreq1).execute();
 			String s = rp1.body().string();
 			String[] temp = s.split(";");
@@ -1514,10 +1518,17 @@ public class HomePage extends javax.swing.JFrame {
 		
 			
 			jBDown = new JButton("Download");
+			jBDown.addActionListener(l->{
+				new downLoadReportPanel(this,selectName,selectedFileName);
+			});
 			jBUp = new JButton("upload");
 			jLResource = new JList();
 			jLResource.setListData(temp);
 			jLResource.setSelectionMode(0);
+			jLResource.addListSelectionListener(listener->{
+				
+					selectedFileName = (String)jLResource.getSelectedValue();
+			});
 			JScrollPane sp1 = new JScrollPane();
 			this.setLayout(null);
 			sp1.setBounds(0, 0, 700, 400);
@@ -1549,6 +1560,8 @@ public class HomePage extends javax.swing.JFrame {
 		private String downLoadPath;  
 		private String downLoadFileName; 
 		private String topicName;
+		private JPanel panel = null;
+		private String selectFileName;
 		public downLoadReportPanel(JFrame f, String topicName) {
 			super(f, "Download file", true);
 			
@@ -1556,6 +1569,14 @@ public class HomePage extends javax.swing.JFrame {
 
 			setSize(500, 100);
 			this.topicName = topicName;
+			intialUI();
+		}
+		
+		public downLoadReportPanel(JPanel f,String topicName,String selectFileName) {
+			this.panel = f;
+			this.topicName = topicName;
+			this.selectFileName = selectFileName;
+			setSize(500, 100);
 			intialUI();
 		}
 		public void intialUI() {
@@ -1582,7 +1603,14 @@ public class HomePage extends javax.swing.JFrame {
 			JBUploadFile.addActionListener(l->{
 				if(downLoadPath.equals("") == false) {  //
 					OkHttpClient client = new OkHttpClient();
-					RequestBody requestBody = new FormBody.Builder().add("requestFileName", "report").add("topicName", topicName).build();
+					RequestBody requestBody;
+					if(panel == null) {
+						requestBody = new FormBody.Builder().add("requestFileName", "report").add("topicName", topicName).build();
+					}else {
+						
+						requestBody = new FormBody.Builder().add("selectedFileName",selectFileName).add("requestFileName", "material").add("topicName", topicName).build();
+					}
+					
 					Request request = new Request.Builder().url("http://localhost:8080/GPMCGroupProject/fileDownload").post(requestBody).build();
 					client.newCall(request).enqueue(new Callback() {
 						@Override
@@ -1594,7 +1622,7 @@ public class HomePage extends javax.swing.JFrame {
 							//downLoadPath is the path contains fileName
 							input = response.body().byteStream();
 							long totalByte = response.body().contentLength();
-							downLoadPath = downLoadPath + File.separator + "report.pdf";
+							downLoadPath = downLoadPath + File.separator + selectFileName;
 							File file = new File(downLoadPath);
 							fileOutputStream = new FileOutputStream(file);
 							while((len = input.read(buf))!=-1) {
