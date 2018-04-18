@@ -79,7 +79,7 @@ public class HomePage extends javax.swing.JFrame {
 			e.printStackTrace();
 		}
 	}
-
+	private boolean type; 
 	String name;
 	String selectName;
 	private String initialData;
@@ -137,6 +137,15 @@ public class HomePage extends javax.swing.JFrame {
 			doc = DocumentHelper.parseText(initialData);
 
 			name = doc.valueOf("//user/username");
+			
+			Element eletep = (Element) doc.selectSingleNode("//user");
+			String tep = eletep.valueOf("@teacher");
+			if(tep.equals("true")) {
+				type = true;
+			}
+			else
+				type = false;
+//			System.out.println(type);
 			// topic list data
 			Element eleTopic = (Element) doc.selectSingleNode("//user/topicList");
 			if (eleTopic != null) {
@@ -165,7 +174,7 @@ public class HomePage extends javax.swing.JFrame {
 			jPBasic.setBounds(299, 122, 797, 473);
 
 			jPShow = new JPanel();
-			jPShow.setBounds(320, 120, 700, 500);
+			jPShow.setBounds(320, 120, 800, 500);
 			getContentPane().add(jPShow);
 			getContentPane().add(jPBasic);
 
@@ -189,6 +198,8 @@ public class HomePage extends javax.swing.JFrame {
 							JOptionPane.YES_NO_OPTION);
 					if (l1 == 0) {
 						// return login
+						this.dispose();
+						new LoginPage();
 					}
 				});
 			}
@@ -198,6 +209,7 @@ public class HomePage extends javax.swing.JFrame {
 				jBChat = new JButton();
 				getContentPane().add(jBChat);
 				jBChat.setText("Chat");
+				jBChat.setEnabled(!type);
 				jBChat.setBounds(795, 76, 100, 35);
 				jBChat.addActionListener(l -> {
 					// Handler information
@@ -246,7 +258,7 @@ public class HomePage extends javax.swing.JFrame {
 				jBStatisc.setText("Statistic");
 				jBStatisc.setBounds(675, 76, 100, 35);
 				 jBStatisc.addActionListener(l->{
-					 System.out.println("select name in Statisc : " + selectName);
+//					 System.out.println("select name in Statisc : " + selectName);
 					 new downLoadReportPanel(this,selectName);
 				 });
 			}
@@ -254,6 +266,7 @@ public class HomePage extends javax.swing.JFrame {
 				jBMove = new JButton();
 				getContentPane().add(jBMove);
 				jBMove.setText("Move");
+				jBMove.setEnabled(!type);
 				jBMove.setBounds(555, 76, 100, 35);
 				jBMove.addActionListener(l -> {
 					movePanel mp = new movePanel();
@@ -297,6 +310,7 @@ public class HomePage extends javax.swing.JFrame {
 			{
 				jBPlus = new JButton();
 				jBPlus.setText("+");
+				jBPlus.setVisible(type);
 				getContentPane().add(jBPlus);
 				jBPlus.setBounds(64, 580, 79, 39);
 				jBPlus.addActionListener(l -> {
@@ -307,6 +321,7 @@ public class HomePage extends javax.swing.JFrame {
 			{
 				jBReudce = new JButton();
 				jBReudce.setText("-");
+				jBReudce.setVisible(type);
 				getContentPane().add(jBReudce);
 				jBReudce.setBounds(165, 580, 79, 39);
 				jBReudce.addActionListener(l -> {
@@ -362,7 +377,7 @@ public class HomePage extends javax.swing.JFrame {
 		selectNumber = jLTopic.getSelectedIndex();
 		
 		selectName = (String) topicList.get(selectNumber);
-		System.out.printf("LeadSelectionIndex is %s%n", selectName);
+//		System.out.printf("LeadSelectionIndex is %s%n", selectName);
 
 		OkHttpClient client1 = new OkHttpClient();
 		RequestBody requestBoday1 = new FormBody.Builder().add("selectName", selectName).build();
@@ -513,6 +528,7 @@ public class HomePage extends javax.swing.JFrame {
 		vg5.addComponent(jl_startTiem);
 
 		JButton jBEdit = new JButton("Edit");
+		jBEdit.setVisible(type);
 		jBEdit.addActionListener(l -> {
 
 			newTopic np1 = new newTopic(this, jBEdit.getText());
@@ -775,17 +791,17 @@ public class HomePage extends javax.swing.JFrame {
 
 						if (sourceButton.equals("Edit")) {
 							if (judge()) {
-								System.out.println("topic completed");
-								// topicList.addElement(title_return);
-								// jLTopic.setListData(topicList);
+//								System.out.println("topic completed");
+//								topicList.addElement(title_return);
+//								jLTopic.setListData(topicList);
 								changeData();
 								this.dispose();
 							}
 						} else {
 							if (judgeSame() && judge()) {
-								System.out.println("topic completed");
-								// topicList.addElement(title_return);
-								// jLTopic.setListData(topicList);
+//								System.out.println("topic completed");
+								 topicList.addElement(title_return);
+								 jLTopic.setListData(topicList);
 								sendData();
 								this.dispose();
 							}
@@ -945,14 +961,14 @@ public class HomePage extends javax.swing.JFrame {
 			Vector<Integer> b = new Vector<Integer>();
 			for (String s : teamA) {
 				studentListA.setSelectedValue(s, true);
-				System.out.println(s);
+//				System.out.println(s);
 				int i = studentListA.getSelectedIndex();
 				a.add(i);
 			}
 
 			for (String s : teamB) {
 				studentListB.setSelectedValue(s, true);
-				System.out.println(s);
+//				System.out.println(s);
 				int i = studentListB.getSelectedIndex();
 				b.add(i);
 			}
@@ -1033,7 +1049,7 @@ public class HomePage extends javax.swing.JFrame {
 			try {
 				Response responseSend = clientSend.newCall(requestSend).execute();
 				if (!responseSend.isSuccessful()) {
-					System.out.println("wanchengle/");
+//					System.out.println("wanchengle/");
 					JOptionPane.showMessageDialog(null, "Can't request server, please check server status");
 				} else {
 					JOptionPane.showMessageDialog(null, "Finish adding a topic");
@@ -1443,15 +1459,8 @@ public class HomePage extends javax.swing.JFrame {
 													GroupLayout.PREFERRED_SIZE)
 											.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 											.addGroup(moveLayout.createParallelGroup()
-													.addComponent(textScroll, GroupLayout.Alignment.LEADING, 0, 518,
-															Short.MAX_VALUE)
-													.addGroup(GroupLayout.Alignment.LEADING, moveLayout
-															.createSequentialGroup().addGap(0, 409, Short.MAX_VALUE)
-															.addComponent(addNewMove, GroupLayout.PREFERRED_SIZE,
-																	GroupLayout.PREFERRED_SIZE,
-																	GroupLayout.PREFERRED_SIZE)
-															.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 0,
-																	GroupLayout.PREFERRED_SIZE)))))
+													.addComponent(textScroll, GroupLayout.Alignment.LEADING, 650,650,650).addComponent(addNewMove)
+													)))
 							.addGap(7));
 			moveLayout.setVerticalGroup(moveLayout.createSequentialGroup().addContainerGap()
 					.addComponent(moveScroll, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
@@ -1470,7 +1479,7 @@ public class HomePage extends javax.swing.JFrame {
 			// load the initial data into the jtable - for now all moves. next iteration
 			// will take the filtered information - ie which topic is selected, which team
 			// is logged in.
-			this.setSize(750, 600);
+			this.setSize(800, 600);
 
 		}
 
@@ -1617,6 +1626,7 @@ public class HomePage extends javax.swing.JFrame {
 				new downLoadReportPanel(this,selectName,selectedFileName);
 			});
 			jBUp = new JButton("upload");
+			jBUp.setVisible(type);
 			jLResource = new JList();
 			jLResource.setListData(temp);
 			jLResource.setSelectionMode(0);

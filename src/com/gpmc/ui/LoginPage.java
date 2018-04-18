@@ -24,16 +24,20 @@ public class LoginPage extends JFrame{
 	public static void main(String[] args) {
 		LoginPage page = new LoginPage();
 		
-		page.setName("Login");
-		page.setSize(350, 177);
-		page.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		
+	}
+	
+	public LoginPage() {
+		setName("Login");
+		setSize(350, 177);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLocationRelativeTo(null);
 		JPanel panel = new JPanel();
-		page.add(panel);
-		page.placeComponents(panel);
+		this.add(panel);
+		this.placeComponents(panel);
 
-		page.setVisible(true);
-		page.setPreferredSize(new java.awt.Dimension(350, 177));
+		this.setVisible(true);
+		this.setPreferredSize(new java.awt.Dimension(350, 177));
 	}
 /**
  * place components in fixed location
