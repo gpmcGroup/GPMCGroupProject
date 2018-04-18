@@ -43,7 +43,7 @@ public class LoginPage extends JFrame{
 
 		panel.setLayout(null);
 
-		JLabel userLabel = new JLabel("Email Address:");
+		JLabel userLabel = new JLabel("Username:");
 		userLabel.setBounds(10, 10, 120, 25);
 		panel.add(userLabel);
 

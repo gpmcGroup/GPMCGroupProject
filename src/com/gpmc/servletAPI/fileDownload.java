@@ -52,7 +52,6 @@ public class fileDownload extends HttpServlet {
 				}else {
 					fileUrl = xmlUtil.getTopicFilePath(topicName, "material");
 					file = new File(fileUrl + File.separator + selectedFileName);
-					System.out.println("要下载的文件路径:" + file.getPath());
 				}
 				
 				if(file.exists() == true) {
