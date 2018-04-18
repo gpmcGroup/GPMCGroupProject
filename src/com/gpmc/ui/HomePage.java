@@ -3,6 +3,7 @@ package com.gpmc.ui;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Point;
+import java.awt.ScrollPane;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -101,17 +102,22 @@ public class HomePage extends javax.swing.JFrame {
 	private JButton jBLogout;
 	private JButton jBPlus;
 	private JButton jBReudce;
+	private JButton jBFile;
 
 	private JList jLTopic;
 
-	JScrollPane jScrollPane = new JScrollPane();
+	private JScrollPane jScrollPane = new JScrollPane();
 
 	private User loginUser;
 
 	private Document doc;
 
 	private Vector topicList;
+	private Vector resourceList;
 
+	
+	
+	
 	public HomePage(String initialData) {
 
 		super();
@@ -185,11 +191,12 @@ public class HomePage extends javax.swing.JFrame {
 				});
 			}
 
+
 			{
 				jBChat = new JButton();
 				getContentPane().add(jBChat);
 				jBChat.setText("Chat");
-				jBChat.setBounds(927, 76, 108, 35);
+				jBChat.setBounds(795, 76, 100, 35);
 				jBChat.addActionListener(l -> {
 					// Handler information
 					Document doc;
@@ -234,8 +241,8 @@ public class HomePage extends javax.swing.JFrame {
 			{
 				jBStatisc = new JButton();
 				getContentPane().add(jBStatisc);
-				jBStatisc.setText("Statisc");
-				jBStatisc.setBounds(788, 76, 97, 35);
+				jBStatisc.setText("Statistic");
+				jBStatisc.setBounds(675, 76, 100, 35);
 				 jBStatisc.addActionListener(l->{
 					 System.out.println("select name in Statisc : " + selectName);
 					 new downLoadReportPanel(this,selectName);
@@ -245,7 +252,7 @@ public class HomePage extends javax.swing.JFrame {
 				jBMove = new JButton();
 				getContentPane().add(jBMove);
 				jBMove.setText("Move");
-				jBMove.setBounds(644, 76, 102, 35);
+				jBMove.setBounds(555, 76, 100, 35);
 				jBMove.addActionListener(l -> {
 					movePanel mp = new movePanel();
 					jPShow.removeAll();
@@ -257,7 +264,7 @@ public class HomePage extends javax.swing.JFrame {
 				this.jBTurn = new JButton();
 				getContentPane().add(jBTurn);
 				this.jBTurn.setText("Turns");
-				this.jBTurn.setBounds(496, 76, 101, 35);
+				this.jBTurn.setBounds(435, 76, 100, 35);
 				jBTurn.addActionListener(l -> {
 					turnPanel tp = new turnPanel();
 					jPShow.removeAll();
@@ -265,6 +272,19 @@ public class HomePage extends javax.swing.JFrame {
 					jPShow.updateUI();
 				});
 				;
+			}
+			{
+				jBFile = new JButton("Resourse");
+				getContentPane().add(jBFile);
+				jBFile.setBounds(915, 76, 100, 35);
+				jBFile.addActionListener(l -> {
+					resourcePanel rp = new resourcePanel();
+					rp.init();
+					jPShow.removeAll();
+					jPShow.add(rp);
+					jPShow.updateUI();
+					jPShow.setVisible(true);
+				});
 			}
 
 			// list add/remove
@@ -310,7 +330,7 @@ public class HomePage extends javax.swing.JFrame {
 				jBIntroduction = new JButton();
 				getContentPane().add(jBIntroduction);
 				jBIntroduction.setText("Introduction");
-				jBIntroduction.setBounds(310, 76, 102, 35);
+				jBIntroduction.setBounds(310, 76, 105, 35);
 				jBIntroduction.addActionListener(l -> {
 
 					getSelectedTopicData();
@@ -1470,6 +1490,33 @@ public class HomePage extends javax.swing.JFrame {
 					m.setVisible(true);
 				}
 			});
+		}
+	}
+	
+	class resourcePanel extends JPanel{
+		private JList jLResource;
+		private JButton jBDown;
+		private JButton jBUp;
+		
+		public resourcePanel() {
+			jBDown = new JButton("Download");
+			jBUp = new JButton("upload");
+			jLResource = new JList();
+			jLResource.setSelectionMode(0);
+			JScrollPane sp1 = new JScrollPane();
+			this.setLayout(null);
+			sp1.setBounds(0, 0, 700, 400);
+			sp1.setViewportView(jLResource);
+			jBDown.setBounds(240, 425, 110, 50);
+			jBUp.setBounds(100,425,110,50);
+			this.add(sp1);
+			this.add(jBDown);
+			this.add(jBUp);
+			this.setBounds(0, 0,  700, 500);
+		}
+		
+		public void init() {
+			this.setVisible(true);
 		}
 	}
 	
